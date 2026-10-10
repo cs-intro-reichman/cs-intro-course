@@ -1,6 +1,6 @@
 # Course map: Introduction to Computer Science (Python)
 
-Skill version 2026-10-10. Lectures marked *not available yet* are not in this version of the skill.
+Skill version 2026-10-11. Lectures marked *not available yet* are not in this version of the skill.
 
 ## Lectures
 
@@ -47,4 +47,4 @@ Skill version 2026-10-10. Lectures marked *not available yet* are not in this ve
 
 These are graded. Use the hint ladder, never write solutions.
 
-*No homework assignments in this version.*
+- HW1: Errors, input and arithmetic, after week 1 (`homework/hw1-errors-input-and-arithmetic.md`)

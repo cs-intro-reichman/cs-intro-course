@@ -13,7 +13,9 @@ The instructor maintains this file. Week numbers follow the current schedule.
 - Comparisons `== != < <= > >=`, `and`, `or`, `not`
 - `input()` (it always returns a string) and converting the result
 - f-strings in the plain `{expr}` form only. Format specs are not taught yet.
-- `round(x, n)`, `abs`, `import math` (`math.sqrt` etc.), `import random` (`random.random()`, `random.randint`)
+- `round(x, n)`, `abs`, `import math` (`math.sqrt`, `math.floor`, `math.ceil`, `math.pi`), `import random` (`random.random()` only; a random whole number is made as `int(random.random() * n)`, lecture 1-2 slide 58)
+- Kinds of errors (syntax, runtime, logical; lecture 1-1 slide 43) and reading a traceback (1-2)
+- Not taught in week 1: `random.randint`, `min`, `max`, `sum` (these first appear in the lists lecture, 4-2)
 - Shown only as previews, not yet taught: a `turtle` demo and a `class Dog` example
 
 ## Week 2: Conditionals and while loops (2-1), for loops and numeral systems (2-2)
@@ -42,7 +44,7 @@ The instructor maintains this file. Week numbers follow the current schedule.
 - Stubs, top-down design, decomposition
 - Lists: literals, indexing, slicing, `in`, `+`, `*`, `len`, `list()`
 - Lists are mutable: item assignment, aliasing (`b = a`), copying (`a[:]`, `a.copy()`)
-- List methods: `append`, `insert`, `pop`, `remove`, `sort`, `reverse`, `copy`. Built-ins: `sorted`, `max`, `min`, `sum`
+- List methods: `append`, `insert`, `pop`, `remove`, `sort`, `reverse`, `copy`. Built-ins: `sorted`, `max`, `min`, `sum` (first taught here)
 - Strings and lists: `split`, `join`
 - Building a list with an accumulator (`result = []` then `append` in a loop)
 - Not modifying a list while looping over it (loop over a copy instead)
