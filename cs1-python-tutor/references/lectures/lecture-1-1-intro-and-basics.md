@@ -1,18 +1,17 @@
 # Lecture 1-1: Intro and basics (week 1)
 
 ## Slide 1
-PYTHON COURSE · WEEK 1 · LECTURE 1
+INTRO TO CS COURSE · WEEK 1 · LECTURE 1
 Fundamentals
-Introduction to Computer Science in Python
+Introduction to Computer Science
 
 ## Slide 2
 Lecture overview
 The course
 Computer science
 Programming
-Problem solving
-Pseudocode
-Why Python
+Problem to program
+Python
 Syntax
 Readability
 Edit, Run & Debug
@@ -30,38 +29,38 @@ Python
 syntax, readability, and running code
 
 ## Slide 3
-Course objectives
-Basic exposure to Computer Science - as a field, not just a tool
-Basic programming skills - specifically, in Python
-What will this course give you ?
+Course requirements
+Attend:
+Two weekly lectures (שיעור)
+One weekly recitation (תירגול)
+One weekly workshop (סדנה) 
+Submit:
+A weekly homework assignments (שיעורי בית)
 The course
 Computer science
 Programming
-Problem solving
-Pseudocode
-Why Python
+Problem to program
+Python
 Syntax
 Readability
 Edit, Run & Debug
 
 ## Slide 4
-Sharpen your analytic skills - precise, structured thinking
-Appreciate clarity and elegance - in code, not only correctness
-Develop a taste for beauty - in science and engineering
-Learn how to learn and develop – not only as a programmer, but also as a computer scientist
-And along the way you will ...
-Course objectives
+Course grading
+Grade components:
+Homework assignments 15% 
+Midterm exam 20% 
+Final exam 65%
+The course
+Computer science
+Programming
+Problem to program
+Python
+Syntax
+Readability
+Edit, Run & Debug
 
 ## Slide 5
-Course requirements
-Attend:
-Two weekly lectures (שיעור)
-One weekly recitation (תרגיל)
-One weekly workshop (סדנה) 
-Submit:
-A weekly homework assignments (שיעורי בית)
-
-## Slide 6
 Course website (“Moodle”)
 Contents:
  Lectures / recitations slides + code
@@ -71,7 +70,7 @@ Important:
 The only formal and abiding channel of communications between the course team and the students is the course web site
 What is said orally by the course staff about HW, exams, requirements, grading, deadlines – is tentative. What is written in the web site is formal.
 
-## Slide 7
+## Slide 6
 Q&A forum
 How to ask questions ?
 Find the forum — by week or topic
@@ -81,30 +80,55 @@ Expect an answer — within a few hours, from a TA or a fellow student
 Feel free to answer others — if you think your answer will be useful
 Keep it clean — professional tone, in English
 
-## Slide 8
+## Slide 7
 Books and resources
 “Python for Everybody” — Severance, free online – py4e.com/book
 The official Python tutorial – docs.python.org/3/tutorial
 “Think Python” — Downey, 3rd ed., free online – greenteapress.com
 
+## Slide 8
+Course objectives
+Basic exposure to Computer Science - as a field, not just a tool
+Basic programming skills - specifically, in Python
+What will this course give you ?
+
 ## Slide 9
+Sharpen your analytic skills - precise, structured thinking
+Appreciate clarity and elegance - in code, not only correctness
+Learn how to learn and develop – not only as a programmer, but also as a computer scientist
+And along the way you will ...
+Course objectives
+
+## Slide 10
+Mastering Computer Science in the AI Era
+AI generates code instantly – but human computer scientists provide the vision, logic and judgment.
+The most effective users of AI tools are developers with a deep understanding of computer science principles.
+1. Problem Specification
+Formulating clear problem boundaries, inputs, outputs and edge cases to direct AI tools effectively.
+2. Critical Code Review
+Auditing code step-by-step to catch hidden defects, semantic bugs and AI errors.
+3. Debugging & Verification
+Diagnosing runtime issues and verifying program state to ensure logical correctness.
+4. System Architectural & Efficiency
+Selecting optimal data structures for fast, maintainable and efficient execution.
+
+## Slide 11
 Computer Science is About...
 The course
 Computer science
 Programming
-Problem solving
-Pseudocode
-Why Python
+Problem to program
+Python
 Syntax
 Readability
 Edit, Run & Debug
 
-## Slide 10
+## Slide 12
 “Computer science is no more about computers than astronomy is about telescopes, biology is about microscopes or chemistry is about beakers and test tubes. Science is not about tools. It is about how we use them, and what we find out when we do.”
 Edsger W. Dijkstra
 Computer Science is About...
 
-## Slide 11
+## Slide 13
 Computer Science is About...
 Theory
 Systems
@@ -117,9 +141,9 @@ Efficiency
 Doing more with less, 
 faster and smarter
 Beauty
-An acquired taste — elegant solutions to hard problems
+Elegant solutions to hard problems
 
-## Slide 12
+## Slide 14
 High Level Apps & AI
 Data Analysis & Simulation
 Medical & Imaging systems
@@ -140,58 +164,34 @@ Cyber Security & Cryptography
 The course
 Computer science
 Programming
-Problem solving
-Pseudocode
-Why Python
+Problem to program
+Python
 Syntax
 Readability
 Edit, Run & Debug
 
-## Slide 13
-A taste of programming
-Simulate the motion of N heavenly bodies,subject to Newton’s laws of motion and gravity
-
-## Slide 14
-A taste of programming
-`spiral.py`
-```python
-import turtle
-t = turtle.Turtle()
-t.speed(0)
-colors = ["#A64B00", "#1B3A5C", "#F5B759"]
-for i in range(200):
-    t.pencolor(colors[i % 3])
-    t.forward(i * 2)
-    t.right(91)
-turtle.done()
-```
-Live demo – the file is in “week 1 code / spiral.py”.
-
 ## Slide 15
+A taste of programming
+Simulate the motion of N heavenly bodies,subject to Newton’s laws of motion and gravitation.
+The reality of software
+Complex programs are built on precise, deterministic rules. 
+Unhandled edge cases often cause unexpected bugs. 
+Watch what happens when physics meets an unhandled condition!
+
+## Slide 16
 Programming is about…
 Writing code that is ...
 Correct — produces the right answer, every time
 Efficient — makes reasonable use of time and memory
 Readable — a human can follow it later – including you
 
-## Slide 16
+## Slide 17
 Good code is ...
 Easy to understand — for other people and for yourself
 Easy to test — you can check that it does what it claims
 Easy to maintain and extend — you can change it easily without breaking it
 A pleasure to work with — for whoever touches it next
 Programming is about…
-
-## Slide 17
-The peanut butter sandwich
-Write literal instructions – then watch them followed exactly, not as intended.
-Write the steps
-→
-Read them literally
-→
-Watch it fail
-→
-Precision is the point
 
 ## Slide 18
 From a problem to a program
@@ -203,9 +203,8 @@ A program in a high-level language
 The course
 Computer science
 Programming
-Problem solving
-Pseudocode
-Why Python
+Problem to program
+Python
 Syntax
 Readability
 Edit, Run & Debug
@@ -214,7 +213,10 @@ Edit, Run & Debug
 What a problem is
 In computer science a problem is defined by:
 Input — what you are given at the start
-Output — the result the process has to produce
+Output — the result the process should produce
+Input
+?
+Output
 
 ## Slide 20
 Three problems, as input and output
@@ -225,38 +227,54 @@ Two real numbers
 Their average
 A list of integers
 The same list, sorted
+?
+?
+?
 
 ## Slide 21
-What makes problem-solving computational
+What an algorithm is
 An algorithm is a finite, unambiguous procedure that is correct for every valid input.
-Precision — every step is spelled out; nothing is left implied
-Finiteness — the procedure has to stop, not run forever
-Generality — it works for the whole class of inputs, not just the case you tried by hand
+A problem says what. An algorithm says how. 
+Input
+Algorithm
+Output
 
 ## Slide 22
-Computational thinking: four habits of mind
-Jeannette Wing, 2006 — a general problem-solving skill
+An algorithm must be...
+Well-defined - every step is explicitly stated; nothing is left implied.
+Finite - the procedure must stop, not run forever.
+General - it works for the whole class of inputs, not just the case you tried by hand.
+
+## Slide 23
+The peanut butter & jelly algorithm
+Task: Write precise step-by-step instructions (an algorithm) to make a peanut butter & jelly sandwich.
+
+## Slide 24
+Knowing the limits
+Before you ask for a solution, know whether one exists.
+1. Can it be solved at all?
+Some problems have no algorithm — not a slow one, not a clever one. None, for any computer, ever.
+2. Can it be solved in reasonable time?
+Others are solvable in principle, but the runtime becomes impractically high as the input grows. Which algorithm, and at what cost, is week 9.
+3. Exact, or close enough?
+When an exact answer is out of reach, a good approximation is the right answer — not a compromise. That is week 3.
+
+## Slide 25
+How to design an algorithm
+Computational thinking (Jeannette Wing, 2006) – 
+a general problem-solving skill
 Break it into pieces
 Spot the repeating pattern
 Keep only what matters
 Write the precise step
 
-## Slide 23
-Pseudocode: the step before code
+## Slide 26
+Pseudocode: how to describe the algorithm
 Human communication: Uses natural language, intuition, and high-level concepts.
 Computer execution: Requires strict, step-by-step instructions with zero ambiguity.
 Pseudocode as a bridge: Separates what to do from how to write it - reducing cognitive load.
-The course
-Computer science
-Programming
-Problem solving
-Pseudocode
-Why Python
-Syntax
-Readability
-Edit, Run & Debug
 
-## Slide 24
+## Slide 27
 Pseudocode: a worked example
 The algorithm - in pseudocode
 read n from the user
@@ -269,17 +287,16 @@ The problem
 Input: a whole number n
 Output: the numbers from 0 to n
 
-## Slide 25
+## Slide 28
 Which language should you learn?
-Java, Python, C, JavaScript… - every serious language has real strengths
-There is no single right answer - the “best” language depends on the job
-What transfers is the thinking – 
-not the syntax of any one language
+Java, Python, C, JavaScript… - every serious language has real strengths.
+There is no single right answer - the “best” language depends on the job.
+What transfers is the thinking – not the syntax of any one language.
 
-## Slide 26
+## Slide 29
 Why Python ?
 Clean and minimal syntax – A first working program takes a single line: 
-High industry demand – Leading language in AI\ML, Data Science, Backend and Automation.
+High industry demand – Leading language in AI/ML, Data Science, Backend and Automation.
 Extensive ecosystem – Built in tools for immediate use (math, random) plus industry-standard libraries (numpy, pandas).
 18
 ```python
@@ -288,27 +305,40 @@ print("Hello World")
 The course
 Computer science
 Programming
-Problem solving
-Pseudocode
-Why Python
+Problem to program
+Python
 Syntax
 Readability
 Edit, Run & Debug
 
-## Slide 27
+## Slide 30
 The intro language at leading CS programs (MIT, Berkeley, Harvard, Stanford).
 Interactive and beginner-friendly - Immediate feedback via REPL, with clear readable error messages (Python 3.10+)
 Balanced trade-offs – Prioritized readability and expressiveness over raw execution speed – ideal for learning fundamental concepts.
 Why Python ?
 
-## Slide 28
+## Slide 31
+Python 2 vs. Python 3: Language Evolution
+As programming languages grow over time, major changes are sometimes necessary to correct early design limitations. 
+Python 2 · Legacy
+Python 3 · Modern standard
+2000
+2008
+2020
+Present
+Python 2 (2000-2020): Legacy version, retired (End-of-Life) in 2020.
+Python 3 (2008-Present): The modern standard for web, data science, research and AI. 
+A breaking change: Python 3 intentionally broke backward compatibility to fix core design flaws. 
+Our Course Standard: We exclusively use Python 3 (currently 3.13). 
+
+## Slide 32
 Our approach
 Teach a meaningful subset of Python - Master essential Python concepts deeply, without getting lost in exhaustive feature lists.
 Build problem-solving skills – Develop algorithmic thinking patterns that directly apply to any programming language.
 Foundation for future growth - Make learning other languages faster and more intuitive.
 Concepts over syntax - Focus on how to think like a computer scientist, not just how to code in Python. 
 
-## Slide 29
+## Slide 33
 Python program example
 The algorithm - in pseudocode
 set i to 0
@@ -330,8 +360,7 @@ print("Done")
 Python implementation
 The task: print the numbers 0 to 5
 
-## Slide 30
-Python syntax elements - Words
+## Slide 34
 `count_to_five.py`
 ```python
 # Declares a variable and sets it to 0
@@ -342,7 +371,18 @@ while i < 6:
     i = i + 1
 print("Done")
 ```
-Reserved words
+`count_to_five.py`
+```python
+# Declares a variable and sets it to 0
+i = 0
+while i < 6:
+    # Prints i, and increments it
+    print(i)
+    i = i + 1
+print("Done")
+```
+Python syntax elements - Names
+Keywords
 Belong to the
 language - you cannot
 use them as names.
@@ -353,14 +393,33 @@ In this example: i
 The course
 Computer science
 Programming
-Problem solving
-Pseudocode
-Why Python
+Problem to program
+Python
 Syntax
 Readability
 Edit, Run & Debug
+`count_to_five.py`
+```python
+# Declares a variable and sets it to 0
+i = 0
+while i < 6:
+    # Prints i, and increments it
+    print(i)
+    i = i + 1
+print("Done")
+```
+`count_to_five.py`
+```python
+# Declares a variable and sets it to 0
+i = 0
+while i < 6:
+    # Prints i, and increments it
+    print(i)
+    i = i + 1
+print("Done")
+```
 
-## Slide 31
+## Slide 35
 ```python
 False
 ```
@@ -466,7 +525,7 @@ with
 ```python
 yield
 ```
-Python syntax elements – Reserved words
+Python keywords
 `count_to_five.py`
 ```python
 # Declares a variable and sets it to 0
@@ -478,7 +537,7 @@ while i < 6:
 print("Done")
 ```
 
-## Slide 32
+## Slide 36
 Python syntax elements – Literals (constants)
 `count_to_five.py`
 ```python
@@ -497,9 +556,6 @@ Text wrapped in quotes
 ("Done“ or 'Done')
 Booleans & None 
 True, False - logical values None - represents absence of value
-
-## Slide 33
-Python syntax elements - Symbols
 `count_to_five.py`
 ```python
 # Declares a variable and sets it to 0
@@ -511,7 +567,30 @@ while i < 6:
 print("Done")
 ```
 
-## Slide 34
+## Slide 37
+Python syntax elements - Symbols
+`count_to_five.py`
+```python
+# Declares a variable and sets it to 0
+i = 0
+while i < 6:
+    # Prints i, and increments it
+    print(i)
+    i = i + 1
+print("Done")
+```
+`count_to_five.py`
+```python
+# Declares a variable and sets it to 0
+i = 0
+while i < 6:
+    # Prints i, and increments it
+    print(i)
+    i = i + 1
+print("Done")
+```
+
+## Slide 38
 ```python
 # Declares a variable and sets it to 0
 i = 0
@@ -530,13 +609,14 @@ A program
 A sequence of statements executed in logical order, directed by control flow (like loops and conditions).
 `count_to_five.py`
 
-## Slide 35
+## Slide 39
 ```python
 class Dog:
     def __init__(self, name):
         self.name = name
     def bark(self):
         print(self.name + " says woof")
+
 rex = Dog("Rex")
 rex.bark()
 ```
@@ -549,7 +629,7 @@ A function that belongs to a class, and acts on its object
 A class
 A blueprint for creating objects, bundling data and methods together.
 
-## Slide 36
+## Slide 40
 Program readability
 `count_to_five.py`
 ```python
@@ -570,14 +650,13 @@ Visual color-coding provided by the editor to make code easier to read
 The course
 Computer science
 Programming
-Problem solving
-Pseudocode
-Why Python
+Problem to program
+Python
 Syntax
 Readability
 Edit, Run & Debug
 
-## Slide 37
+## Slide 41
 Program readability
 “Any fool can write
 code that a computer
@@ -591,11 +670,10 @@ i=0;
 while i<6:print(i);i=i+1
 print("Done")
 ```
-Same output. Same program, as far as Python is concerned.
 Same code, written badly
 PEP 8 - The community style guide. A set of conventions (not strict rules), to make Python code clean and readable.
 
-## Slide 38
+## Slide 42
 Aspects of any language 
 `count_to_five.py`
 ```python
@@ -616,7 +694,7 @@ The rules of the language: vocabulary and grammar
 Style
 How well you say it.
 
-## Slide 39
+## Slide 43
 Natural language vs. programming language
 Natural languages
 Hebrew, English, and other human languages
@@ -626,38 +704,55 @@ Programming languages
 Syntax is sacred
 Only one semantic interpretation - no ambiguity
 
-## Slide 40
-Ways to execute Python code
-Interactive Mode
+## Slide 44
+How Python runs your code
+The course
+Computer science
+Programming
+Problem to program
+Python
+Syntax
+Readability
+Edit, Run & Debug
+One command - and two steps you never see.
+C, C++, Java — compile, then run
+You compile first, then run the machine-code file you got. Two steps, two files.
+```python
+Python — one command
+python myprog.py does both at once — and no machine-code file of yours is ever produced.
+```
+“Python is an interpreted language” is a useful shorthand. More precisely: compiled to bytecode, then interpreted — which is why the chain earlier in this lecture has no “machine code” box.
+YOUR CODE
+COMPILER
+part of Python itself
+BYTECODE
+INTERPRETER
+a C program, compiled to machine code
+Output
+
+## Slide 45
+Python execution modes
+The REPL
 ```python
 >>> python
 ```
-Evaluates one expression at a time directly in the terminal (REPL).
+Interactive Mode — one line, one answer, nothing saved.
 Instant execution & feedback
 Ideal for testing code snippets
-Script Mode
+Script files
 `python myprog.py`
-Runs a whole .py file in one command – no separate build step.
+Script Mode — the whole file runs top to bottom.
 Permanent, reusable code
 Standard for production software
 Notebooks
 ```python
 Jupyter / Colab
 ```
-Combines code cells, docs, and inline visualizations.
+Interactive, one cell at a time — code, text and charts together.
 Standard in Data Science & AI
 Interactive step-by-step flow
-The course
-Computer science
-Programming
-Problem solving
-Pseudocode
-Why Python
-Syntax
-Readability
-Edit, Run & Debug
 
-## Slide 41
+## Slide 46
 The REPL (Read-Eval-Print Loop)
 ```python
 python (interactive)
@@ -672,17 +767,16 @@ hello
 >>> 1 / 0
 ZeroDivisionError: division by zero
 ```
-Demo this live – no file needed; transcript: “week 1 code / repl_session.txt”.
 
-## Slide 42
+## Slide 47
 Popular IDEs for Python: 
 VS Code — free, lightweight, cross-platform
 PyCharm — full-featured, Python-dedicated IDE
-Jupyter / Colab — interactive, browser-based notebook environments
-Integrated Development Environments (IDEs)
-What is an IDE ? An all-in-one workspace featuring a code editor, compiler, build tools, debugger and more...
+Pressing Run just runs python myprog.py for you - that is Script Mode.
+IDEs – Your Python workspace
+What is an IDE? An all-in-one workspace: a code editor, a file tree, a debugger, and a Run button.
 
-## Slide 43
+## Slide 48
 Debugging – Finding and fixing bugs in your code
 Syntax Errors
 ```python
@@ -693,7 +787,7 @@ Runtime Errors
 ```python
 ZeroDivisionError
 ```
-Occur while running; Python calls these exceptions (try/except in Week 4).
+Occur while running; Python calls these exceptions (try/except).
 Logical Errors
 ```python
 wrong answer
@@ -701,15 +795,15 @@ wrong answer
 The program runs to completion without crashing, but the answer is wrong due to flawed logic.
 Murphy's Law: “Anything that can possibly go wrong, will.”
 
-## Slide 44
+## Slide 49
 Before next lecture
-Visit the course website — [TBD]
+Visit the course website
 Install Python – python.org/downloads
-Set up VS Code (???) — setup guide [TBD]
-Homework 1 — play with an existing python program, break it on purpose, then fix it; then write a few of your own. 
+Set up VS Code - setup guide – “From Zero to Code – Python” (in course website(
+Homework 1 - play with an existing python program, break it on purpose, then fix it; then write a few of your own. 
 Further instructions: see the course website.
 
-## Slide 45
-PYTHON COURSE · WEEK 1 · LECTURE 2
+## Slide 50
 Next: Data Types, Input and Output
 Variables, dynamic typing, expressions, I/O
+INTRO TO CS COURSE · WEEK 1 · LECTURE 2

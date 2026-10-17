@@ -1,7 +1,7 @@
 # Lecture 4-2: Lists and tuples (week 4)
 
 ## Slide 1
-PYTHON COURSE · WEEK 3 · LECTURE 2
+PYTHON COURSE · WEEK 4 · LECTURE 2
 Lists and Tuples
 Sequences that can be changed
 
@@ -23,6 +23,7 @@ Lists
 Operators
 Mutability
 Aliasing
+Functions
 Methods & Built-ins
 Strings & lists
 Tuples
@@ -49,6 +50,7 @@ Lists
 Operators
 Mutability
 Aliasing
+Functions
 Methods & Built-ins
 Strings & lists
 Tuples
@@ -235,6 +237,7 @@ Lists
 Operators
 Mutability
 Aliasing
+Functions
 Methods & Built-ins
 Strings & lists
 Tuples
@@ -395,6 +398,7 @@ Lists
 Operators
 Mutability
 Aliasing
+Functions
 Methods & Built-ins
 Strings & lists
 Tuples
@@ -934,9 +938,11 @@ Lists
 Operators
 Mutability
 Aliasing
+Functions
 Methods & Built-ins
 Strings & lists
 Tuples
+Aliasing applies to every data type in Python, but only causes side effects with mutable objects. 
 
 ## Slide 16
 Making a real copy
@@ -1109,9 +1115,157 @@ because a string cannot be changed, so aliasing one is invisible.
 ```python
 def  ?
 ```
-Next week: a list passed to a function can be changed by it.
+Next: a list passed to a function can be changed by it.
 
 ## Slide 20
+Passing lists to functions
+Since lists are mutable, modifying them inside a function affects the original object.
+`pass_list.py`
+```python
+def boost(goals):
+    for i in range(len(goals)):
+        g = goals[i]
+        if g > 35:
+            goals[i] = round(g * 1.1)
+plan = [24, 37, 22, 40, 32, 36]
+boost(plan)
+print(plan)  # [24, 41, 22, 44, 32, 40]
+```
+Lists
+Operators
+Mutability
+Aliasing
+Functions
+Methods & Built-ins
+Strings & lists
+Tuples
+inside boost
+```python
+plan
+```
+```python
+goals
+```
+```python
+24
+```
+```python
+37
+```
+```python
+22
+```
+```python
+40
+```
+```python
+32
+```
+```python
+36
+```
+`int_to_function.py`
+```python
+def boost_one(goal):
+    # goal is a local name
+    goal = round(goal * 1.1)
+    return goal
+target = 40
+boost_one(target)
+print(target)   # 40 - unchanged
+```
+The function receives a reference to the exact same object. If the argument type is immutable (e.g., int, float, bool, str, tuple), re-assignment creates a new local object and leaves the original unchanged. If it is mutable – it changes the original.
+```python
+40
+```
+inside boost_one
+```python
+target
+```
+```python
+goal
+```
+```python
+44
+```
+
+## Slide 21
+Returning a list from a function
+Task: build next year's plan without changing this year's.
+`build_new_plan.py`
+```python
+def build_new_plan(goals):
+    result = []
+    for g in goals:
+        if g > 35:
+            result.append(round(g * 1.1))
+        else:
+            result.append(g)
+    return result
+
+next_year = build_new_plan(plan)
+print(next_year)  # [24, 41, 22, 44, 32, 40]
+print(plan)       # unchanged
+```
+```python
+Mutate vs. Return pattern
+In-place mutators: Return None (e.g., boost(...)).
+Pure builders: Leave the input untouched (e.g., build_new_plan(...)).
+Never both: It confuses callers.
+```
+inside build_new_plan
+```python
+24
+```
+```python
+37
+```
+```python
+22
+```
+```python
+40
+```
+```python
+32
+```
+```python
+36
+```
+```python
+plan
+```
+```python
+goals
+```
+the same list
+```python
+24
+```
+```python
+41
+```
+```python
+22
+```
+```python
+44
+```
+```python
+32
+```
+```python
+40
+```
+```python
+next_year
+```
+```python
+result
+```
+a new list
+
+## Slide 22
 ```python
 += and *= operators
 ```
@@ -1254,7 +1408,7 @@ a
 *
 ```
 
-## Slide 21
+## Slide 23
 Common list methods
 method
 what it does
@@ -1330,11 +1484,12 @@ Lists
 Operators
 Mutability
 Aliasing
+Functions
 Methods & Built-ins
 Strings & lists
 Tuples
 
-## Slide 22
+## Slide 24
 Built-in functions that work on lists
 Functions, not methods: the list goes inside the parentheses.
 `builtins.py`
@@ -1416,7 +1571,7 @@ sorted
 40
 ```
 
-## Slide 23
+## Slide 25
 The sort trap
 ```python
 Methods that modify mutable objects in place, return None.
@@ -1488,7 +1643,7 @@ General rule : Applies across all mutable data types in Python.
 2
 ```
 
-## Slide 24
+## Slide 26
 The split method
 A string method that converts a single string into a list of substrings.
 `split.py`
@@ -1569,11 +1724,12 @@ Lists
 Operators
 Mutability
 Aliasing
+Functions
 Methods & Built-ins
 Strings & lists
 Tuples
 
-## Slide 25
+## Slide 27
 The join method
 A string method that concatenates a list of strings into a single string using a delimiter.
 `join.py`
@@ -1647,7 +1803,7 @@ i
 v
 ```
 
-## Slide 26
+## Slide 28
 Worked example: counting words
 Task: Given a sentence, count its words and determine the longest word.
 ```python
@@ -1685,7 +1841,7 @@ elephant
 ```
 longest, after the last pass
 word
-len
+word len
 longest
 ```python
 the
@@ -1751,7 +1907,7 @@ How to avoid it ?
 Check if len(words) > 0 before accessing index 0.
 ```
 
-## Slide 27
+## Slide 29
 The sales report, finished
 Task: Total, average, best branch, how many above average.
 The idea: one pass to total, a second pass to count.
@@ -1815,35 +1971,37 @@ Best region: 3 with 40
 Regions above average: 4
 ```
 
-## Slide 28
+## Slide 30
 Class exercise: Reordering by a permutation
-```python
-Task: build a new list of the items of my_list in the order per dictates.
-```
+Task: a function that returns my_list reordered by per.
 ```python
 The idea: per holds a permutation of the indices. Each value of per is a position in my_list.
 ```
 `permutation.py`
 ```python
+def reorder(values, per):
+    result = []
+    for i in per:
+        result.append(values[i])
+    return result
+
 my_list = [100, 23, 43, 12]
 per = [2, 3, 0, 1]
-
-result = []
-for i in per:
-    result.append(my_list[i])
-
-print(result)    # [43, 12, 100, 23]
+new_list = reorder(my_list, per)
+print(new_list)   # [43, 12, 100, 23]
 ```
+```python
 Indirect iteration (Index-as-Data)
 Values as indices: The elements of per serve as indices rather than raw data values.
-Indirect lookup : The loop variable i represents a valid index used access my_list[i].
+Indirect lookup : The loop variable i represents a valid index used to access values[i].
+```
 ```python
 Accumulator pattern: result dynamically grows from empty with .append.
 ```
 
-## Slide 29
+## Slide 31
 Class exercise: Collapsing repeated runs
-Task: Collapse consecutive duplicate items into a single instance
+Task: a function that collapses consecutive duplicates into one.
 ```python
 10
 ```
@@ -1916,18 +2074,22 @@ Task: Collapse consecutive duplicate items into a single instance
 The idea: Append an item only if it differs from the last item already added.
 `collapse_runs.py`
 ```python
-list2 = [list1[0]]
-for elem in list1:
-    if elem != list2[-1]:
-        list2.append(elem)
+def collapse(values):
+    result = [values[0]]
+    for elem in values:
+        if elem != result[-1]:
+            result.append(elem)
+    return result
+
+list2 = collapse(list1)
 ```
 ```python
 Key points
-list2[-1] : Accesses the last appended item.
-Seeded initialization: list2 is initialized with one item (list1[0]) to safely allow list2[-1] access without raising an IndexError on an empty list. 
+result[-1] : Accesses the last appended item.
+Seeded initialization: result is initialized with one item (values[0]) to safely allow result[-1] access without raising an IndexError on an empty list. 
 ```
 
-## Slide 30
+## Slide 32
 A tuple
 An immutable sequence of values - Round brackets, commas between, fixed once created. Provides storage for heterogeneous data.
 `tuple_basics.py`
@@ -1975,11 +2137,12 @@ Lists
 Operators
 Mutability
 Aliasing
+Functions
 Methods & Built-ins
 Strings & lists
 Tuples
 
-## Slide 31
+## Slide 33
 string, list or tuple: how to choose?
 str
 list
@@ -2026,7 +2189,7 @@ Choose a tuple when
 Heterogeneous collection: Grouping fixed attributes of a single entity (e.g., (x,y) coordinates, date, student's record).
 Immutability guarantee: Preventing accidental modifications.
 
-## Slide 32
+## Slide 34
 Class exercise: how immutable is immutable?
 Predict the output:
 `tuple_with_list.py`
@@ -2093,7 +2256,7 @@ int
 string
 ```
 
-## Slide 33
+## Slide 35
 Packing & unpacking
 The feature that makes tuples worth their slide.
 `pack-unpack.py`
@@ -2136,7 +2299,54 @@ y
 ```
 unpacking: one name per item
 
-## Slide 34
+## Slide 36
+Returning two values
+A function returns one value. A tuple is how it returns two.
+`best_branch.py`
+```python
+def best_branch(figures):
+    best = 0
+    for i in range(len(figures)):
+        if figures[i] > figures[best]:
+            best = i
+    return best, figures[best]
+
+branch, amount = best_branch(sales)
+print(branch, amount)   # 3 40
+```
+```python
+3
+```
+```python
+40
+```
+```python
+3
+```
+```python
+40
+```
+```python
+returned
+```
+packing
+```python
+3
+```
+```python
+40
+```
+```python
+branch
+```
+```python
+amount
+```
+unpacking
+max alone returns 40 and loses the branch.
+The pair is the answer.
+
+## Slide 37
 The swap, two ways
 The same exchange, with a temporary variable or with packing & unpacking.
 `swap_temp.py`
@@ -2235,7 +2445,7 @@ x = y
 y = temp
 ```
 
-## Slide 35
+## Slide 38
 ```python
 "Yael Bar"
 ```
@@ -2301,7 +2511,7 @@ Index shift: Deleting an element from one list shifts its indices, causing compl
 The requirement: We need a single atomic structure that binds related fields together. 
 Desynchronization error: Yael Bar now pairs with Ron Cohen's ID and grade
 
-## Slide 36
+## Slide 39
 ```python
 "Dana Levi"
 ```
@@ -2385,7 +2595,7 @@ students.pop(1)   # Ron Cohen leaves
 print(students[1]) # ('Yael Bar ', '211980365', 73)
 ```
 
-## Slide 37
+## Slide 40
 Class exercise: Processing records
 Task: Print the name and grade of the student with the highest score.
 The idea: apply maximum finding pattern to track the top record.
@@ -2447,7 +2657,7 @@ best
 No shortcuts for maximum
 Finding the maximum requires going through every student.
 
-## Slide 38
+## Slide 41
 Task: Find and print Ron Cohen's grade (by name).
 `find_student.py`
 ```python
@@ -2509,7 +2719,7 @@ a middleman step we never wanted
 students
 ```
 
-## Slide 39
+## Slide 42
 Lecture summary
 ```python
 The new ideas
@@ -2570,11 +2780,12 @@ Lists
 Operators
 Mutability
 Aliasing
+Functions
 Methods & Built-ins
 Strings & lists
 Tuples
 
-## Slide 40
-PYTHON COURSE · WEEK 4 · LECTURE 1
-Next: Functions
-Naming a piece of work, and reusing it
+## Slide 43
+PYTHON COURSE · WEEK 5 · LECTURE 1
+Next: Two-dimensional lists
+Lists of lists, and list comprehension

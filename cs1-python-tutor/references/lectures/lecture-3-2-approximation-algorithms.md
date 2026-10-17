@@ -2,7 +2,7 @@
 
 ## Slide 1: Approximation Algorithms
 √
-PYTHON COURSE · WEEK 4 · LECTURE 1
+PYTHON COURSE · WEEK 3 · LECTURE 2
 Approximation Algorithms
 Computing approximate answers
 Reichman University
@@ -81,7 +81,7 @@ while abs(g * g - x) >= epsilon:
     steps = steps + 1
 print(f"{round(g, 4)} in {steps} steps")
 ```
-[LIVE] the file is in “week 4 code / sqrt_sequential.py”.
+[LIVE] the file is in “week 3 code / sqrt_sequential.py”.
 
 ## Slide 9: Reading the loop
 Reading the loop
@@ -138,7 +138,7 @@ if g > x:
 else:
     print(f"{round(g, 4)} in {steps} steps")
 ```
-[LIVE] the file is in “week 4 code / sqrt_sequential_fixed.py”.
+[LIVE] the file is in “week 3 code / sqrt_sequential_fixed.py”.
 
 ## Slide 13: Three algorithms, one problem
 Three algorithms, one problem
@@ -204,7 +204,7 @@ while abs(g * g - x) >= epsilon:
     steps = steps + 1
 print(f"{round(g, 4)} in {steps} steps")
 ```
-[LIVE] the file is in “week 4 code / sqrt_bisection.py”.
+[LIVE] the file is in “week 3 code / sqrt_bisection.py”.
 
 ## Slide 17: Bisection: running time
 Bisection: running time
@@ -252,7 +252,7 @@ Sequential search needed 29,988 steps and bisection 11, for the same x and ε.
 
 ## Slide 21: Newton–Raphson: the formula
 Newton–Raphson: the formula
-The rule: if g is near a solution of f(x) = 0, g − f(g) / f′(g) is nearer
+The rule: if g is near a solution of f(x) = 0, 				then g − f(g) / f′(g) is nearer
 For √x: f(g) = g · g − x, so f′(g) = 2 · g
 The next guess: g − (g · g − x) / (2 · g)
 Calculus: the derivative, tangent, convergence and limit grew out of such questions
@@ -311,7 +311,7 @@ while abs(g * g - x) > epsilon:
     print(f"step {steps}: {g}")
 print(f"{round(g, 4)} in {steps} steps")
 ```
-[LIVE] the file is in “week 4 code / sqrt_newton.py”.
+[LIVE] the file is in “week 3 code / sqrt_newton.py”.
 ```python
 with x = 105
 step 1: 27.25
@@ -353,3 +353,10 @@ Root finding: all three solve f(x) = 0
 The pattern: guess, measure error, improve, stop
 The trade-off: more assumptions, fewer steps
 Used in: optimization, machine learning, graphics, simulation
+
+## Slide 27: Next: Functions
+f
+PYTHON COURSE · WEEK 4 · LECTURE 1
+Next: Functions
+Naming and reusing code
+Reichman University

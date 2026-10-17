@@ -2,7 +2,7 @@
 
 ## Slide 1: PageRank
 #1
-PYTHON COURSE · WEEK 6 · LECTURE 2
+INTRO TO CS· WEEK 6 · LECTURE 2
 PageRank
 Ranking pages by their links
 Reichman University
@@ -130,14 +130,11 @@ def read_links(filename):
     with open(filename) as f:
         tokens = f.read().split()
     n = int(tokens[0])
-    links = []
-    for i in range(n):
-        links.append([0] * n)     # a new row each time
+    links = [[0] * n for _ in range(n)]   # n new rows
     for k in range(1, len(tokens), 2):
         links[int(tokens[k])][int(tokens[k + 1])] += 1
     return links
 ```
-the file is in “week 6 code / web_links.py”.
 
 ## Slide 11: From counts to chances
 From counts to chances
@@ -158,7 +155,10 @@ links[1]
 ```python
 p[1][j]  =  0.10 / 5   +   0.90 × links[1][j] / 5
 ```
-jump anywhere          follow one of the 5 links
+jump anywhere
+5 = the number of pages
+follow one of page 1's links
+5 = the links on page 1 (0 + 0 + 2 + 2 + 1)
 0.02
 0.02
 0.38
@@ -229,7 +229,6 @@ def transition_matrix(links, jump=0.10):
         p.append(row)
     return p
 ```
-the file is in “week 6 code / transition.py”.
 
 ## Slide 14: PageRank: the plan
 PageRank: the plan
@@ -285,7 +284,6 @@ def next_page(row):
             return j
     return len(row) - 1           # in case of rounding
 ```
-the file is in “week 6 code / next_page.py”.
 
 ## Slide 18: The surfer
 The surfer
@@ -299,15 +297,11 @@ def simulate(p, moves):
     the share of the moves that ended on each page."""
     visits = [0] * len(p)
     page = 0
-    for t in range(moves):
+    for _ in range(moves):
         page = next_page(p[page])
         visits[page] += 1
-    ranks = []
-    for v in visits:
-        ranks.append(v / moves)
-    return ranks
+    return [v / moves for v in visits]
 ```
-the file is in “week 6 code / surfer.py”.
 
 ## Slide 19: Putting it together
 Putting it together
@@ -332,7 +326,6 @@ for moves in [100, 10_000, 1_000_000]:
         print(f"{r:7.3f}", end="")
     print()
 ```
-[LIVE] the file is in “week 6 code / pagerank.py”.
 
 ## Slide 20: The ranks
 The ranks
@@ -358,38 +351,180 @@ Computing it exactly
 
 ## Slide 22: Computing the probabilities directly
 Computing the probabilities directly
-Instead of one surfer: keep the chance of being on each page
-At the start: all of it on page 0, [1, 0, 0, 0, 0]
-One move: new[j] = the sum over i of rank[i] × p[i][j]
-Repeat: until the numbers stop changing
+rank[i]: the share of a crowd of surfers that is on page i now
+At the start: the whole crowd on page 0, [1, 0, 0, 0, 0]
+p[i][j]: the chance to go from page i to page j, by a link or a jump
+One move: the new rank[j] is the sum over i of rank[i] × p[i][j]
+Repeat: the new ranks replace the old, until they stop changing
 
-## Slide 23: One move, in numbers
-One move, in numbers
-Each new row is the previous row times the transition matrix.
+## Slide 23: The crowd, move by move
+The crowd, move by move
+100 surfers, all starting on page 0. Each click is one move.
+×2
+×2
 0
 1
 2
 3
 4
-1
+at the start
+page 0
+```python
+1.000
+```
+100
+page 1
+```python
+0.000
+```
 0
+page 2
+```python
+0.000
+```
 0
+page 3
+```python
+0.000
+```
 0
+page 4
+```python
+0.000
+```
 0
-after 0 moves
-0.020
-0.920
-0.020
-0.020
-0.020
 after 1 move
-0.047
-0.038
-0.360
-0.369
-0.186
+page 0
+```python
+0.020
+```
+2
+page 1
+```python
+0.920
+```
+92
+page 2
+```python
+0.020
+```
+2
+page 3
+```python
+0.020
+```
+2
+page 4
+```python
+0.020
+```
+2
 after 2 moves
-pages 0 to 4
+page 0
+```python
+0.047
+```
+5
+page 1
+```python
+0.038
+```
+4
+page 2
+```python
+0.360
+```
+36
+page 3
+```python
+0.369
+```
+37
+page 4
+```python
+0.186
+```
+18
+after 3 moves
+page 0
+```python
+0.436
+```
+43
+page 1
+```python
+0.062
+```
+6
+page 2
+```python
+0.117
+```
+12
+page 3
+```python
+0.358
+```
+36
+page 4
+```python
+0.027
+```
+3
+after 10 moves
+page 0
+```python
+0.284
+```
+28
+page 1
+```python
+0.240
+```
+24
+page 2
+```python
+0.148
+```
+15
+page 3
+```python
+0.261
+```
+26
+page 4
+```python
+0.067
+```
+7
+after 30 moves
+page 0
+```python
+0.273
+```
+27
+page 1
+```python
+0.266
+```
+26
+page 2
+```python
+0.146
+```
+15
+page 3
+```python
+0.247
+```
+25
+page 4
+```python
+0.068
+```
+7
+the same ranks as the simulation
+dots
 
 ## Slide 24: One move, in Python
 One move, in Python
@@ -405,7 +540,6 @@ def step(rank, p):
             new[j] += rank[i] * p[i][j]
     return new
 ```
-the file is in “week 6 code / power_step.py”.
 
 ## Slide 25: Repeating the move
 Repeating the move
@@ -434,7 +568,6 @@ for move in range(1, 31):
             print(f"{r:7.3f}", end="")
         print()
 ```
-[LIVE] the file is in “week 6 code / power.py”.
 
 ## Slide 26: Simulation vs. exact computation
 Simulation vs. exact computation
@@ -449,12 +582,24 @@ One move costs n × n steps
 Exact: 30 moves for 3 digits here
 The same answer every run
 
-## Slide 27: Limitations
-Limitations
-Dead ends: a page with no links makes out zero
-The usual fix: from a dead end, jump to any page
-The 10%: the 1998 paper jumped 15% of the time
-Scale: billions of pages, a few links on each
+## Slide 27: What simulation is good for
+What simulation is good for
+On big or messy problems, simulation often wins.
+Changing the rules
+Real surfers press Back, or get bored.
+Simulation: add a few lines to the loop.
+Exact method: there may be no table p for it.
+No big table
+The exact method keeps all n × n chances.
+A billion pages: a billion billion numbers.
+A surfer only needs the links of its page.
+Many computers
+Surfers do not depend on each other.
+Run thousands at once, on many machines.
+Add up their visit counts at the end.
+Checking the math
+Two different methods, the same numbers.
+If they disagree, one of them has a bug.
 
 ## Slide 28: PageRank in one slide
 PageRank in one slide

@@ -32,6 +32,7 @@ def my_sqrt(x, epsilon=0.001):
 print(my_sqrt(2, 1e-9))
 print(my_sqrt(x=2, epsilon=1e-9))
 print(my_sqrt(epsilon=1e-9, x=2))
+print(my_sqrt(2, epsilon=1e-9))
 ```
 
 ### `main.py`
@@ -85,6 +86,43 @@ def my_sqrt(x, epsilon=0.001):
 def hypot(x1, y1, x2, y2):
     """Return the distance between two points."""
     return my_sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+```
+
+### `primes.py`
+```python
+# The same design, with the body filled in
+def is_prime(k):
+    """Return True if k is a prime number."""
+    for d in range(2, k):
+        if k % d == 0:
+            return False
+    return True
+
+n = int(input())
+count = 0
+for k in range(2, n + 1):
+    if is_prime(k):
+        print(k, end=" ")
+        count += 1
+print()
+print(f"{count} primes")
+```
+
+### `primes_design.py`
+```python
+# The design: main is written, is_prime is a stub
+def is_prime(k):
+    """Return True if k is a prime number."""
+    return False
+
+n = int(input())
+count = 0
+for k in range(2, n + 1):
+    if is_prime(k):
+        print(k, end=" ")
+        count += 1
+print()
+print(f"{count} primes")
 ```
 
 ### `stubs.py`

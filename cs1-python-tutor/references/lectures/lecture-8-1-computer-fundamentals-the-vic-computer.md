@@ -2,7 +2,7 @@
 
 ## Slide 1: Computer Fundamentals
 01
-PYTHON COURSE · WEEK 8 · LECTURE 1
+INTRO TO CS· WEEK 8 · LECTURE 1
 Computer Fundamentals
 Inside a simple computer
 Reichman University

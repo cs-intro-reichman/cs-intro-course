@@ -20,11 +20,12 @@ The instructor maintains this file. Week numbers follow the current schedule.
 
 ## Week 2: Conditionals and while loops (2-1), for loops and numeral systems (2-2)
 - `if` / `elif` / `else`, indentation as block structure, chained comparisons (`0 <= x <= 100`)
+- The conditional expression `a if condition else b` (lecture 2-1, slide 19)
 - `while`, the loop's three parts (initialise, test, update), augmented assignment (`+=`, `-=`, ...)
 - Common loop bugs, nested loops, `break`, the `while True: ... break` pattern
 - `for x in sequence`, `range(stop)`, `range(start, stop)`, `range(start, stop, step)`, `_` as an unused loop variable
 - Loop patterns: counter, accumulator (sum, product, max/min), flag (`found = True/False`)
-- Binary and other bases, conversion between decimal and binary by hand and in a loop
+- Binary and other bases, conversion between decimal and binary by hand and in a loop, `bin()`
 - Simulation with `random` (Gambler's ruin)
 
 ## Week 3: Strings (3-1), Approximation algorithms (3-2)
@@ -50,14 +51,18 @@ The instructor maintains this file. Week numbers follow the current schedule.
 - Not modifying a list while looping over it (loop over a copy instead)
 - Tuples: literals, indexing, immutability, unpacking (`for name, sid, grade in students:`)
 
-## Week 5: Two-dimensional lists (5-1), Dictionaries and sets (5-2)
+## Week 5: Lists, part 2: comprehensions, lists in action, tables (5-1), Dictionaries and sets (5-2)
 - Lists of lists, `grid[r][c]`, nested loops over rows and columns, row sums and column averages
 - Building a grid correctly (and the `[[0] * n] * m` aliasing bug)
+- **List comprehensions** (start of 5-1; the grid and table forms come after the grid bug): `[k * k for k in range(1, 6)]`, with a filter (`[n for n in xs if n % 2 == 0]`), building a grid with `[["."] * cols for _ in range(rows)]`, a column `[row[c] for row in t]`, `[sum(row) for row in t]`, a nested comprehension for transpose. Rule taught: use one only to build a list, keep it short, never for actions like printing
+- **Lists in action** (5-1, second part): coupon collector (a list of booleans `found = [False] * n`, a `while` loop, `int(random.random() * n)`, a function in a module, averaging many trials), the sieve of Eratosthenes (`is_prime = [True] * (n + 1)`, `range(2 * p, n + 1, p)`), building a deck of cards with nested loops and shuffling it (swap with `deck[i], deck[r] = deck[r], deck[i]`). Note: these are lecture examples, so don't point a student to them when their homework is the same problem
 - Matrices: add, multiply, transpose, printing
-- **Format specs in f-strings** (`{x:4}`, `{r:.3f}`, `{n:,}`, `>` alignment), taught on 5-1 slide 12, usable from here on
+- `random.randint` appears in 5-1 (filling a grid with random numbers); before that, random whole numbers are made with `int(random.random() * n)`
+- **Format specs in f-strings** (`{x:4}`, `{r:.3f}`, `{n:,}`, `>` alignment), taught on 5-1 slide 30 (in the two-dimensional part), usable from there on
 - Dictionaries: literals, `d[key]`, adding and updating, `in`, `KeyError`, `get`, `keys`, `values`, `items`, looping over a dict
 - Rules for keys (immutable keys). Counting with a dict, grouping (a dict of lists)
-- Sets: literals, `set()`, `add`, `in`, union, intersection, difference. Choosing a container
+- `dict()`, `update`, `clear`, sorting a dictionary's items with `sorted`
+- Sets: literals, `set()`, `add`, `in`, union, intersection, difference, symmetric difference (operators and methods), `issubset`, `issuperset`, `isdisjoint`. Choosing a container
 - Timing code with `time.perf_counter()`, and why set and dict lookup is fast (hashing, high level only)
 
 ## Week 6: Files (6-1), PageRank (6-2)
@@ -92,4 +97,4 @@ The instructor maintains this file. Week numbers follow the current schedule.
 - (to be filled in)
 
 ## Never taught in this course (avoid unless the student asks)
-List comprehensions, `lambda`, `enumerate`, `zip`, conditional expressions (`a if c else b`), `*args`/`**kwargs`, generators/`yield`, decorators, `global`, inheritance (unless a later lecture adds it), type hints in code.
+`lambda`, `enumerate`, `zip`, dictionary and set comprehensions, `*args`/`**kwargs`, generators/`yield`, decorators, `global`, inheritance (unless a later lecture adds it), type hints in code.

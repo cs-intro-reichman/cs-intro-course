@@ -1,7 +1,7 @@
-# Lecture 1-2: Types and I/O (week 1)
+# Lecture 1-2: Data types, input and output (week 1)
 
 ## Slide 1
-PYTHON COURSE · WEEK 1 · LECTURE 2
+INTRO TO CS COURSE · WEEK 1 · LECTURE 2
 Data Types, Input and Output
 Variables, dynamic typing, expressions, input and output
 
@@ -72,9 +72,9 @@ to do with them.
 
 ## Slide 5
 Every value has a type
-Every value that exists while a program runs has a type of its own
-type() — the built-in that answers “what type is this value?”
-The type decides — which operations are legal, and what they mean
+Every value that exists while a program runs has a type of its own.
+type() - the built-in that answers “what type is this value?”
+The type decides — which operations are legal, and what they mean.
 
 ## Slide 6
 `types_demo.py`
@@ -137,7 +137,7 @@ Variables
 ## Slide 9
 Variable creation and assignment
 Assignment (=) - Binds a name of the variable to a value.
-Automatic creation — Creating a variable happens implicitly on its first assignment.
+Automatic creation - Creating a variable happens implicitly on its first assignment.
 A variable has no type — type(x) reports the type of the value x refers to right now.
 
 ## Slide 10
@@ -277,11 +277,11 @@ This is what "dynamically typed" means.
 ## Slide 13
 Static vs. Dynamic Typing
 Statically typed
-the type of every variable is fixed and checked before the program runs.
+The type of every variable is fixed and checked before the program runs.
 
 Java · C · C++ · C# · Go · Rust · Swift
 Dynamically typed
-types belong to values and are checked while the program runs.
+Types belong to values and are checked while the program runs.
 
 
 Python · JavaScript · Ruby · PHP
@@ -436,27 +436,49 @@ input() always returns text
 `input_is_text.py`
 ```python
 age = input("How old are you? ")
-print(type(age))     # <class 'str'>
+print(type(age))
 print(age - 1)
-# TypeError: unsupported operant type(s) for -: ‘str’ and ‘int’
 ```
 ```python
 Return value is always text
-Even if the user types digits, input() always returns a string (e.g., "18“ instead of the number 18).
+Even if the user types digits, input() always returns a string (e.g., "18" instead of the number 18).
 ```
 Python is strongly typed
 Python will not automatically convert text to numbers for arithmetic operations. Mixing types causes a runtime error.
 Digits entered via input() are stored as text, not numbers.
+```python
+terminal
+```
+```python
+TypeError: unsupported operand type(s)
+           for -: 'str' and 'int'
+```
+```python
+<class 'str'>
+```
+```python
+How old are you? 
+```
+```python
+18
+```
 
 ## Slide 25
-From text to a number
+From text to number
 `int_input_preview.py`
 ```python
 age = int(input("How old are you? "))
-print(age - 1)      # 19
+print(age - 1)
 ```
 int() converts text to a whole number — the full story in the Casting section.
 So what do we do if we want to read a number ?
+```python
+terminal
+```
+```python
+How old are you? 18
+17
+```
 
 ## Slide 26
 Command-line input
@@ -498,24 +520,39 @@ floor division
 ```
 exponentiation
 ```python
-Data: whole numbers (integers) – Positive, negative or zero, with no decimal point (e.g., 42, -7, 0).
+Data: whole numbers (integers) - Positive, negative or zero, with no decimal point (e.g., 42, -7, 0).
 
 Operations: 
 ```
 Variables
+addition
+subtraction
+multiplication
+division
+modulo
 
 ## Slide 28
 int operations
 `int_ops.py`
 ```python
-print(5 + 3)     # 8
-print(5 - 3)     # 2
-print(5 * 3)     # 15
-print(5 / 5)     # 1.0   a float, not an int
-print(5 // 5)    # 1     floor division
-print(5 % 3)     # 2
-print(2 ** 10)   # 1024
-print(1 / 0)     # ZeroDivisionError
+print(5 + 3) 
+print(5 - 3)
+print(5 * 3)
+print(5 / 5)
+print(5 // 5)
+print(5 % 3)
+print(2 ** 10)
+print(1 / 0)
+```
+```python
+# 8
+# 2
+# 15
+# 1.0   a float, not an int
+# 1     floor division
+# 2
+# 1024
+# ZeroDivisionError
 ```
 
 ## Slide 29
@@ -591,45 +628,69 @@ Data: real numbers – Numbers with a fractional part (e.g., 3.14, -0.5, 6.02e23
 Operations: 
 ```
 Variables
+addition
+subtraction
+multiplication
+division
+modulo
 
 ## Slide 33
 Examples
 `float_ops.py`
 ```python
 print(3.141 + 0.03)    # 3.171
-print(6.02e23 / 2)     # 3.01e+23
+print(6.02e23 / 2.0)   # 3.01e+23
 print(5.0 / 2.0)       # 2.5
-print(5 // 2)          # 2
-print(1 / 3)           # 0.3333333333333333
+print(5.0 // 2.0)      # 2.0
+print(1.0 / 3.0)       # 0.3333333333333333
 print(1.0 / 0.0)       # ZeroDivisionError
 ```
 
 ## Slide 34
+When int meets float
+`mixed_types.py`
+```python
+print(5 + 2.0)        # 7.0
+print(5.0 // 2)       # 2.0
+print(10 * 1.5)       # 15.0
+print(7 % 2.0)        # 1.0
+print(type(5 + 2.0))  # <class 'float'>
+```
+The rule
+An int mixed with a float always gives a float. The whole number is widened; the fractional side is never cut.
+Why it happens
+A whole number is a real with nothing after the point, so a float can hold it. An int cannot hold a fraction. So the float side does the work.
+```python
+Not the same as /
+4 / 2 gives 2.0 from two ints. That is the rule of / itself, not a conversion - True division always returns a float.
+```
+
+## Slide 35
 Math operations & the math module
 Python provides built-in functions as well as dedicated modules for mathematical operations.
 `builtins_demo.py`
 ```python
 # built in - no import needed
-abs(-3)           # 3
-round(3.7)        # 4
-round(3.14159, 2) # 3.14
+print(abs(-3))           # 3
+print(round(3.7))        # 4
+print(round(3.14159, 2)) # 3.14
 ```
 Built-in math functions
 Always available without importing anything.
 `math_demo.py`
 ```python
 import math
-math.sqrt(16)   # 4.0
-math.floor(3.7) # 3
-math.ceil(3.2)  # 4
-math.pi         # 3.141592653589793
+print(math.sqrt(16))   # 4.0
+print(math.floor(3.7)) # 3
+print(math.ceil(3.2))  # 4
+print(math.pi)        # 3.141592653589793
 ```
 ```python
 The math module
 Requires import math to access advanced mathematical functions and constants.
 ```
 
-## Slide 35
+## Slide 36
 How Python handles invalid operations
 `invalid_operations.py`
 ```python
@@ -644,7 +705,7 @@ Instead of returning dangerous default values (like Infinity or NaN), Python sto
 Coming up later
 How to catch these errors using try / except.
 
-## Slide 36
+## Slide 37
 Example: the quadratic equation
 `quadratic.py`
 ```python
@@ -657,7 +718,7 @@ print((-b - d) / 2.0)
 ```
 Solves x² + bx + c = 0. Try b = -3, c = 2.
 
-## Slide 37
+## Slide 38
 Textual information
 HTML:
 DNA:
@@ -679,7 +740,7 @@ bool
 Casting
 Variables
 
-## Slide 38
+## Slide 39
 The str data type: Data & Operations 
 ```python
 +
@@ -696,7 +757,7 @@ Operations:
 repetition
 more operations and methods – coming up soon...
 
-## Slide 39
+## Slide 40
 The + operator of str 
 `str_ops_concat.py`
 ```python
@@ -713,7 +774,7 @@ The + operator performs string concatenation. It joins two or more strings end-t
 Python does not insert spaces automatically between joined strings. If a space is needed between words, you must include it explicitly (e.g. " ").
 ```
 
-## Slide 40
+## Slide 41
 ```python
 The * operator of str 
 ```
@@ -728,14 +789,14 @@ print(divider)  # ----------
 ```
 ```python
 What does the operator do ?
-The * operator performs String Repetition. It duplicates a string a specified number of times and concatenates the copies together.
+The * operator performs string repetition. It duplicates a string a specified number of times and concatenates the copies together.
 ```
    Rule: Types
-Repetition requires exactly one string (str) and one whole number (int), and in this exact order. You cannot “multiply” two strings together!
+Repetition requires exactly one string (str) and one whole number (int). You cannot “multiply” two strings together!
 
-## Slide 41
+## Slide 42
 Class exercise – Predict the output
-`str_ops.py`
+`str_ops_mixed.py`
 ```python
 print(6 + 5)
 print("6" + "5")
@@ -747,7 +808,7 @@ print(6 * "5")
 print("6" * "5")
 ```
 
-## Slide 42
+## Slide 43
 `str_growth.py`
 ```python
 s = "1"
@@ -757,7 +818,7 @@ print(s)
 ```
 Class exercise – Predict the output
 
-## Slide 43
+## Slide 44
 f-strings
 `fstrings.py`
 ```python
@@ -774,7 +835,7 @@ Anything inside { } is evaluated as Python expressions and automatically convert
 No more TypeError!
 Numbers inside {} are converted automatically. This is the standard way to build formatted text in Python.
 
-## Slide 44
+## Slide 45
 George Boole · 1815–1864
 Created Boolean logic - a mathematical system using only True and False. A century later, it became the foundation upon which all modern computer systems and software are built.
 Boolean logic
@@ -788,7 +849,7 @@ str
 Casting
 Variables
 
-## Slide 45
+## Slide 46
 The bool type: Data & Operations
 ```python
 not
@@ -805,7 +866,7 @@ Data: True, False.
 Operations (Boolean connectors):
 ```
 
-## Slide 46
+## Slide 47
 Boolean connectors truth tables
 Every combination of inputs, and the value each connector returns.
 a | not a
@@ -831,7 +892,7 @@ and
 or
 ```
 
-## Slide 47
+## Slide 48
 operator | meaning | true | false
  | equal | 2 == 2 | 2 == 3
  | not equal | 3 != 2 | 2 != 2
@@ -859,7 +920,7 @@ Comparison operators
 >=
 ```
 
-## Slide 48
+## Slide 49
 `age_check.py`
 ```python
 city = input("City: ")
@@ -872,7 +933,7 @@ if too_young:
 ```
 Worked examples
 
-## Slide 49
+## Slide 50
 Worked examples
 `comparisons.py`
 ```python
@@ -882,10 +943,10 @@ x != 1             # not 1?
 num % 2 == 0	      # num is even ?
 ```
 
-## Slide 50
+## Slide 51
 Worked example: leap years
 Definition: A leap year (שנה מעוברת) is a year which is 
-                       (i) divisible by 400, or (ii) divisible by 4 but not by 100.
+                       (i) Divisible by 400, or (ii) Divisible by 4 but not by 100.
 Task: Write a program that determines if a given year is a leap year.
 `leap_year.py`
 ```python
@@ -894,9 +955,9 @@ is_leap = (year % 400 == 0)
 is_leap = is_leap or (year % 4 == 0 and year % 100 != 0)
 print(is_leap)
 ```
-2020 → True  ·  1900 → False  ·  2028 → True
+Try: 2026, 2020, 1900, 1600
 
-## Slide 51
+## Slide 52
 The float precision trap
 `rounding.py`
 ```python
@@ -907,7 +968,7 @@ print((0.7 + 0.1) == (0.9 - 0.1)) # False
 IEEE 754 representation
 Computers stores floats in binary (bits). Some decimal fractions (like 0.1) cannot be represented exactly, leading to small rounding inaccuracies.
 
-## Slide 52
+## Slide 53
 Comparing floats
 `comparing_floats.py`
 ```python
@@ -924,7 +985,7 @@ Exact arithmetic alternatives
 Use Pythons decimal or fractions modules when exact values are required (e.g., financial calculations).
 ```
 
-## Slide 53
+## Slide 54
 Casting: Type conversion
 Data types
 Expressions
@@ -948,8 +1009,9 @@ Converts any value to True or False.
 ```
 Variables
 Explicitly converting a value from one data type to another using built-in functions.
+Python also converts on its own, without being asked - an int mixed with a float, as seen earlier.
 
-## Slide 54
+## Slide 55
 Worked examples
 `casting.py`
 ```python
@@ -960,8 +1022,8 @@ print(float("3.5"))           # 3.5
 print(bool(0), bool(""))      # False False
 ```
 
-## Slide 55
-`casting.py`
+## Slide 56
+`casting_exercise.py`
 ```python
 print(7 / 2)
 print(7 // 2)
@@ -972,7 +1034,7 @@ print("7" * int(7 / 2))
 ```
 Class exercise – Predict the output
 
-## Slide 56
+## Slide 57
 When a conversion fails
 `bad_input.py`
 ```python
@@ -990,6 +1052,12 @@ Error messages seem cryptic at first, but reading them carefully is an essential
 terminal
 ```
 ```python
+How old are you? 
+```
+```python
+hello
+```
+```python
 Traceback (most recent call last):
   File "bad_input.py", line 1, in <module>
     age = int(input("How old are you? "))
@@ -998,7 +1066,7 @@ ValueError: invalid literal for int()
             with base 10: 'hello'
 ```
 
-## Slide 57
+## Slide 58
 The random module
 `random_demo.py`
 ```python
@@ -1010,18 +1078,18 @@ print(2.0 * random.random() - 1.0)   # in [-1, +1)
 Run it twice and get different outputs
 The random module provides tools for generating random numbers and values.
 
-## Slide 58
+## Slide 59
 A worked example: a random whole number
 `random_int.py`
 ```python
 import random
-n = int(input("Enter N: "))
+n = int(input("Enter n: "))
 r = random.random()      # in [0, 1)
-result = int(r * n)      # in [0, N)
+result = int(r * n)      # in [0, n)
 print(f"random integer is {result}")
 ```
 
-## Slide 59
+## Slide 60
 Lecture summary
 ```python
 int
@@ -1054,7 +1122,7 @@ str
 bool
 Casting
 
-## Slide 60
+## Slide 61
 Lecture summary
 ```python
 Every value has a type
@@ -1082,17 +1150,8 @@ int is exact, float is not
 Compare floats with a
 tolerance, never with ==.
 ```
-Data types
-Variables
-Expressions
-Input / output
-int
-float
-str
-bool
-Casting
 
-## Slide 61
-PYTHON COURSE · WEEK 2 · LECTURE 1
+## Slide 62
+INTRO TO CS COURSE · WEEK 2 · LECTURE 1
 Next: Conditionals and loops
 Making a program choose, and making it repeat

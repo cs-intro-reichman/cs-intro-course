@@ -111,10 +111,12 @@ epsilon and g exist only during the call.
 
 ## Slide 8: What a function is
 What a function is
+```python
 Takes: zero, one or more inputs, its arguments
 Does: whatever its body says, when it is called
-Returns: one value; None if there is no return statement
+Returns: one value (None if there is no return). return a, b packs two values into one tuple.
 Hides: its local names and its code from the caller
+```
 
 ## Slide 9: A function calling a function
 A function calling a function
@@ -226,12 +228,15 @@ Keyword arguments
 By position: my_sqrt(2, 1e-9), order decides
 By name: my_sqrt(x=2, epsilon=1e-9), the call says
 Any order: named arguments may come in any order
+Mixed: my_sqrt(2, epsilon=1e-9), positional first, then named
+Usual style: main inputs by position, optional ones by name
 Why: the call is easier to read
 
 ## Slide 18: Calling by name
 Calling by name
 ```python
 python keyword_args.py
+1.4142135623746899
 1.4142135623746899
 1.4142135623746899
 1.4142135623746899
@@ -248,6 +253,7 @@ def my_sqrt(x, epsilon=0.001):
 print(my_sqrt(2, 1e-9))
 print(my_sqrt(x=2, epsilon=1e-9))
 print(my_sqrt(epsilon=1e-9, x=2))
+print(my_sqrt(2, epsilon=1e-9))
 ```
 [LIVE] the file is in “week 4 code / keyword_args.py”.
 
@@ -344,8 +350,7 @@ Documenting the API
 help(mymath.my_sqrt)
 my_sqrt(x, epsilon=0.001)
     Return a number whose
-    square is within
-    epsilon of x.
+    square is near x.
 ```
 `mymath.py`
 ```python
@@ -382,11 +387,14 @@ def my_sqrt(x, epsilon=0.001):
 print(hypot(2, 1, 5, 4))
 ```
 the file is in “week 4 code / stubs.py”.
+What is a stub?
+A function with its real name and parameters, but a placeholder body (here, return 0.0).
+The program already runs, so you can check how the pieces fit together, then write the real bodies one at a time.
 
 ## Slide 27: What makes a good function
 What makes a good function
 One job: if the name needs “and”, it is two functions
-A good name: a verb phrase saying what you get back
+A good name: says what it returns or does, like perimeter, is_right, print_primes
 Few parameters: many parameters suggest a bad design
 A docstring: one sentence saying what it returns
 
@@ -496,7 +504,87 @@ Your steps
 2. Give each a signature and a docstring.
 3. Draw who calls whom.
 
-## Slide 35: Design and AI tools
+## Slide 35: Solution: the pieces
+Solution: the pieces
+The task: read n, print the primes from 2 to n, then their count
+main: reads n, tries every k from 2 to n, counts the primes
+is_prime(k): one job, True if k is a prime number
+Stop: is_prime needs no “and”, so it is small enough
+
+## Slide 36: Solution: the diagram
+Solution: the diagram
+Two good designs. Every box has one job.
+Design A
+main
+the top-level code
+is_prime
+to write
+Design B
+main
+the top-level code
+print_primes
+to write
+count_primes
+to write
+is_prime
+to write
+
+## Slide 37: Solution: the design, written down
+Solution: the design, written down
+```python
+python primes_design.py
+20
+
+0 primes
+```
+`primes_design.py`
+```python
+# The design: main is written, is_prime is a stub
+def is_prime(k):
+    """Return True if k is a prime number."""
+    return False
+
+n = int(input())
+count = 0
+for k in range(2, n + 1):
+    if is_prime(k):
+        print(k, end=" ")
+        count += 1
+print()
+print(f"{count} primes")
+```
+[LIVE] the file is in “week 4 code / primes_design.py”.
+
+## Slide 38: Solution: fill in the body
+Solution: fill in the body
+```python
+python primes.py
+20
+2 3 5 7 11 13 17 19 
+8 primes
+```
+`primes.py`
+```python
+# The same design, with the body filled in
+def is_prime(k):
+    """Return True if k is a prime number."""
+    for d in range(2, k):
+        if k % d == 0:
+            return False
+    return True
+
+n = int(input())
+count = 0
+for k in range(2, n + 1):
+    if is_prime(k):
+        print(k, end=" ")
+        count += 1
+print()
+print(f"{count} primes")
+```
+[LIVE] the file is in “week 4 code / primes.py”.
+
+## Slide 39: Design and AI tools
 Design and AI tools
 AI tools can now write a function body in seconds.
 What they need: a clear name, parameters and docstring

@@ -194,13 +194,10 @@ def simulate(p, moves):
     the share of the moves that ended on each page."""
     visits = [0] * len(p)
     page = 0
-    for t in range(moves):
+    for _ in range(moves):
         page = next_page(p[page])
         visits[page] += 1
-    ranks = []
-    for v in visits:
-        ranks.append(v / moves)
-    return ranks
+    return [v / moves for v in visits]
 ```
 
 ### `transition.py`
@@ -218,6 +215,32 @@ def transition_matrix(links, jump=0.10):
             row.append(jump / n + (1 - jump) * follow)
         p.append(row)
     return p
+```
+
+### `usa_map.py`
+```python
+# Draws the towns of USA.txt as a map of characters.
+W, H = 60, 18          # columns and rows
+
+xs, ys = [], []
+with open("USA.txt") as f:
+    f.readline()       # skip the header
+    for line in f:
+        x, y = line.split()
+        xs.append(float(x))
+        ys.append(float(y))
+
+left, right = min(xs), max(xs)
+bottom, top = min(ys), max(ys)
+
+grid = [[" "] * W for _ in range(H)]
+for i in range(len(xs)):
+    col = int((xs[i] - left) / (right - left) * (W - 1))
+    row = int((top - ys[i]) / (top - bottom) * (H - 1))
+    grid[row][col] = "*"
+
+for row in grid:
+    print("".join(row))
 ```
 
 ### `usa_points.py`
@@ -258,9 +281,7 @@ def read_links(filename):
     with open(filename) as f:
         tokens = f.read().split()
     n = int(tokens[0])
-    links = []
-    for i in range(n):
-        links.append([0] * n)     # a new row each time
+    links = [[0] * n for _ in range(n)]   # n new rows
     for k in range(1, len(tokens), 2):
         links[int(tokens[k])][int(tokens[k + 1])] += 1
     return links

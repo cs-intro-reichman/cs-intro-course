@@ -29,6 +29,59 @@ for col in range(cols):
     print(f"movie {col}: {round(total / rows, 2)}")
 ```
 
+### `coupon_experiment.py`
+```python
+# How many boxes does it take, on average?
+import coupons
+
+n = 100
+for trials in [10, 100, 10000]:
+    results = [coupons.collect(n) for _ in range(trials)]
+    average = sum(results) / trials
+    print(f"{trials} trials: {round(average, 1)} boxes")
+
+theory = sum([n / k for k in range(1, n + 1)])
+print(f"theory: {round(theory, 1)} boxes")
+```
+
+### `coupons.py`
+```python
+"""The coupon collector, as a function."""
+import random
+
+
+def collect(n):
+    """Return the boxes needed to collect all n cards."""
+    found = [False] * n      # found[c]: got card c yet?
+    count = 0                # boxes bought
+    distinct = 0             # different cards found
+    while distinct < n:
+        card = int(random.random() * n)
+        count += 1
+        if not found[card]:
+            found[card] = True
+            distinct += 1
+    return count
+```
+
+### `deck.py`
+```python
+ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10",
+         "Jack", "Queen", "King", "Ace"]
+suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
+
+deck = []
+for rank in ranks:
+    for suit in suits:
+        deck.append(f"{rank} of {suit}")
+
+print(f"{len(deck)} cards")
+for card in deck[:5]:
+    print(card)
+print("...")
+print(deck[-1])
+```
+
 ### `format_specs.py`
 ```python
 # [ ] mark the edges of each value
@@ -43,6 +96,17 @@ print(f"[{r:7.3f}]")    # [  0.667]
 print(f"[{n:,}]")       # [1,234,567]
 print(f"[{n:>12,}]")    # [   1,234,567]
 print(f"[{name:6}]")    # [Dana  ]
+```
+
+### `grid_comprehension.py`
+```python
+rows, cols = 3, 4
+board = [["."] * cols for _ in range(rows)]
+board[1][1] = "X"
+for row in board:
+    print(" ".join(row))
+
+print(board[0] is board[2])
 ```
 
 ### `grid_trap.py`
@@ -83,6 +147,17 @@ for animal, sound in sounds.items():
 
 print(list(sounds.keys()))
 print(list(sounds.values()))
+```
+
+### `keep_some.py`
+```python
+numbers = [4, 9, 15, 2, 8, 23]
+evens = [n for n in numbers if n % 2 == 0]
+print(evens)
+
+words = ["grid", "row", "matrix", "cell"]
+long_words = [w.upper() for w in words if len(w) > 3]
+print(long_words)
 ```
 
 ### `make_grid.py`
@@ -241,6 +316,52 @@ print(s1 - s2)       # difference
 print({1, 7} <= s1)  # subset
 ```
 
+### `shuffle.py`
+```python
+import random
+
+deck = ["A", "2", "3", "4", "5", "6"]
+n = len(deck)
+for i in range(n - 1):
+    # pick a random position r, from i to n - 1
+    r = i + int(random.random() * (n - i))
+    # swap the cards at positions i and r
+    deck[i], deck[r] = deck[r], deck[i]
+    print(deck)
+```
+
+### `sieve.py`
+```python
+n = 30
+is_prime = [True] * (n + 1)    # is k still in?
+is_prime[0] = False
+is_prime[1] = False
+for p in range(2, n + 1):
+    if is_prime[p]:
+        # cross out the multiples of p
+        for m in range(2 * p, n + 1, p):
+            is_prime[m] = False
+
+primes = [k for k in range(n + 1) if is_prime[k]]
+for p in primes:
+    print(p, end=" ")
+print()
+print(f"{len(primes)} primes up to {n}")
+```
+
+### `squares.py`
+```python
+# The loop way
+squares = []
+for k in range(1, 6):
+    squares.append(k * k)
+print(squares)
+
+# The same list, in one line
+squares = [k * k for k in range(1, 6)]
+print(squares)
+```
+
 ### `sum_of_rows.py`
 ```python
 import random
@@ -259,6 +380,45 @@ for row in table:
     for x in row:
         print(f"{x:4}", end="")
     print()
+```
+
+### `table_comprehension.py`
+```python
+ratings = [[4, 5, 4, 5, 4],
+           [5, 3, 4, 4, 4],
+           [3, 4, 3, 5, 3]]
+
+# one column: movie 2
+print([row[2] for row in ratings])
+
+# one number per row: each reviewer's total
+print([sum(row) for row in ratings])
+
+# transpose: column c becomes row c
+flipped = [[row[c] for row in ratings]
+           for c in range(len(ratings[0]))]
+for row in flipped:
+    print(row)
+```
+
+### `thinning.py`
+```python
+def count_primes(n):
+    """Return the number of primes from 2 to n."""
+    is_prime = [True] * (n + 1)
+    is_prime[0] = False
+    is_prime[1] = False
+    for p in range(2, n + 1):
+        if is_prime[p]:
+            for m in range(2 * p, n + 1, p):
+                is_prime[m] = False
+    return len([k for k in range(n + 1) if is_prime[k]])
+
+
+for n in [100, 10000, 1000000]:
+    count = count_primes(n)
+    share = round(100 * count / n)
+    print(f"{n}: {count} primes, {share}%")
 ```
 
 ### `transpose.py`

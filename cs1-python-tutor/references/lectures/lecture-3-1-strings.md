@@ -2182,5 +2182,5 @@ Print the middle character of a word — or the middle two, if its length is eve
 
 ## Slide 36
 PYTHON COURSE · WEEK 3 · LECTURE 2
-Next: Lists and Tuples
-Sequences that can be changed
+Next: Approximation Algorithms
+When exact is impossible
