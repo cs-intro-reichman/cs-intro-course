@@ -1,6 +1,8 @@
 # HW1: Errors, input and arithmetic
 
-Given after week 1. Students may use Python taught up to week 1.
+Given after week 1.
+
+**Material for this assignment: week 1 only** (lectures 1-1, 1-2; recitation 1, and the code files of that week). Solve it, hint toward it and point to slides using only this material and the Python listed for week 1 in `python-taught.md`, even if the student is already in a later week. Don't suggest or point to anything from week 2 on.
 
 **This is graded work: guide with the hint ladder, never give solution code.**
 

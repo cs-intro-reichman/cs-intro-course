@@ -1,6 +1,6 @@
 # Course map: Introduction to Computer Science (Python)
 
-Skill version 2026-10-17. Lectures marked *not available yet* are not in this version of the skill.
+Skill version 2026-10-17c. Lectures marked *not available yet* are not in this version of the skill.
 
 ## Lectures
 
@@ -40,13 +40,17 @@ Skill version 2026-10-17. Lectures marked *not available yet* are not in this ve
 ## Recitations
 
 - Week 1: Types, expressions and I/O (`recitations/recitation-01-types-expressions-and-i-o.md`)
+- Week 2: Conditions and loops (`recitations/recitation-02-conditions-and-loops.md`)
+- Week 3: Strings and approximation (`recitations/recitation-03-strings-and-approximation.md`)
+- Week 4: Functions, lists and tuples (`recitations/recitation-04-functions-lists-and-tuples.md`)
+- Week 5: Tables, dictionaries and sets (`recitations/recitation-05-tables-dictionaries-and-sets.md`)
 
 ## Homework assignments
 
 These are graded. Use the hint ladder, never write solutions.
 
-- HW1: Errors, input and arithmetic, after week 1 (`homework/hw1-errors-input-and-arithmetic.md`)
-- HW2: Conditionals and loops, after week 2 (`homework/hw2-conditionals-and-loops.md`)
+- HW1: Errors, input and arithmetic, after week 1, uses only material from week 1 (`homework/hw1-errors-input-and-arithmetic.md`)
+- HW2: Conditionals and loops, after week 2, uses only material from weeks 1 to 2 (`homework/hw2-conditionals-and-loops.md`)
 
 ## Course documents
 

@@ -109,7 +109,7 @@ Formulating clear problem boundaries, inputs, outputs and edge cases to direct A
 Auditing code step-by-step to catch hidden defects, semantic bugs and AI errors.
 3. Debugging & Verification
 Diagnosing runtime issues and verifying program state to ensure logical correctness.
-4. System Architectural & Efficiency
+4. System Architecture & Efficiency
 Selecting optimal data structures for fast, maintainable and efficient execution.
 
 ## Slide 11

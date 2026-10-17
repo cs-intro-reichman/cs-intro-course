@@ -1,6 +1,8 @@
 # HW2: Conditionals and loops
 
-Given after week 2. Students may use Python taught up to week 2.
+Given after week 2.
+
+**Material for this assignment: weeks 1 to 2 only** (lectures 1-1, 1-2, 2-1, 2-2, 2-x; recitations 1, 2, and the code files of those weeks). Solve it, hint toward it and point to slides using only this material and the Python listed for weeks 1 to 2 in `python-taught.md`, even if the student is already in a later week. Don't suggest or point to anything from week 3 on.
 
 **This is graded work: guide with the hint ladder, never give solution code.**
 

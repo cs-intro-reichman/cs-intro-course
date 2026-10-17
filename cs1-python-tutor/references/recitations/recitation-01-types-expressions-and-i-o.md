@@ -61,7 +61,7 @@ Extra
 Wrap-up
 ```python
 1 · The interpreter
-In a terminal, type python --version (or python3 --version). You should see Python 3.13 or newer.
+In a terminal, type python --version (or python3 --version). You should see Python 3.13.
 ```
 ```python
 2 · The REPL
