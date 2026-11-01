@@ -1,6 +1,6 @@
 # Course map: Introduction to Computer Science (Python)
 
-Skill version 2026-10-17c. Lectures marked *not available yet* are not in this version of the skill.
+Skill version 2026-11-01. Lectures marked *not available yet* are not in this version of the skill.
 
 ## Lectures
 
@@ -11,7 +11,7 @@ Skill version 2026-10-17c. Lectures marked *not available yet* are not in this v
 | 1 | code | Code files from the week 1 lectures | `lectures/week-01-code.md` |
 | 2 | 2-1 | Conditionals and while loops | `lectures/lecture-2-1-conditionals-and-while-loops.md` |
 | 2 | 2-2 | The for loop and numeral systems | `lectures/lecture-2-2-the-for-loop-and-numeral-systems.md` |
-| 2 | 2-x | Gambler's ruin (simulation) | `lectures/lecture-2-x-gambler-s-ruin-simulation.md` |
+| 2 | code | Code files from the week 2 lectures | `lectures/week-02-code.md` |
 | 3 | 3-1 | Strings | `lectures/lecture-3-1-strings.md` |
 | 3 | 3-2 | Approximation algorithms | `lectures/lecture-3-2-approximation-algorithms.md` |
 | 3 | code | Code files from the week 3 lectures | `lectures/week-03-code.md` |
@@ -51,6 +51,7 @@ These are graded. Use the hint ladder, never write solutions.
 
 - HW1: Errors, input and arithmetic, after week 1, uses only material from week 1 (`homework/hw1-errors-input-and-arithmetic.md`)
 - HW2: Conditionals and loops, after week 2, uses only material from weeks 1 to 2 (`homework/hw2-conditionals-and-loops.md`)
+- HW3: Loans and anagrams, after week 3, uses only material from weeks 1 to 3 (`homework/hw3-loans-and-anagrams.md`)
 
 ## Course documents
 

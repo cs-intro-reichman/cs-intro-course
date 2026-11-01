@@ -1,7 +1,7 @@
 # Lecture 2-2: The for loop and numeral systems (week 2)
 
 ## Slide 1
-PYTHON COURSE · WEEK 2 · LECTURE 2
+INTRO TO CS COURSE · WEEK 2 · LECTURE 2
 Loops and Numeral Systems
 The for loop, loop patterns, and numbers in binary
 
@@ -19,10 +19,11 @@ Loop patterns
 accumulate, carry forward, nest
 3
 Numeral systems
-positional notation, and why binary
+positional notation, and binary
 4
-Binary
-converting both ways
+Gambler's ruin
+estimating an answer by simulation
+Gambler's ruin
 
 ## Slide 3
 Recapping while: The cost of manual counting
@@ -70,6 +71,7 @@ On each iteration, Python automatically rebinds i to the next value.
 No explicit initialization, condition, or modification of i are needed in code.
 ```
 Replacing explicit loop mechanics with automated sequence iteration.
+Gambler's ruin
 
 ## Slide 5
 The for loop
@@ -130,17 +132,30 @@ On each pass name is bound to the next item: "Messi", then "Ronaldo", then "Neym
 ```python
 output
 ```
-```python
-Hello, Messi
-Hello, Ronaldo
-Hello, Neymar
-```
 `names.py`
 ```python
 for name in ["Messi", "Ronaldo", "Neymar"]:
     print("Hello,", name)
 ```
 The square brackets make a list. Lists are next week; today we only need that a list is something a loop can walk through.
+```python
+Hello, Messi
+```
+```python
+Hello, Ronaldo
+```
+```python
+Hello, Neymar
+```
+```python
+"Messi"
+```
+```python
+"Ronaldo"
+```
+```python
+"Neymar"
+```
 
 ## Slide 7
 Generating a sequence with range()
@@ -322,17 +337,14 @@ Set up the accumulator before the loop, with a starting value.
 Change its value inside the loop, once per item.
 3 · Use
 Read or print it after the loop has finished.
+Gambler's ruin
 
 ## Slide 13
 Tracing the sum accumulator
 n = 4. One row per iteration.
-pass
 i
 total += i
 total
-```python
-1
-```
 ```python
 1
 ```
@@ -341,9 +353,6 @@ total
 ```
 ```python
 1
-```
-```python
-2
 ```
 ```python
 2
@@ -358,16 +367,10 @@ total
 3
 ```
 ```python
-3
-```
-```python
 3 + 3
 ```
 ```python
 6
-```
-```python
-4
 ```
 ```python
 4
@@ -389,9 +392,6 @@ print(total)   # 10
 What makes total an Accumulator
 total holds the sum of all the numbers seen so far. 
 Once the loop finishes, it holds the total sum of all numbers.
-```
-```python
--
 ```
 ```python
 -
@@ -654,6 +654,24 @@ Automatic rebinding: On each iteration, Python automatically rebinds ch to the n
 Focus for today: We iterate directly over the characters themselves.
 Coming next week: Accessing characters by index, slicing and string methods.
 ```
+```python
+b
+```
+```python
+i
+```
+```python
+n
+```
+```python
+a
+```
+```python
+r
+```
+```python
+y
+```
 
 ## Slide 20
 Example: counting one letter
@@ -861,6 +879,7 @@ A non-positional system
 Value = Count: Total value is simply the number of marks.
 Position independent: A mark means 1 regardless of where it sits.
 Simple & Intuitive: Works perfectly for small, manageable quantities.
+Gambler's ruin
 
 ## Slide 25
 ```python
@@ -1182,6 +1201,7 @@ Why build a string?
 Easier manipulation: string concatenation (+) simply joins digits, avoiding complex positional arithmetic.
 Text vs. Number: Storing as a string prevents Python from interpreting 1010 as the decimal number “one thousand and ten”.
 ```
+Gambler's ruin
 
 ## Slide 31
 Tracing the conversion
@@ -1300,7 +1320,6 @@ the grid, filled in from the right
 ```python
 26 = 11010
 ```
-the s column, read off the last row
 Why the digits are prepended
 The loop finds the last digit first: 0, then 1, then 0, then 1, then 1.
 Written in that order they would come out backwards, so each new digit joins the front of the string.
@@ -1323,7 +1342,7 @@ And what does it print for a negative number?
 ## Slide 33
 The zero case
 The condition is false immediately, so nothing is printed.
-`fixed.py`
+`to_binary_fixed.py`
 ```python
 x = int(input("n (>= 0): "))
 s = ""
@@ -1464,15 +1483,88 @@ Binary to decimal
 today
 ✓
 Negative integers: two's complement
-later
+other courses
 Real numbers: floating point
-later
+other courses
 Images, sound, compression, transmission
 other courses
 Arithmetic implemented in binary
 other courses
 
 ## Slide 38
+Gambler's ruin
+The for loop
+Loop patterns
+Numeral systems
+Binary
+Gambler's ruin
+Every flip wins $1 or loses $1. Start at $50, aim for $250.
+Same rules, completely different histories. The game ends at $0 or at $250.
+
+## Slide 39
+Monte Carlo simulation
+The strategy
+Flip a coin and see what happens. Repeat many times. Compute statistics.
+Why it matters
+Used across science, engineering, finance and game design — and often the only tool available when a problem has no formula.
+We are not computing an answer. We are estimating one, and the estimate differs every run. That is not a bug.
+Seventy games at once — about one in five reaches the goal.
+
+## Slide 40
+The simulation in Python
+`one_game.py`
+```python
+cash = start
+while 0 < cash < goal:
+    if random.random() < 0.5:
+        cash += 1
+    else:
+        cash -= 1
+    n_flips += 1
+```
+`many_games.py`
+```python
+T = 100
+for t in range(T):
+    cash = start
+    # ... one game ...
+    if cash == goal:
+        n_wins += 1
+# calculate winning games percentage
+print(f"Percentage of winning games: {n_wins * 100 / T}%")
+```
+We cannot know how many flips — an indefinite loop.
+We know exactly how many games — a counted loop.
+
+## Slide 41
+Running it
+```python
+terminal
+```
+```python
+Percentage of winning games: 21.1 %
+Average flips per game: 9808.0
+```
+parameters | coin flips | how long it takes
+$50 / $250 / 1000 games | 10 million | under a second
+$500 / $2500 / 1000 games | 1 billion | about two minutes
+The numbers change every run
+That is what estimating looks like. Run it three times and watch the percentage move by a point or two.
+Knowing roughly how many operations you are asking for is part of the job — week 8 makes that idea formal.
+
+## Slide 42
+Theory and experiment
+What the mathematics says
+Probability of reaching the goal = start / goal =  = 50 / 250 = 20%. 
+Expected number of flips = start × (goal − start) = 50 × 200 = 10,000.
+What the simulation found
+21.1% of games reached the goal, over 9,808 flips per game on average.
+The program knew none of that mathematics. It arrived at the same place by flipping coins.
+So why simulate, if the formula already answers it?
+To validate a theory, or to help reach one. To generate events from a model, for research, training, investing or games. And because in many cases there is no formula at all, and simulation is the only way to get data.
+Change 0.5 to 0.49 — a slightly unfair coin — and the mathematics gets much harder. The simulation needs a two-character edit.
+
+## Slide 43
 Lecture summary
 ```python
 The for loop
@@ -1497,8 +1589,9 @@ The for loop
 Loop patterns
 Numeral systems
 Binary
+Gambler's ruin
 
-## Slide 39
+## Slide 44
 Self practice
 Write a program for each of these.
 Rewrite with for
@@ -1510,7 +1603,7 @@ Read a non-negative integer and print how many digits it has, using % 10 and // 
 Binary, both directions
 Print the binary form of every number from 0 to 15, then read a binary string back and print its decimal value.
 
-## Slide 40
-PYTHON COURSE · WEEK 3 · LECTURE 1
-Next: Strings, Lists and Tuples
-Where for comes into its own, and binary back to decimal
+## Slide 45
+INTRO TO CS COURSE · WEEK 3 · LECTURE 1
+Next: Strings and Approximation algorithms
+Where for comes into its own, and where exactness gives way to a good enough answer

@@ -2,7 +2,7 @@
 
 Given after week 2.
 
-**Material for this assignment: weeks 1 to 2 only** (lectures 1-1, 1-2, 2-1, 2-2, 2-x; recitations 1, 2, and the code files of those weeks). Solve it, hint toward it and point to slides using only this material and the Python listed for weeks 1 to 2 in `python-taught.md`, even if the student is already in a later week. Don't suggest or point to anything from week 3 on.
+**Material for this assignment: weeks 1 to 2 only** (lectures 1-1, 1-2, 2-1, 2-2; recitations 1, 2, and the code files of those weeks). Solve it, hint toward it and point to slides using only this material and the Python listed for weeks 1 to 2 in `python-taught.md`, even if the student is already in a later week. Don't suggest or point to anything from week 3 on.
 
 **This is graded work: guide with the hint ladder, never give solution code.**
 
@@ -219,7 +219,7 @@ First test each program yourself, with the examples above and with inputs of you
 ```
 It runs each program on several inputs and prints PASS or FAIL for each test; for a FAIL it shows the expected output and yours. For TestRandom it controls what random.random() returns, so it can check exact output, including the edge case. Passing all the tests doesn't guarantee full points: the graders run other inputs too, and they read your code.
 ### Submission
-Before you submit, make sure your code follows the course's coding style guidelines. Submit on the course's Moodle page, in the Homework 2 assignment. Upload these files only:
+Upload only the following files to the Moodle submission bix:
 ```python
 time_calc.py
 test_random.py

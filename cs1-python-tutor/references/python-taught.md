@@ -34,8 +34,12 @@ The instructor maintains this file. Week numbers follow the current schedule.
 - Strings are immutable. `id()`
 - String methods: `upper`, `lower`, `strip`, `find`, `index`, `count`, `replace`, `isalpha`, `isdigit`, `islower`, `isupper`
 - `ord`, `chr`
-- `continue` (and when to prefer a plain `if`)
-- Approximation: sequential (exhaustive) search, bisection search, Newton–Raphson, tolerance ε (`epsilon`), counting iterations
+- Comparing strings with `==`, `<`, `>` (character by character, by character codes, so capitals come before small letters)
+- The empty string `""`, and `if name:` to test for it
+- Methods vs functions (`s.upper()` vs `len(s)`); calling a string method on a number gives `AttributeError`; the immutability trap (`s.strip()` alone does nothing, `s = s.strip()` keeps the result)
+- The accumulator pattern on strings (`result = ""` then `result += ch`)
+- `continue` (and when to prefer a plain `if`), `break` vs `continue`
+- Approximation: sequential (exhaustive) search with a fixed step (`increment`), bisection search, Newton–Raphson, tolerance ε (`epsilon`), counting iterations
 
 ## Week 4: Functions (4-1), Lists and tuples (4-2)
 - `def`, parameters and arguments, `return`, functions calling functions, the order of events in a call

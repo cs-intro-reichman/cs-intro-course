@@ -211,7 +211,7 @@ First test each program yourself, with the examples above and with inputs of you
 ```
 It runs each program on several inputs and prints PASS or FAIL for each test; for a FAIL it shows the expected output and yours. For Ascend and TimeFormat it also checks the rules (no if, min, max or sorted). Passing all the tests doesn't guarantee full points: the graders run other inputs too, and they read your code.
 ### Submission
-Before you submit, make sure your code follows the course's coding style guidelines. Submit on the course's Moodle page, in the Homework 1 assignment. Upload these files only:
+Please upload these files only (don’t use zip or compression, just direct upload) into the submission box on Moodle:
 ```python
 bill3.py
 fv_calc.py

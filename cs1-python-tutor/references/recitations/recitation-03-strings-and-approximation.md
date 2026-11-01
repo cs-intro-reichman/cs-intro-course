@@ -8,37 +8,71 @@ s[::-1]
 ```
 PYTHON COURSE · WEEK 3 · RECITATION 3
 Recitation 3
-Strings and approximation
+for loops and strings
 
 ## Slide 2
 Recitation overview
 Warm-up
 Text tools
 Passwords
+Monte Carlo
 Ciphers
-Approximation
 Extra
 Wrap-up
 1
-Slicing predictions
-indices, pieces, and a trap
+Predictions
+range, slicing, and the immutability trap
 2
 Text tools
-usernames, passwords, run-length
+a username, run-length encoding, a password check
 3
+Monte Carlo
+darts and pi: throw, test, count
+4
 Ciphers
 Vigenere, built on Caesar
-4
-Approximation
-a cube root and cos(x) = x, by bisection
 
 ## Slide 3
+Warm-up: range
+Warm-up
+Text tools
+Passwords
+Monte Carlo
+Ciphers
+Extra
+Wrap-up
+WARM-UP · 2 MIN
+Four loops with for. Write the four lines they print.
+`warmup_range.py`
+```python
+for i in range(2, 11, 3):
+    print(i, end=" ")
+print()
+for i in range(5, 0, -2):
+    print(i, end=" ")
+print()
+for ch in "abc":
+    print(ch * 2, end=" ")
+print()
+for i in range(3, 3):
+    print("never")
+print("done")
+```
+```python
+The answers
+2 5 8
+5 3 1
+aa bb cc
+done (the empty range runs 0 times)
+```
+
+## Slide 4
 Warm-up: slicing
 Warm-up
 Text tools
 Passwords
+Monte Carlo
 Ciphers
-Approximation
 Extra
 Wrap-up
 WARM-UP · 4 MIN
@@ -67,7 +101,7 @@ True False
 IndexError - one past the end
 ```
 
-## Slide 4
+## Slide 5
 Warm-up: methods and the trap
 WARM-UP · 4 MIN
 Methods return a new string. Which line forgets that?
@@ -95,13 +129,13 @@ True True
 False True
 ```
 
-## Slide 5
+## Slide 6
 Exercise 1: Username and e-mail
 Warm-up
 Text tools
 Passwords
+Monte Carlo
 Ciphers
-Approximation
 Extra
 Wrap-up
 EASY · 7 MIN ON YOUR OWN
@@ -124,7 +158,7 @@ Think about
 .strip() first, .lower() and .upper() where needed
 ```
 
-## Slide 6
+## Slide 7
 Exercise 1: one solution
 `username.py`
 ```python
@@ -147,7 +181,7 @@ Build, then lower: parentheses, so .lower() applies to the whole username
 Initials: first[0] and last[0] are strings of length 1, joined with dots in an f-string
 ```
 
-## Slide 7
+## Slide 8
 Exercise 1: the run
 `username.py`
 ```python
@@ -170,13 +204,143 @@ E-mail: dgerman@runi.ac.il
 Initials: D.G.
 ```
 
-## Slide 8
-Exercise 2: Strong password
+## Slide 9
+Exercise 2: Run-length encoding
 Warm-up
 Text tools
 Passwords
+Monte Carlo
 Ciphers
-Approximation
+Extra
+Wrap-up
+MID · 10 MIN ON YOUR OWN
+Task: compress a string by replacing every run of equal characters with the character and its length.
+```python
+aaabbc becomes a3b2c1; xyz becomes x1y1z1; an empty string stays empty
+Then decode: a3b2c1 becomes aaabbc again (counts are single digits)
+Walk the positions, not the characters: a run ends where s[i] differs from s[i - 1]
+```
+```python
+terminal
+```
+```python
+Text: aaabbc
+Encoded: a3b2c1
+
+Code: a3b2c1
+Decoded: aaabbc
+```
+```python
+Think about
+Encoding: a counter for the current run, and a result string that grows
+Decoding: positions 0, 2, 4, ... hold characters; 1, 3, 5, ... hold counts: range(0, len(code), 2)
+```
+
+## Slide 10
+The idea: a run ends at a change
+aaabbc has three runs. Count a run until the next character differs, then write it down.
+```python
+1 · Start - the first character opens a run: current = s[0], count = 1
+2 · Compare - for each position from 1: same as current? count it. Different? write current and count, start a new run
+3 · Finish - after the loop, the last run is still open: write it too
+4 · Edge - the empty string has no s[0]: handle it before the loop
+```
+In pseudocode
+result = empty; if s is empty, stop
+current = s[0], count = 1
+for i from 1 to the end:
+      same as current? count += 1
+      else: write current and count,
+                current = s[i], count = 1
+write the last run
+
+## Slide 11
+Exercise 2: encoding
+`rle_encode.py`
+```python
+s = input("Text: ")
+
+result = ""
+if len(s) > 0:
+    current = s[0]
+    count = 1
+    for i in range(1, len(s)):
+        if s[i] == current:
+            count += 1
+        else:
+            result += current + str(count)
+            current = s[i]
+            count = 1
+    result += current + str(count)
+print(f"Encoded: {result}")
+```
+```python
+Reading the loop
+Positions from 1: s[i] is compared with the run that is open, not with s[i - 1] - same thing, one variable
+Two accumulators: result grows a piece at a time; count restarts at 1 whenever a run closes
+The last line of the if-block: the last run is written after the loop, always
+str(count): a number cannot be joined to a string without it
+```
+
+## Slide 12
+Exercise 2: the run
+`rle_encode.py`
+```python
+s = input("Text: ")
+
+result = ""
+if len(s) > 0:
+    current = s[0]
+    count = 1
+    for i in range(1, len(s)):
+        if s[i] == current:
+            count += 1
+        else:
+            result += current + str(count)
+            current = s[i]
+            count = 1
+    result += current + str(count)
+print(f"Encoded: {result}")
+```
+`python rle_encode.py`
+```python
+Text: aaabbc
+Encoded: a3b2c1
+```
+
+## Slide 13
+Exercise 2: decoding
+`rle_decode.py`
+```python
+code = input("Code: ")
+
+text = ""
+for i in range(0, len(code), 2):
+    ch = code[i]
+    count = int(code[i + 1])
+    text += ch * count
+print(f"Decoded: {text}")
+```
+```python
+Two positions at a time
+range(0, len(code), 2): the step visits 0, 2, 4, ... - the character positions
+The count is the next position: code[i + 1], turned into a number with int()
+The * operator from week 1: "a" * 3 is aaa
+A promise: counts have one digit; a4b12 would need the digits gathered until a letter appears
+```
+`python rle_decode.py`
+```python
+Code: a3b2c1
+Decoded: aaabbc
+```
+
+## Slide 14
+Exercise 3: Strong password
+Warm-up
+Text tools
+Passwords
+Monte Carlo
+Ciphers
 Extra
 Wrap-up
 MID · 10 MIN ON YOUR OWN
@@ -202,8 +366,8 @@ Think about
 A flag per rule: False at first, True once the loop sees the evidence
 Decide after the loop: it discovers, the code after it acts
 
-## Slide 9
-Exercise 2: the loop (1 of 2)
+## Slide 15
+Exercise 3: the loop (1 of 2)
 ```python
 password.py (lines 1-12)
 ```
@@ -229,8 +393,8 @@ Flags start False before the loop - inside it they would be reset on every pass
 Length and the space need no loop: len() and in answer them in one call each
 ```
 
-## Slide 10
-Exercise 2: the report (2 of 2)
+## Slide 16
+Exercise 3: the report (2 of 2)
 ```python
 password.py (lines 14-28)
 ```
@@ -260,8 +424,8 @@ The empty string means strong: nothing was added, so nothing was wrong
 print(problems, end=""): the newlines are already in the text
 ```
 
-## Slide 11
-Exercise 2: the run
+## Slide 17
+Exercise 3: the run
 ```python
 password.py (lines 14-28)
 ```
@@ -293,7 +457,7 @@ no uppercase letter
 contains a space
 ```
 
-## Slide 12
+## Slide 18
 continue: when to reach for it
 ```python
 The password loop had no continue. Where would one help?
@@ -305,143 +469,148 @@ break is different - it leaves the loop for good; continue leaves one pass
 Try it:
 rewrite the vowel-removal loop from lecture 3-1 with continue, and decide which version reads better.
 
-## Slide 13
-Exercise 3: Run-length encoding
+## Slide 19
+Exercise 4: Darts and pi
 Warm-up
 Text tools
 Passwords
+Monte Carlo
 Ciphers
-Approximation
 Extra
 Wrap-up
 MID · 10 MIN ON YOUR OWN
-Task: compress a string by replacing every run of equal characters with the character and its length.
-```python
-aaabbc becomes a3b2c1; xyz becomes x1y1z1; an empty string stays empty
-Then decode: a3b2c1 becomes aaabbc again (counts are single digits)
-Walk the positions, not the characters: a run ends where s[i] differs from s[i - 1]
-```
+Task: throw N random points into the square [-1, 1) x [-1, 1). Count how many land inside the unit circle.
+The circle covers pi/4 of the square, so 4 * inside / N is an estimate of pi
+Print the estimate for N = 100, 1000, 10000 and 100000 and compare with math.pi
+Lecture 2-1's random point in the circle is one dart; now throw N of them
 ```python
 terminal
 ```
 ```python
-Text: aaabbc
-Encoded: a3b2c1
-
-Code: a3b2c1
-Decoded: aaabbc
+N = 100: 3.24
+N = 1000: 3.152
+N = 10000: 3.1384
+N = 100000: 3.1416
+math.pi: 3.1416
 ```
 ```python
 Think about
-Encoding: a counter for the current run, and a result string that grows
-Decoding: positions 0, 2, 4, ... hold characters; 1, 3, 5, ... hold counts: range(0, len(code), 2)
+A point (x, y) is inside the circle when x * x + y * y <= 1
+for n in [100, 1000, 10000, 100000]: walks the four sizes
+The accumulator: count the hits
 ```
 
-## Slide 14
-The idea: a run ends at a change
-aaabbc has three runs. Count a run until the next character differs, then write it down.
+## Slide 20
+The idea: area as probability
+A random point in the square lands inside the circle with probability pi / 4. Count how often it does.
 ```python
-1 · Start - the first character opens a run: current = s[0], count = 1
-2 · Compare - for each position from 1: same as current? count it. Different? write current and count, start a new run
-3 · Finish - after the loop, the last run is still open: write it too
-4 · Edge - the empty string has no s[0]: handle it before the loop
+1 · Throw - x = 2 * random.random() - 1, the same for y
+2 · Test - inside when x * x + y * y <= 1
+3 · Count - hits += 1 for every point inside
+4 · Estimate - hits / n is about pi / 4, so pi is about 4 * hits / n
+5 · Repeat - more darts, better estimate; the error shrinks slowly
 ```
 In pseudocode
-result = empty; if s is empty, stop
-current = s[0], count = 1
-for i from 1 to the end:
-      same as current? count += 1
-      else: write current and count,
-                current = s[i], count = 1
-write the last run
+for each size n:
+      hits = 0
+      repeat n times:
+            throw a random point
+            if it is inside: hits += 1
+      print 4 * hits / n
 
-## Slide 15
-Exercise 3: encoding
-`rle_encode.py`
+## Slide 21
+Exercise 4: one solution
+`monte_carlo_pi.py`
 ```python
-s = input("Text: ")
+import random
+import math
 
-result = ""
-if len(s) > 0:
-    current = s[0]
-    count = 1
-    for i in range(1, len(s)):
-        if s[i] == current:
-            count += 1
-        else:
-            result += current + str(count)
-            current = s[i]
-            count = 1
-    result += current + str(count)
-print(f"Encoded: {result}")
+for n in [100, 1000, 10000, 100000]:
+    hits = 0
+    for i in range(n):
+        x = 2 * random.random() - 1
+        y = 2 * random.random() - 1
+        if x * x + y * y <= 1:
+            hits += 1
+    estimate = 4 * hits / n
+    print(f"N = {n}: {round(estimate, 4)}")
+print(f"math.pi: {round(math.pi, 4)}")
 ```
 ```python
-Reading the loop
-Positions from 1: s[i] is compared with the run that is open, not with s[i - 1] - same thing, one variable
-Two accumulators: result grows a piece at a time; count restarts at 1 whenever a run closes
-The last line of the if-block: the last run is written after the loop, always
-str(count): a number cannot be joined to a string without it
+Reading the program
+Two loops: the outer picks a size, the inner throws that many darts
+Reset per size: hits = 0 sits inside the outer loop
+A fresh point per dart: both random calls are inside the inner loop
+The estimate uses /: a float, printed rounded to 4 digits
 ```
 
-## Slide 16
-Exercise 3: the run
-`rle_encode.py`
+## Slide 22
+Exercise 4: the run
+`monte_carlo_pi.py`
 ```python
-s = input("Text: ")
+import random
+import math
 
-result = ""
-if len(s) > 0:
-    current = s[0]
-    count = 1
-    for i in range(1, len(s)):
-        if s[i] == current:
-            count += 1
-        else:
-            result += current + str(count)
-            current = s[i]
-            count = 1
-    result += current + str(count)
-print(f"Encoded: {result}")
-```
-`python rle_encode.py`
-```python
-Text: aaabbc
-Encoded: a3b2c1
-```
-
-## Slide 17
-Exercise 3: decoding
-`rle_decode.py`
-```python
-code = input("Code: ")
-
-text = ""
-for i in range(0, len(code), 2):
-    ch = code[i]
-    count = int(code[i + 1])
-    text += ch * count
-print(f"Decoded: {text}")
+for n in [100, 1000, 10000, 100000]:
+    hits = 0
+    for i in range(n):
+        x = 2 * random.random() - 1
+        y = 2 * random.random() - 1
+        if x * x + y * y <= 1:
+            hits += 1
+    estimate = 4 * hits / n
+    print(f"N = {n}: {round(estimate, 4)}")
+print(f"math.pi: {round(math.pi, 4)}")
 ```
 ```python
-Two positions at a time
-range(0, len(code), 2): the step visits 0, 2, 4, ... - the character positions
-The count is the next position: code[i + 1], turned into a number with int()
-The * operator from week 1: "a" * 3 is aaa
-A promise: counts have one digit; a4b12 would need the digits gathered until a letter appears
+python monte_carlo_pi.py (one run)
 ```
-`python rle_decode.py`
 ```python
-Code: a3b2c1
-Decoded: aaabbc
+N = 100: 3.24
+N = 1000: 3.152
+N = 10000: 3.1384
+N = 100000: 3.1416
+math.pi: 3.1416
 ```
 
-## Slide 18
-Exercise 4: The Vigenere cipher
+## Slide 23
+Exercise 4, expansion: how often is it 7?
+`sevens.py`
+```python
+import random
+
+N = 10000
+sevens = 0
+for i in range(N):
+    first = int(random.random() * 6) + 1
+    second = int(random.random() * 6) + 1
+    if first + second == 7:
+        sevens += 1
+
+print(f"Sevens: {sevens} of {N}")
+print(f"Share: {round(sevens / N, 3)}")
+print(f"Expected: {round(1 / 6, 3)}")
+```
+Recitation 1's question, answered
+Two dice, ten thousand times: the same three-part shape - throw, test, count
+Expected: 6 of the 36 combinations add up to 7, so about one roll in six
+Your turn: count how often the two dice are equal, and how often the total is 2
+```python
+python sevens.py (one run)
+```
+```python
+Sevens: 1687 of 10000
+Share: 0.169
+Expected: 0.167
+```
+
+## Slide 24
+Exercise 5: The Vigenere cipher
 Warm-up
 Text tools
 Passwords
+Monte Carlo
 Ciphers
-Approximation
 Extra
 Wrap-up
 HIGH · 12 MIN ON YOUR OWN
@@ -463,8 +632,8 @@ Start from the lecture's caesar.py: the shift is now ord(key[j]) - ord("a")
 j counts the key letter used so far; it wraps with % len(key) and advances only on letters
 ```
 
-## Slide 19
-Exercise 4: one solution
+## Slide 25
+Exercise 5: one solution
 `vigenere.py`
 ```python
 text = input("Message: ")
@@ -491,8 +660,8 @@ j: advances only inside the if, so spaces do not consume key letters; % len(key)
 Decryption: subtract the shift instead - (position - shift) % 26 - and the message comes back
 ```
 
-## Slide 20
-Exercise 4: the run
+## Slide 26
+Exercise 5: the run
 `vigenere.py`
 ```python
 text = input("Message: ")
@@ -518,8 +687,8 @@ Key: lemon
 lxfopv ef rnhr
 ```
 
-## Slide 21
-Exercise 4, expansion: both directions
+## Slide 27
+Exercise 5, expansion: both directions
 `vigenere_both.py`
 ```python
 text = input("Message: ")
@@ -546,151 +715,145 @@ Negative shifts are safe: % 26 always lands in 0 to 25, as with Caesar's shift -
 Round trip: decrypt lxfopv ef rnhr with lemon, and attack at dawn comes back
 ```
 
-## Slide 22
-Exercise 5: Bisection, twice
+## Slide 28
+Extra 1: Any base
 Warm-up
 Text tools
 Passwords
+Monte Carlo
 Ciphers
-Approximation
 Extra
 Wrap-up
-HIGH · 12 MIN ON YOUR OWN
-Task: the lecture found a square root by bisection. Change the function, keep the loop.
-```python
-Part A: the cube root of x > 0. Bracket 0 to x if x >= 1, else 0 to 1; stop when |g^3 - x| < epsilon
-Part B: solve cos(x) = x. The answer is between 0 and 1; math.cos is the only new tool
-Count the steps in both; print the guess rounded to 6 digits
-```
+EXTRA
+Task: generalise the two binary conversions of lecture 2-2 to any base from 2 to 10.
+to_base: read a number n >= 0 and a base; print n written in that base (26 in base 3 is 222)
+from_base: read a string of digits and a base; print its value (222 in base 3 is 26)
+Handle n = 0, and stop with a message if a digit is too big for the base
 ```python
 terminal
 ```
 ```python
-x: 2
-cube root: 1.259921 in 20 steps
+n: 26
+base: 3
+222
 
-cos(x) = x: 0.739085 in 19 steps
+digits: 222
+base: 3
+26
 ```
 ```python
 Think about
-Bisection keeps the half that still contains the answer: which half is it, for each function?
-For part B, f(g) = cos(g) - g goes from positive to negative: if f(mid) > 0: low = mid
+In base 2 the loop used % 2 and // 2. What do they become?
+Reading back: value = value * base + int(ch) for each character
 ```
 
-## Slide 23
-Exercise 5: the cube root
-`cube_root.py`
+## Slide 29
+Extra 1: to any base
+`to_base.py`
 ```python
-x = float(input("x: "))
-epsilon = 0.000001
-low = 0.0
-high = 1.0 if x < 1 else x
-guess = (low + high) / 2
-steps = 0
-while abs(guess ** 3 - x) >= epsilon:
-    if guess ** 3 < x:
-        low = guess
-    else:
-        high = guess
-    guess = (low + high) / 2
-    steps += 1
-root = round(guess, 6)
-print(f"cube root: {root} in {steps} steps")
+n = int(input("n: "))
+base = int(input("base: "))
+
+digits = ""
+if n == 0:
+    digits = "0"
+while n > 0:
+    digits = str(n % base) + digits
+    n = n // base
+print(digits)
 ```
 ```python
-The lecture's loop, one function away
-The function: guess ** 3 - x in the condition and in the update, where the lecture had g * g - x
-The bracket: 0 to x for x >= 1, 0 to 1 below (a conditional expression) - the answer must be inside from the start
-The update: too small? move low up. Too big? move high down. The interval halves
-20 steps for x = 2: each step halves an interval of width 2 until the error is below epsilon
+Nothing depended on 2
+% base peels off the last digit, // base drops it
+Last digit first: each new digit is put in front of the ones found so far
+Zero: the loop never runs, so the if before it supplies the single digit 0
+Sanity check: base 10 must print the number unchanged
 ```
 
-## Slide 24
-Exercise 5: the run
-`cube_root.py`
+## Slide 30
+Extra 1: the run
+`to_base.py`
 ```python
-x = float(input("x: "))
-epsilon = 0.000001
-low = 0.0
-high = 1.0 if x < 1 else x
-guess = (low + high) / 2
-steps = 0
-while abs(guess ** 3 - x) >= epsilon:
-    if guess ** 3 < x:
-        low = guess
-    else:
-        high = guess
-    guess = (low + high) / 2
-    steps += 1
-root = round(guess, 6)
-print(f"cube root: {root} in {steps} steps")
+n = int(input("n: "))
+base = int(input("base: "))
+
+digits = ""
+if n == 0:
+    digits = "0"
+while n > 0:
+    digits = str(n % base) + digits
+    n = n // base
+print(digits)
 ```
-`python cube_root.py`
+`python to_base.py`
 ```python
-x: 2
-cube root: 1.259921 in 20 steps
+n: 26
+base: 3
+222
 ```
 
-## Slide 25
-Exercise 5: cos(x) = x
-`fixed_point.py`
+## Slide 31
+Extra 1: from any base
+`from_base.py`
 ```python
-import math
-epsilon = 0.000001
-low = 0.0
-high = 1.0
-guess = (low + high) / 2
-steps = 0
-while abs(math.cos(guess) - guess) >= epsilon:
-    if math.cos(guess) - guess > 0:
-        low = guess
-    else:
-        high = guess
-    guess = (low + high) / 2
-    steps += 1
-answer = round(guess, 6)
-print(f"cos(x) = x: {answer} in {steps} steps")
+text = input("digits: ")
+base = int(input("base: "))
+
+value = 0
+valid = True
+for ch in text:
+    digit = int(ch)
+    if digit >= base:
+        valid = False
+        break
+    value = value * base + digit
+if valid:
+    print(value)
+else:
+    print("not a valid number in that base")
 ```
 ```python
-An equation with no formula
-The function: math.cos(guess) - guess is zero exactly where cos(x) = x
-The sign decides: positive at 0, negative at 1, so a positive midpoint means the answer is to the right
-Nothing else changed: the stopping rule, the halving and the counter are the lecture's
-0.739085: a number you cannot write down exactly, found to six digits in 19 steps
+Horner, with a guard
+Left to right: value * base + digit - everything so far is worth base times more, plus this digit
+The guard: a digit that is too big for the base makes the number invalid
+Flag and break: the loop discovers, the code after the loop acts (lecture 2-2)
+A letter still crashes int(ch) - lecture 3-1's `isdigit()` is the guard to add
 ```
 
-## Slide 26
-Exercise 5: the run
-`fixed_point.py`
+## Slide 32
+Extra 1: the run
+`from_base.py`
 ```python
-import math
-epsilon = 0.000001
-low = 0.0
-high = 1.0
-guess = (low + high) / 2
-steps = 0
-while abs(math.cos(guess) - guess) >= epsilon:
-    if math.cos(guess) - guess > 0:
-        low = guess
-    else:
-        high = guess
-    guess = (low + high) / 2
-    steps += 1
-answer = round(guess, 6)
-print(f"cos(x) = x: {answer} in {steps} steps")
+text = input("digits: ")
+base = int(input("base: "))
+
+value = 0
+valid = True
+for ch in text:
+    digit = int(ch)
+    if digit >= base:
+        valid = False
+        break
+    value = value * base + digit
+if valid:
+    print(value)
+else:
+    print("not a valid number in that base")
 ```
-`python fixed_point.py`
+`python from_base.py`
 ```python
-cos(x) = x: 0.739085 in 19 steps
+digits: 222
+base: 3
+26
 ```
 
-## Slide 27
-Extra 1: The clean palindrome
+## Slide 33
+Extra 2: The clean palindrome
 Warm-up
 Text tools
 Passwords
+Monte Carlo
 Ciphers
-Approximation
 Extra
 Wrap-up
 EXTRA
@@ -714,8 +877,8 @@ The accumulator for strings: cleaned += ch
 word == word[::-1] is the whole test (lecture 3-1)
 ```
 
-## Slide 28
-Extra 1: one solution
+## Slide 34
+Extra 2: one solution
 `clean_palindrome.py`
 ```python
 sentence = input("Sentence: ")
@@ -742,35 +905,35 @@ Cleaned: risetovotesir
 Palindrome: True
 ```
 
-## Slide 29
+## Slide 35
 Recitation summary
 Warm-up
 Text tools
 Passwords
+Monte Carlo
 Ciphers
-Approximation
 Extra
 Wrap-up
 What we practised
+Start in, stop out
+range(start, stop, step) - and a loop that runs zero times is not an error.
+Throw, test, count
+Two loops, a counter reset per size: the share of hits estimates a probability.
 Find the seam, cut, assemble
 find() gives a position; slices take the pieces; + and f-strings rebuild.
 Discover, then act
-Flags are set inside the loop and read after it.
-Loops over positions
-range(len(s)) when a character must meet its neighbour.
-Guess, measure, improve, stop
-Bisection: the same loop for any function that changes sign.
+Flags are set inside the loop and read after it; loops over positions when a character must meet its neighbour.
 Tools we used
+Loops
+for, range(start, stop, step), for ch in s, nested for, end=""
 Strings
 len, s[i], s[a:b:c], in, ==, ord, chr, +=, * and the empty string
 Methods
 strip, lower, upper, find, replace, count, isalpha, isdigit, isupper, islower
 Patterns
-string accumulator, flags, index loops with a step, continue
-Approximation
-abs(), round(), math.cos, epsilon, a bracket that contains the answer
+accumulator, flags, index loops with a step, continue, % and // peel digits off
 
-## Slide 30
+## Slide 36
 Self practice
 AT HOME
 Write a program for each of these.
@@ -778,15 +941,15 @@ Count the doubles
 Count how many times a letter is immediately followed by the same letter: 'bookkeeper' has three.
 The middle
 Print the middle character of a word, or the middle two if its length is even. Test with lengths 1 to 4.
-Anagrams
-Read two words and decide whether one is a rearrangement of the other, using count() on every character.
 Title case by hand
 Capitalise the first letter of every word in a sentence without using title() or split(): the character after a space is a word start.
+The longest chain
+Which start below 100 takes the most steps to reach 1 in the 3n + 1 game of recitation 2? A while inside a for, and a running maximum that remembers the start.
 
-## Slide 31
+## Slide 37
 PYTHON COURSE · WEEK 4 · RECITATION 4
-Next: Functions, lists and tuples
-def, return, lists that change, and records
+Next: Approximation and functions
+bisection, Newton, def, return, and modules
 
 ## From `clean_palindrome.py`
 
@@ -843,6 +1006,46 @@ while abs(math.cos(guess) - guess) >= epsilon:
     steps += 1
 answer = round(guess, 6)
 print(f"cos(x) = x: {answer} in {steps} steps")
+```
+
+## From `from_base.py`
+
+### `from_base.py`
+```python
+text = input("digits: ")
+base = int(input("base: "))
+
+value = 0
+valid = True
+for ch in text:
+    digit = int(ch)
+    if digit >= base:
+        valid = False
+        break
+    value = value * base + digit
+if valid:
+    print(value)
+else:
+    print("not a valid number in that base")
+```
+
+## From `monte_carlo_pi.py`
+
+### `monte_carlo_pi.py`
+```python
+import random
+import math
+
+for n in [100, 1000, 10000, 100000]:
+    hits = 0
+    for i in range(n):
+        x = 2 * random.random() - 1
+        y = 2 * random.random() - 1
+        if x * x + y * y <= 1:
+            hits += 1
+    estimate = 4 * hits / n
+    print(f"N = {n}: {round(estimate, 4)}")
+print(f"math.pi: {round(math.pi, 4)}")
 ```
 
 ## From `password.py`
@@ -913,6 +1116,41 @@ if len(s) > 0:
             count = 1
     result += current + str(count)
 print(f"Encoded: {result}")
+```
+
+## From `sevens.py`
+
+### `sevens.py`
+```python
+import random
+
+N = 10000
+sevens = 0
+for i in range(N):
+    first = int(random.random() * 6) + 1
+    second = int(random.random() * 6) + 1
+    if first + second == 7:
+        sevens += 1
+
+print(f"Sevens: {sevens} of {N}")
+print(f"Share: {round(sevens / N, 3)}")
+print(f"Expected: {round(1 / 6, 3)}")
+```
+
+## From `to_base.py`
+
+### `to_base.py`
+```python
+n = int(input("n: "))
+base = int(input("base: "))
+
+digits = ""
+if n == 0:
+    digits = "0"
+while n > 0:
+    digits = str(n % base) + digits
+    n = n // base
+print(digits)
 ```
 
 ## From `username.py`
@@ -988,6 +1226,24 @@ t.upper()
 print(t)
 print("Zebra" < "apple", "a" < "b")
 print(s.isalpha(), "abc".isalpha())
+```
+
+## From `warmup_range.py`
+
+### `warmup_range.py`
+```python
+for i in range(2, 11, 3):
+    print(i, end=" ")
+print()
+for i in range(5, 0, -2):
+    print(i, end=" ")
+print()
+for ch in "abc":
+    print(ch * 2, end=" ")
+print()
+for i in range(3, 3):
+    print("never")
+print("done")
 ```
 
 ## From `warmup_slicing.py`

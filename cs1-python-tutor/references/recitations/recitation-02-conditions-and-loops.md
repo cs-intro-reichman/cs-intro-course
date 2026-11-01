@@ -8,37 +8,72 @@ while
 ```
 PYTHON COURSE · WEEK 2 · RECITATION 2
 Recitation 2
-Conditions and loops
+Conditions and while loops
 
 ## Slide 2
 Recitation overview
 Warm-up
 Conditions
 while
-for
-Monte Carlo
+Nested loops
+Sentinel
 Extra
 Wrap-up
 1
-Loop predictions
-how many lines, and why
+Predictions
+booleans, floats, and the four loop bugs
 2
 Conditions
-elif, order, and a one-line if
+elif, order, a one-line if, and guards
 3
 while
 games that stop when something happens
 4
-for and range
-count, accumulate, nest
+Loops inside loops
+patterns, and a stream that ends with a sentinel
 
 ## Slide 3
+Warm-up: booleans and floats
+Warm-up
+Conditions
+while
+Nested loops
+Sentinel
+Extra
+Wrap-up
+WARM-UP · 3 MIN
+x is 7. Write the output of every line before we run it. Two of the lines are traps.
+`warmup_booleans.py`
+```python
+x = 7
+print(x > 5 and x < 10)
+print(not x == 7)
+print(x % 2 == 0 or x % 3 == 0)
+print(5 <= x <= 7)
+print(x == 7.0, x == "7")
+print(0.1 + 0.2 == 0.3)
+print(abs(0.1 + 0.2 - 0.3) < 1e-9)
+print(type(x > 5))
+```
+```python
+The answers
+True
+False
+False (7 is odd and not a multiple of 3)
+True (one comparison, not two)
+True False (7 == 7.0, but "7" is text)
+False (the float trap)
+True (compare the gap)
+<class 'bool'>
+```
+
+## Slide 4
 Warm-up: how many lines?
 Warm-up
 Conditions
 while
-for
-Monte Carlo
+Nested loops
+Sentinel
 Extra
 Wrap-up
 WARM-UP · 4 MIN
@@ -62,9 +97,16 @@ A: 5 lines, 0 to 4, and i ends at 5
 B: 6 lines, 0 to 5, and i ends at 6
 Neither is wrong: using one when you meant the other is the bug
 
-## Slide 4
+## Slide 5
 Warm-up: what goes wrong?
-WARM-UP · 4 MIN
+Warm-up
+Conditions
+while
+Nested loops
+Sentinel
+Extra
+Wrap-up
+WARM-UP · 2 MIN
 Two more. Each has one of the classic loop bugs. Which, and what is printed?
 `warmup_loops_2.py`
 ```python
@@ -75,42 +117,19 @@ while i < 5:
 i += 1
 
 # D
+i = 1
 total = 0
-for i in range(1, 4):
+while i < 4:
     total = 0
     total += i
+    i += 1
 print(total)
 ```
+```python
 The answers
 C: prints 0 forever - the update sits outside the body. Ctrl-C stops it
 D: prints 3, not 6 - total is reset to 0 on every pass
 Read the indentation, not the intention
-
-## Slide 5
-Warm-up: range
-WARM-UP · 2 MIN
-Four loops with for. Write the four lines they print.
-`warmup_range.py`
-```python
-for i in range(2, 11, 3):
-    print(i, end=" ")
-print()
-for i in range(5, 0, -2):
-    print(i, end=" ")
-print()
-for ch in "abc":
-    print(ch * 2, end=" ")
-print()
-for i in range(3, 3):
-    print("never")
-print("done")
-```
-```python
-The answers
-2 5 8
-5 3 1
-aa bb cc
-done (the empty range runs 0 times)
 ```
 
 ## Slide 6
@@ -118,8 +137,8 @@ Exercise 1: Ticket price
 Warm-up
 Conditions
 while
-for
-Monte Carlo
+Nested loops
+Sentinel
 Extra
 Wrap-up
 EASY · 7 MIN ON YOUR OWN
@@ -144,6 +163,36 @@ x if condition else y is a value: assign it, print it
 ```
 
 ## Slide 7
+Exercise 1: Is Eligible to Vote
+Warm-up
+Conditions
+while
+Nested loops
+Sentinel
+Extra
+Wrap-up
+EASY · 7 MIN ON YOUR OWN
+Task: a cinema charges by age. Read an age and print the price.
+Under 5: free. 5 to 17: 20. 18 to 64: 40. 65 and up: 25
+One if-elif-else chain, with the tests in an order that works
+Print 'Free' for a price of 0, using the conditional expression (one line)
+```python
+terminal
+```
+```python
+Age: 3
+Free
+
+Age: 70
+Price: 25
+```
+```python
+Think about
+An elif chain stops at the first True test
+x if condition else y is a value: assign it, print it
+```
+
+## Slide 8
 Exercise 1: one solution
 `ticket.py`
 ```python
@@ -173,7 +222,7 @@ Age: 17
 Price: 20
 ```
 
-## Slide 8
+## Slide 9
 Alice reordered the tests. Same result?
 Alice tested the biggest group first. Same result for every age?
 ```python
@@ -205,13 +254,118 @@ No. A three-year-old passes age < 65 first and pays 40. The later tests never ru
 Rule: most specific test first, or make every test exclusive: 5 <= age < 18.
 ```
 
-## Slide 9
-Exercise 2: Guess the number
+## Slide 10
+Exercise 2: The quadratic equation, properly
 Warm-up
 Conditions
 while
-for
-Monte Carlo
+Nested loops
+Sentinel
+Extra
+Wrap-up
+EASY · 7 MIN ON YOUR OWN
+Task: lecture 1-2's quadratic.py crashes when d is negative, and assumes a is 1. Fix both.
+Read a, b and c as floats; the equation is a x² + b x + c = 0
+If a is 0 it is not quadratic: one root -c / b when b is not 0, otherwise 'Not an equation'
+Otherwise d = b² - 4 a c decides: no real roots, one root, or two
+Round every root to 2 digits; call math.sqrt only when it is safe
+```python
+terminal
+```
+```python
+a: 1
+b: -3
+c: 2
+x1 = 2.0
+x2 = 1.0
+```
+Think about
+A guard runs before the operation it protects: test d, then take the root
+Ask about a before d: the formula divides by 2a
+Three cases of d: an elif chain, in an order that cannot overlap
+
+## Slide 11
+Exercise 2: one solution
+`quadratic.py`
+```python
+import math
+a = float(input("a: "))
+b = float(input("b: "))
+c = float(input("c: "))
+if a == 0:
+    if b == 0:
+        print("Not an equation")
+    else:
+        print(f"One root: {round(-c / b, 2)}")
+else:
+    d = b * b - 4 * a * c
+    if d < 0:
+        print("No real roots")
+    elif d == 0:
+        print(f"One root: {round(-b / (2 * a), 2)}")
+    else:
+        root = math.sqrt(d)
+        print(f"x1 = {round((-b + root) / (2 * a), 2)}")
+        print(f"x2 = {round((-b - root) / (2 * a), 2)}")
+```
+Guards, nested
+a == 0 first: the formula divides by 2a, so the linear case is answered before any root is computed
+d decides: an elif chain with three cases that cannot overlap - negative, zero, positive
+math.sqrt(d) only in the else: the guard of lecture 2-1, protecting the call that crashed in lecture 1-2
+round(..., 2) on the printed value: the arithmetic stays exact; only the text is shortened
+`python quadratic.py`
+```python
+a: 1
+b: 2
+c: 1
+One root: -1.0
+```
+
+## Slide 12
+Exercise 2: the run
+`quadratic.py`
+```python
+import math
+a = float(input("a: "))
+b = float(input("b: "))
+c = float(input("c: "))
+if a == 0:
+    if b == 0:
+        print("Not an equation")
+    else:
+        print(f"One root: {round(-c / b, 2)}")
+else:
+    d = b * b - 4 * a * c
+    if d < 0:
+        print("No real roots")
+    elif d == 0:
+        print(f"One root: {round(-b / (2 * a), 2)}")
+    else:
+        root = math.sqrt(d)
+        print(f"x1 = {round((-b + root) / (2 * a), 2)}")
+        print(f"x2 = {round((-b - root) / (2 * a), 2)}")
+```
+`python quadratic.py`
+```python
+a: 1
+b: -3
+c: 2
+x1 = 2.0
+x2 = 1.0
+
+a: 0
+b: 2
+c: -8
+One root: 4.0
+```
+
+## Slide 13
+Exercise 3: Guess the number
+Warm-up
+Conditions
+while
+Nested loops
+Sentinel
 Extra
 Wrap-up
 MID · 10 MIN ON YOUR OWN
@@ -236,8 +390,8 @@ Rounds unknown in advance: while True and break when it is found
 The secret: int(random.random() * 100) + 1, a 100-sided die
 ```
 
-## Slide 10
-Exercise 2: one solution
+## Slide 14
+Exercise 3: one solution
 `guess.py`
 ```python
 import random
@@ -265,8 +419,8 @@ Nested if: inside the else, the three valid cases; tries is bumped once, before 
 break: ends the loop at once; the header never becomes False
 ```
 
-## Slide 11
-Exercise 2: the run
+## Slide 15
+Exercise 3: the run
 `guess.py`
 ```python
 import random
@@ -296,8 +450,8 @@ Guess: 62
 Correct in 3 tries
 ```
 
-## Slide 12
-Exercise 2, expansion: the computer guesses
+## Slide 16
+Exercise 3, expansion: the computer guesses
 `computer_guesses.py`
 ```python
 low = 1
@@ -321,13 +475,13 @@ h means 'higher than that', l means 'lower', c means 'correct'
 Halving: every answer throws away half the range - at most 7 rounds for 1 to 100
 Bisection in disguise: lecture 3-2 will do this to find a square root
 
-## Slide 13
-Exercise 3: The 3n + 1 game
+## Slide 17
+Exercise 4: The 3n + 1 game
 Warm-up
 Conditions
 while
-for
-Monte Carlo
+Nested loops
+Sentinel
 Extra
 Wrap-up
 MID · 10 MIN ON YOUR OWN
@@ -350,8 +504,8 @@ Even or odd: n % 2 == 0
 One accumulator counts the steps
 ```
 
-## Slide 14
-Exercise 3: one solution
+## Slide 18
+Exercise 4: one solution
 `collatz.py`
 ```python
 n = int(input("n: "))
@@ -375,8 +529,8 @@ The last 1: printed after the loop, because the body never sees n == 1
 n // 2, not n / 2: keep n an int, or 3.0 appears in the output
 ```
 
-## Slide 15
-Exercise 3: the run
+## Slide 19
+Exercise 4: the run
 `collatz.py`
 ```python
 n = int(input("n: "))
@@ -399,49 +553,17 @@ n: 6
 8 steps
 ```
 
-## Slide 16
-Exercise 3, expansion: the longest chain
-`longest_chain.py`
-```python
-best_start = 1
-best_steps = 0
-for start in range(1, 100):
-    n = start
-    steps = 0
-    while n != 1:
-        if n % 2 == 0:
-            n = n // 2
-        else:
-            n = 3 * n + 1
-        steps += 1
-    if steps > best_steps:
-        best_steps = steps
-        best_start = start
-print(f"{best_start} takes {best_steps} steps")
-```
-```python
-A loop inside a loop
-The outer for tries every start below 100; the inner while runs one chain
-Reset per start: n = start and steps = 0 belong inside the outer loop
-Running maximum: remember the best so far, and which start produced it
-Answer: 97 takes 118 steps
-```
-`python longest_chain.py`
-```python
-97 takes 118 steps
-```
-
-## Slide 17
-Exercise 4: Patterns
+## Slide 20
+Exercise 5: Patterns
 Warm-up
 Conditions
 while
-for
-Monte Carlo
+Nested loops
+Sentinel
 Extra
 Wrap-up
 MID · 10 MIN ON YOUR OWN
-Task: read a size n and print two patterns with nested loops.
+Task: read a size n and print two patterns with a while loop inside a while loop.
 A hollow square: stars on the border, spaces inside
 A checkerboard: # and . alternating, every row shifted by one
 Each cell is one print(..., end=""); one bare print() ends a row
@@ -460,45 +582,54 @@ Think about
 Which cells are on the border? Think about i and j, not about the picture
 On the checkerboard, what do all the # cells have in common? Add i and j
 
-## Slide 18
-Exercise 4: the hollow square
+## Slide 21
+Exercise 5: the hollow square
 `hollow_square.py`
 ```python
 n = int(input("n: "))
 
-for i in range(n):
-    for j in range(n):
+i = 0
+while i < n:
+    j = 0
+    while j < n:
         on_row = i == 0 or i == n - 1
         on_col = j == 0 or j == n - 1
         if on_row or on_col:
             print("*", end="")
         else:
             print(" ", end="")
+        j += 1
     print()
+    i += 1
 ```
 ```python
 A cell is a pair (i, j)
-The visit: two loops reach every cell once, row by row
+The visit: two loops reach every cell once, row by row; j = 0 sits inside the outer loop, so every row starts at column 0
 The border: first or last row, or first or last column - two booleans, joined by or
 The row: end="" keeps the cells on one line; the bare print() ends it
+The updates: j += 1 is the last line of the inner body, i += 1 the last line of the outer one
 Try n = 1 and n = 2: every cell is on the border
 ```
 
-## Slide 19
-Exercise 4: the run
+## Slide 22
+Exercise 5: the run
 `hollow_square.py`
 ```python
 n = int(input("n: "))
 
-for i in range(n):
-    for j in range(n):
+i = 0
+while i < n:
+    j = 0
+    while j < n:
         on_row = i == 0 or i == n - 1
         on_col = j == 0 or j == n - 1
         if on_row or on_col:
             print("*", end="")
         else:
             print(" ", end="")
+        j += 1
     print()
+    i += 1
 ```
 `python hollow_square.py`
 ```python
@@ -510,19 +641,23 @@ n: 5
 *****
 ```
 
-## Slide 20
-Exercise 4: the checkerboard
+## Slide 23
+Exercise 5: the checkerboard
 `checkerboard.py`
 ```python
 n = int(input("n: "))
 
-for i in range(n):
-    for j in range(n):
+i = 0
+while i < n:
+    j = 0
+    while j < n:
         if (i + j) % 2 == 0:
             print("#", end="")
         else:
             print(".", end="")
+        j += 1
     print()
+    i += 1
 ```
 ```python
 Parity of i + j
@@ -532,19 +667,23 @@ Why it works: neighbours differ by one in i or in j, never in both
 Your turn: swap the two characters without touching the condition
 ```
 
-## Slide 21
-Exercise 4: the run
+## Slide 24
+Exercise 5: the run
 `checkerboard.py`
 ```python
 n = int(input("n: "))
 
-for i in range(n):
-    for j in range(n):
+i = 0
+while i < n:
+    j = 0
+    while j < n:
         if (i + j) % 2 == 0:
             print("#", end="")
         else:
             print(".", end="")
+        j += 1
     print()
+    i += 1
 ```
 `python checkerboard.py`
 ```python
@@ -556,318 +695,300 @@ n: 5
 #.#.#
 ```
 
-## Slide 22
-Exercise 5: Darts and pi
+## Slide 25
+Exercise 6: Statistics until -1
 Warm-up
 Conditions
 while
-for
-Monte Carlo
+Nested loops
+Sentinel
 Extra
 Wrap-up
 HIGH · 12 MIN ON YOUR OWN
-Task: throw N random points into the square [-1, 1) x [-1, 1). Count how many land inside the unit circle.
-The circle covers pi/4 of the square, so 4 * inside / N is an estimate of pi
-Print the estimate for N = 100, 1000, 10000 and 100000 and compare with math.pi
-Last week's random point in the circle (lecture 2-1) is one dart; now throw N of them
+Task: read non-negative numbers until -1 is entered. Report what came in.
+Print how many numbers there were, their sum, their average (2 digits), the smallest and the largest
+If -1 was the very first thing typed, print 'No numbers were entered.' and nothing else
+Lecture 2-1's smallest.py found the minimum; keep its shape and add the other four answers
 ```python
 terminal
 ```
 ```python
-N = 100: 3.24
-N = 1000: 3.152
-N = 10000: 3.1384
-N = 100000: 3.1416
-math.pi: 3.1416
+Number (-1 to finish): 8
+Number (-1 to finish): 3
+Number (-1 to finish): -1
+Count: 2
+Sum: 11
+Average: 5.5
+Smallest: 3
+Largest: 8
 ```
-```python
 Think about
-A point (x, y) is inside the circle when x * x + y * y <= 1
-for n in [100, 1000, 10000, 100000]: walks the four sizes
-The accumulator: count the hits
-```
-
-## Slide 23
-The idea: area as probability
-A random point in the square lands inside the circle with probability pi / 4. Count how often it does.
-```python
-1 · Throw - x = 2 * random.random() - 1, the same for y
-2 · Test - inside when x * x + y * y <= 1
-3 · Count - hits += 1 for every point inside
-4 · Estimate - hits / n is about pi / 4, so pi is about 4 * hits / n
-5 · Repeat - more darts, better estimate; the error shrinks slowly
-```
-In pseudocode
-for each size n:
-      hits = 0
-      repeat n times:
-            throw a random point
-            if it is inside: hits += 1
-      print 4 * hits / n
-
-## Slide 24
-Exercise 5: one solution
-`monte_carlo_pi.py`
-```python
-import random
-import math
-
-for n in [100, 1000, 10000, 100000]:
-    hits = 0
-    for i in range(n):
-        x = 2 * random.random() - 1
-        y = 2 * random.random() - 1
-        if x * x + y * y <= 1:
-            hits += 1
-    estimate = 4 * hits / n
-    print(f"N = {n}: {round(estimate, 4)}")
-print(f"math.pi: {round(math.pi, 4)}")
-```
-```python
-Reading the program
-Two loops: the outer picks a size, the inner throws that many darts
-Reset per size: hits = 0 sits inside the outer loop
-A fresh point per dart: both random calls are inside the inner loop
-The estimate uses /: a float, printed rounded to 4 digits
-```
-
-## Slide 25
-Exercise 5: the run
-`monte_carlo_pi.py`
-```python
-import random
-import math
-
-for n in [100, 1000, 10000, 100000]:
-    hits = 0
-    for i in range(n):
-        x = 2 * random.random() - 1
-        y = 2 * random.random() - 1
-        if x * x + y * y <= 1:
-            hits += 1
-    estimate = 4 * hits / n
-    print(f"N = {n}: {round(estimate, 4)}")
-print(f"math.pi: {round(math.pi, 4)}")
-```
-```python
-python monte_carlo_pi.py (one run)
-```
-```python
-N = 100: 3.24
-N = 1000: 3.152
-N = 10000: 3.1384
-N = 100000: 3.1416
-math.pi: 3.1416
-```
+The first number seeds smallest and largest: read it before the loop
+Four accumulators, initialised once; the average divides by count, so guard the empty case
 
 ## Slide 26
-Exercise 5, expansion: how often is it 7?
-`sevens.py`
+The idea: seed, then stream
+The numbers arrive one at a time and the program does not know how many. One value ends the stream; the rest is bookkeeping.
 ```python
-import random
-
-N = 10000
-sevens = 0
-for i in range(N):
-    first = int(random.random() * 6) + 1
-    second = int(random.random() * 6) + 1
-    if first + second == 7:
-        sevens += 1
-
-print(f"Sevens: {sevens} of {N}")
-print(f"Share: {round(sevens / N, 3)}")
-print(f"Expected: {round(1 / 6, 3)}")
+1 · Seed - read the first number before the loop; it is the smallest and the largest so far
+2 · Test - the loop runs while the number is not the sentinel: while x != END
+3 · Account - count it, add it, and move smallest and largest if it beats them
+4 · Next - the last line of the body reads the next number; the header tests it
+5 · Report - after the loop: nothing was entered, or the five answers
 ```
-Last week's question, answered
-Two dice, ten thousand times: the same three-part shape - throw, test, count
-Expected: 6 of the 36 combinations add up to 7, so about one roll in six
-Your turn: count how often the two dice are equal, and how often the total is 2
-```python
-python sevens.py (one run)
-```
-```python
-Sevens: 1687 of 10000
-Share: 0.169
-Expected: 0.167
-```
+In pseudocode
+read x
+count = 0, total = 0
+smallest = x, largest = x
+while x is not -1:
+      count it, add it
+      smallest? largest?
+      read the next x
+if count is 0: say so
+else: print the five answers
 
 ## Slide 27
-Extra 1: Any base
-Warm-up
-Conditions
-while
-for
-Monte Carlo
-Extra
-Wrap-up
-EXTRA
-Task: generalise the two binary conversions of lecture 2-2 to any base from 2 to 10.
-to_base: read a number n >= 0 and a base; print n written in that base (26 in base 3 is 222)
-from_base: read a string of digits and a base; print its value (222 in base 3 is 26)
-Handle n = 0, and stop with a message if a digit is too big for the base
+Exercise 6: the loop (1 of 2)
 ```python
-terminal
+stats.py (lines 1-16)
 ```
 ```python
-n: 26
-base: 3
-222
+END = -1
 
-digits: 222
-base: 3
-26
+x = int(input("Number (-1 to finish): "))
+count = 0
+total = 0
+smallest = x
+largest = x
+
+while x != END:
+    count += 1
+    total += x
+    if x < smallest:
+        smallest = x
+    if x > largest:
+        largest = x
+    x = int(input("Number (-1 to finish): "))
 ```
 ```python
-Think about
-In base 2 the loop used % 2 and // 2. What do they become?
-Reading back: value = value * base + int(ch) for each character
+Discover
+A named sentinel: END = -1 says what the number means; the header reads while x != END
+The seed: smallest and largest start as the first number, not as 0
+Two independent ifs: a number can be the new smallest or the new largest, and the first one is both
+The read is last: handle the current x, then fetch the next; the header tests it
 ```
 
 ## Slide 28
-Extra 1: to any base
-`to_base.py`
+Exercise 6: the report (2 of 2)
 ```python
-n = int(input("n: "))
-base = int(input("base: "))
-
-digits = ""
-if n == 0:
-    digits = "0"
-while n > 0:
-    digits = str(n % base) + digits
-    n = n // base
-print(digits)
+stats.py (lines 18-26)
 ```
 ```python
-Nothing depended on 2
-% base peels off the last digit, // base drops it
-Last digit first: each new digit is put in front of the ones found so far
-Zero: the loop never runs, so the if before it supplies the single digit 0
-Sanity check: base 10 must print the number unchanged
+if count == 0:
+    print("No numbers were entered.")
+else:
+    print(f"Count: {count}")
+    print(f"Sum: {total}")
+    print(f"Average: {round(total / count, 2)}")
+    print(f"Smallest: {smallest}")
+    print(f"Largest: {largest}")
+```
+Act
+The guard: count == 0 means -1 came first; the else never divides by zero
+Five lines, five answers: f-strings with the accumulators, round() for the average only
+`python stats.py`
+```python
+Number (-1 to finish): 8
+Number (-1 to finish): 3
+Number (-1 to finish): 9
+Number (-1 to finish): -1
+Count: 3
+Sum: 20
+Average: 6.67
+Smallest: 3
+Largest: 9
 ```
 
 ## Slide 29
-Extra 1: the run
-`to_base.py`
+Exercise 6, expansion: a text sentinel
+`stats_text.py`
 ```python
-n = int(input("n: "))
-base = int(input("base: "))
+text = input("Number (done to finish): ")
+count = 0
+total = 0
 
-digits = ""
-if n == 0:
-    digits = "0"
-while n > 0:
-    digits = str(n % base) + digits
-    n = n // base
-print(digits)
+while text != "done":
+    x = int(text)
+    count += 1
+    total += x
+    text = input("Number (done to finish): ")
+
+if count == 0:
+    print("No numbers were entered.")
+else:
+    print(f"Count: {count}")
+    print(f"Average: {round(total / count, 2)}")
 ```
-`python to_base.py`
 ```python
-n: 26
-base: 3
-222
+When -1 is a legitimate value
+Read text, not a number: the line stays a string until the loop has checked it
+The sentinel is a word: while text != "done" - a string comparison, as in lecture 1-2; no number can collide with it
+Cast inside the body: int(text) runs only for real numbers, never for the sentinel
+```
+`python stats_text.py`
+```python
+Number (done to finish): 8
+Number (done to finish): -1
+Number (done to finish): done
+Count: 2
+Average: 3.5
 ```
 
 ## Slide 30
-Extra 1: from any base
-`from_base.py`
+Extra 1: Digits of any length
+Warm-up
+Conditions
+while
+Nested loops
+Sentinel
+Extra
+Wrap-up
+EXTRA
+Task: recitation 1 took a four-digit number apart. Do it for any length, with a loop.
+Read a non-negative integer. Print how many digits it has, their sum, the number backwards, and whether it is a palindrome
+Only //, %, * and + inside the loop - no strings
+Check your answer on 0 and on 10 before you trust it
 ```python
-text = input("digits: ")
-base = int(input("base: "))
-
-value = 0
-valid = True
-for ch in text:
-    digit = int(ch)
-    if digit >= base:
-        valid = False
-        break
-    value = value * base + digit
-if valid:
-    print(value)
-else:
-    print("not a valid number in that base")
+terminal
 ```
 ```python
-Horner, with a guard
-Left to right: value * base + digit - everything so far is worth base times more, plus this digit
-The guard: a digit that is too big for the base makes the number invalid
-Flag and break: the loop discovers, the code after the loop acts (lecture 2-2)
-A letter still crashes int(ch) - a stated limitation until next week's strings
+Number: 4913
+Digits: 4
+Sum: 17
+Backwards: 3194
+Palindrome: False
+```
+```python
+Think about
+n % 10 is the last digit, n // 10 drops it (lecture 2-1)
+Backwards: backwards * 10 + digit, last digit first
+The loop never runs for 0 - how many digits does 0 have?
 ```
 
 ## Slide 31
-Extra 1: the run
-`from_base.py`
+Extra 1: one solution
+`digits_loop.py`
 ```python
-text = input("digits: ")
-base = int(input("base: "))
-
-value = 0
-valid = True
-for ch in text:
-    digit = int(ch)
-    if digit >= base:
-        valid = False
-        break
-    value = value * base + digit
-if valid:
-    print(value)
-else:
-    print("not a valid number in that base")
+n = int(input("Number: "))
+original = n
+digits = 0
+total = 0
+backwards = 0
+while n > 0:
+    digit = n % 10
+    digits += 1
+    total += digit
+    backwards = backwards * 10 + digit
+    n = n // 10
+if original == 0:
+    digits = 1
+print(f"Digits: {digits}")
+print(f"Sum: {total}")
+print(f"Backwards: {backwards}")
+print(f"Palindrome: {original == backwards}")
 ```
-`python from_base.py`
 ```python
-digits: 222
-base: 3
-26
+Four accumulators, one loop
+Keep the original: n is destroyed by the loop, so a copy is kept for the palindrome test
+Peel and push: % 10 takes the last digit, // 10 drops it, * 10 + digit builds the mirror image
+The zero guard: the loop never runs for 0, so digits would stay 0; one if fixes the count
+10 backwards is 1: the leading zero cannot be stored in a number - correct, and worth saying
+```
+`python digits_loop.py`
+```python
+Number: 12321
+Digits: 5
+Sum: 9
+Backwards: 12321
+Palindrome: True
 ```
 
 ## Slide 32
+Extra 1: the run
+`digits_loop.py`
+```python
+n = int(input("Number: "))
+original = n
+digits = 0
+total = 0
+backwards = 0
+while n > 0:
+    digit = n % 10
+    digits += 1
+    total += digit
+    backwards = backwards * 10 + digit
+    n = n // 10
+if original == 0:
+    digits = 1
+print(f"Digits: {digits}")
+print(f"Sum: {total}")
+print(f"Backwards: {backwards}")
+print(f"Palindrome: {original == backwards}")
+```
+`python digits_loop.py`
+```python
+Number: 4913
+Digits: 4
+Sum: 17
+Backwards: 3194
+Palindrome: False
+```
+
+## Slide 33
 Recitation summary
 Warm-up
 Conditions
 while
-for
-Monte Carlo
+Nested loops
+Sentinel
 Extra
 Wrap-up
 What we practised
 Order in an elif chain
 Most specific first, or make every test exclusive.
+Guard before you compute
+Test a, test d, then take the root - never the other way round.
 while True and break
 Exit from the middle, where the answer is known.
-The three moving parts
-Initialise, test, update - and reset inside the outer loop.
-Simulation
-Throw, test, count: the share of hits estimates a probability.
+Seed, then stream
+Read the first value before the loop; the last line of the body reads the next.
 Tools we used
+Booleans
+the six comparisons, and, or, not, chained comparisons, bool()
 Conditions
-if, elif, else, the conditional expression, and, or, chained comparisons
+if, elif, else, nested if, the conditional expression, guards
 Loops
-while, for, range(start, stop, step), break, +=, end=""
+while, +=, break, while True, a loop inside a loop, end=""
 Patterns
-accumulator, running maximum, flag and break, nested loops
-Conversions
-% and // peel digits off; value * base + digit reads them back
+accumulator, running minimum and maximum, sentinel, a trace table
 
-## Slide 33
+## Slide 34
 Self practice
 AT HOME
 Write a program for each of these.
-Sentinel statistics
-Read numbers until -1 is entered. Print how many there were, their sum, their average, the smallest and the largest. Say so if there were none.
 A diamond
-Read n and print a diamond of stars with 2n - 1 rows: 1 star, then 3, ..., 2n - 1, then back down. abs() helps.
+Read n and print a diamond of stars with 2n - 1 rows: 1 star, then 3, ..., 2n - 1, then back down. Two while loops and abs() do it.
 Fizz and buzz
-Print the numbers 1 to 50, but replace multiples of 3 by Fizz, multiples of 5 by Buzz, and multiples of both by FizzBuzz.
-Count the digits
-Read a non-negative integer and print how many digits it has, with a loop and % and // - then check your answer against 0 and 10.
+Print the numbers 1 to 50 with a while loop, but replace multiples of 3 by Fizz, multiples of 5 by Buzz, and multiples of both by FizzBuzz.
+Doubling time
+Read an amount and a yearly interest rate in percent. How many years until the amount has doubled? A loop that grows the amount until it passes the target.
+Leap years
+Read two years and print every leap year between them, one per line, with the boolean of lecture 1-2 inside a while loop. Count them too.
 
-## Slide 34
+## Slide 35
 PYTHON COURSE · WEEK 3 · RECITATION 3
-Next: Strings and approximation
-indexing, slicing, methods, and bisection
+Next: for loops, binary and strings
+range, numeral systems, indexing, slicing, and methods
 
 ## From `checkerboard.py`
 
@@ -875,13 +996,17 @@ indexing, slicing, methods, and bisection
 ```python
 n = int(input("n: "))
 
-for i in range(n):
-    for j in range(n):
+i = 0
+while i < n:
+    j = 0
+    while j < n:
         if (i + j) % 2 == 0:
             print("#", end="")
         else:
             print(".", end="")
+        j += 1
     print()
+    i += 1
 ```
 
 ## From `collatz.py`
@@ -920,6 +1045,29 @@ while True:
         low = guess + 1
     else:
         high = guess - 1
+```
+
+## From `digits_loop.py`
+
+### `digits_loop.py`
+```python
+n = int(input("Number: "))
+original = n
+digits = 0
+total = 0
+backwards = 0
+while n > 0:
+    digit = n % 10
+    digits += 1
+    total += digit
+    backwards = backwards * 10 + digit
+    n = n // 10
+if original == 0:
+    digits = 1
+print(f"Digits: {digits}")
+print(f"Sum: {total}")
+print(f"Backwards: {backwards}")
+print(f"Palindrome: {original == backwards}")
 ```
 
 ## From `from_base.py`
@@ -971,15 +1119,19 @@ while True:
 ```python
 n = int(input("n: "))
 
-for i in range(n):
-    for j in range(n):
+i = 0
+while i < n:
+    j = 0
+    while j < n:
         on_row = i == 0 or i == n - 1
         on_col = j == 0 or j == n - 1
         if on_row or on_col:
             print("*", end="")
         else:
             print(" ", end="")
+        j += 1
     print()
+    i += 1
 ```
 
 ## From `longest_chain.py`
@@ -1022,6 +1174,31 @@ for n in [100, 1000, 10000, 100000]:
 print(f"math.pi: {round(math.pi, 4)}")
 ```
 
+## From `quadratic.py`
+
+### `quadratic.py`
+```python
+import math
+a = float(input("a: "))
+b = float(input("b: "))
+c = float(input("c: "))
+if a == 0:
+    if b == 0:
+        print("Not an equation")
+    else:
+        print(f"One root: {round(-c / b, 2)}")
+else:
+    d = b * b - 4 * a * c
+    if d < 0:
+        print("No real roots")
+    elif d == 0:
+        print(f"One root: {round(-b / (2 * a), 2)}")
+    else:
+        root = math.sqrt(d)
+        print(f"x1 = {round((-b + root) / (2 * a), 2)}")
+        print(f"x2 = {round((-b - root) / (2 * a), 2)}")
+```
+
 ## From `sevens.py`
 
 ### `sevens.py`
@@ -1039,6 +1216,58 @@ for i in range(N):
 print(f"Sevens: {sevens} of {N}")
 print(f"Share: {round(sevens / N, 3)}")
 print(f"Expected: {round(1 / 6, 3)}")
+```
+
+## From `stats.py`
+
+### `stats.py`
+```python
+END = -1
+
+x = int(input("Number (-1 to finish): "))
+count = 0
+total = 0
+smallest = x
+largest = x
+
+while x != END:
+    count += 1
+    total += x
+    if x < smallest:
+        smallest = x
+    if x > largest:
+        largest = x
+    x = int(input("Number (-1 to finish): "))
+
+if count == 0:
+    print("No numbers were entered.")
+else:
+    print(f"Count: {count}")
+    print(f"Sum: {total}")
+    print(f"Average: {round(total / count, 2)}")
+    print(f"Smallest: {smallest}")
+    print(f"Largest: {largest}")
+```
+
+## From `stats_text.py`
+
+### `stats_text.py`
+```python
+text = input("Number (done to finish): ")
+count = 0
+total = 0
+
+while text != "done":
+    x = int(text)
+    count += 1
+    total += x
+    text = input("Number (done to finish): ")
+
+if count == 0:
+    print("No numbers were entered.")
+else:
+    print(f"Count: {count}")
+    print(f"Average: {round(total / count, 2)}")
 ```
 
 ## From `ticket.py`
@@ -1095,6 +1324,21 @@ while n > 0:
 print(digits)
 ```
 
+## From `warmup_booleans.py`
+
+### `warmup_booleans.py`
+```python
+x = 7
+print(x > 5 and x < 10)
+print(not x == 7)
+print(x % 2 == 0 or x % 3 == 0)
+print(5 <= x <= 7)
+print(x == 7.0, x == "7")
+print(0.1 + 0.2 == 0.3)
+print(abs(0.1 + 0.2 - 0.3) < 1e-9)
+print(type(x > 5))
+```
+
 ## From `warmup_loops_1.py`
 
 ### `warmup_loops_1.py`
@@ -1123,10 +1367,12 @@ while i < 5:
 i += 1
 
 # D
+i = 1
 total = 0
-for i in range(1, 4):
+while i < 4:
     total = 0
     total += i
+    i += 1
 print(total)
 ```
 

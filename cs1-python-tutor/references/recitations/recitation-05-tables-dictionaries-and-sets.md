@@ -4,41 +4,76 @@
 
 ## Slide 1
 ```python
-{ }
+[:]
 ```
 PYTHON COURSE · WEEK 5 · RECITATION 5
 Recitation 5
-Tables, dictionaries and sets
+Lists, tuples and tables
 
 ## Slide 2
 Recitation overview
 Warm-up
 Comprehensions
+Lists
+Records
 Boards
-Counting
-Sets
 Extra
 Wrap-up
 1
 Predictions
-comprehensions, the grid trap, keys
+aliasing, None, comprehensions, and the grid trap
 2
+One-liners
+loops to comprehensions, pairs, and zip
+3
+Lists and records
+mutate or return; a grade book from tuples
+4
 Boards
 tic-tac-toe, in four functions
-3
-Counting
-letter frequencies and anagram groups
-4
-Sets
-who takes what, in one operator
 
 ## Slide 3
+Warm-up: lists
+Warm-up
+Comprehensions
+Lists
+Records
+Boards
+Extra
+Wrap-up
+WARM-UP · 4 MIN
+Six printed lines. Two of them are traps from lecture 4-2 - which two?
+`warmup_lists.py`
+```python
+a = [1, 2, 3]
+b = a
+b.append(4)
+print(a)
+c = a[:]
+c[0] = 99
+print(a, c)
+print(a.sort())
+print(a)
+t = (1, 2)
+x, y = t
+print(y, x)
+print([1, 2] + [3], [0] * 3)
+```
+The answers
+[1, 2, 3, 4]   (b is a second name, not a copy)
+[1, 2, 3, 4] [99, 2, 3, 4]   (a slice is a copy)
+None   (sort changes a and returns nothing)
+[1, 2, 3, 4]
+2 1
+[1, 2, 3] [0, 0, 0]
+
+## Slide 4
 Warm-up: comprehensions and grids
 Warm-up
 Comprehensions
+Lists
+Records
 Boards
-Counting
-Sets
 Extra
 Wrap-up
 WARM-UP · 4 MIN
@@ -69,42 +104,13 @@ The answers
 [0, 0]  (column 1)
 ```
 
-## Slide 4
-Warm-up: dictionaries and sets
-WARM-UP · 4 MIN
-Eight lines. Three of them are about the difference between keys and values.
-`warmup_dicts.py`
-```python
-d = {"a": 1, "b": 2}
-d["c"] = 3
-d["a"] = 10
-print(d)
-print("b" in d, 2 in d)
-print(d.get("z", 0))
-print(len(d), sorted(d))
-print(sum(d.values()))
-s = set("banana")
-print(len(s), sorted(s))
-print({1, 2, 3} & {2, 3, 4}, {1, 2} <= {1, 2, 3})
-print(d["z"])
-```
-The answers
-{'a': 10, 'b': 2, 'c': 3}
-True False   (in asks about keys)
-0   (the default, no crash)
-3 ['a', 'b', 'c']   (sorted gives the keys)
-15   (the values, asked for by name)
-3 ['a', 'b', 'n']
-{2, 3} True
-KeyError - and the program stops
-
 ## Slide 5
 Exercise 1: Loops to comprehensions
 Warm-up
 Comprehensions
+Lists
+Records
 Boards
-Counting
-Sets
 Extra
 Wrap-up
 EASY · 6 MIN ON YOUR OWN
@@ -177,15 +183,396 @@ print(column)
 ```
 
 ## Slide 8
-Exercise 2: Tic-tac-toe
+Exercise 2: Pairs
 Warm-up
 Comprehensions
+Lists
+Records
 Boards
-Counting
-Sets
 Extra
 Wrap-up
-MID · 14 MIN ON YOUR OWN
+EASY · 5 MIN ON YOUR OWN
+Task: two lists. Pair the items that sit at the same position, as a list of tuples.
+```python
+pairs(a, b) returns [(a[0], b[0]), (a[1], b[1]), ...]
+Different lengths: pair as far as the shorter list goes
+Without zip. If you know it, do not use it yet - a loop over positions, or a comprehension
+```
+```python
+the REPL
+```
+```python
+>>> names = ["dana", "ron"]
+>>> grades = [88, 95]
+>>> pairs(names, grades)
+[('dana', 88), ('ron', 95)]
+>>> pairs([1, 2, 3], ["a", "b"])
+[(1, 'a'), (2, 'b')]
+```
+```python
+Think about
+Position i of both lists: a[i] and b[i] - a loop over range(len(a))
+A tuple is built with parentheses: (a[i], b[i])
+```
+
+## Slide 9
+Exercise 2: one solution
+`pairs.py`
+```python
+def pairs(a, b):
+    """Pair a[i] with b[i]; the shorter wins."""
+    result = []
+    for i in range(min(len(a), len(b))):
+        result.append((a[i], b[i]))
+    return result
+
+names = ["dana", "ron", "omer"]
+grades = [88, 95, 51]
+for name, grade in pairs(names, grades):
+    print(name, grade)
+print(pairs([1, 2, 3], ["a", "b"]))
+```
+```python
+Reading it
+Positions, not items: range(...) because the same i must reach both lists
+The shorter wins: min(len(a), len(b)) keeps b[i] inside b
+Double parentheses: append((a[i], b[i])) - the inner pair packs the tuple
+Unpacking the result: for name, grade in pairs(...) reads like the records of lecture 4-2
+```
+
+## Slide 10
+Exercise 2: the run
+`pairs.py`
+```python
+def pairs(a, b):
+    """Pair a[i] with b[i]; the shorter wins."""
+    result = []
+    for i in range(min(len(a), len(b))):
+        result.append((a[i], b[i]))
+    return result
+
+names = ["dana", "ron", "omer"]
+grades = [88, 95, 51]
+for name, grade in pairs(names, grades):
+    print(name, grade)
+print(pairs([1, 2, 3], ["a", "b"]))
+```
+`python pairs.py`
+```python
+dana 88
+ron 95
+omer 51
+[(1, 'a'), (2, 'b')]
+```
+
+## Slide 11
+Meet zip
+```python
+Python has this function built in. Think of a zipper, not a zip file.
+zip(a, b) pairs the items at matching positions
+It stops at the shorter list, like our min()
+Lazy: list(zip(a, b)) shows the pairs; a for loop walks them
+for name, grade in zip(names, grades): - no index in sight
+Several lists: zip(a, b, c) gives triples
+```
+Rule of thumb:
+walking two lists side by side? zip. Needing the position number itself? range(len(...)).
+
+## Slide 12
+Exercise 2, with zip
+`pairs_zip.py`
+```python
+names = ["dana", "ron", "omer"]
+grades = [88, 95, 51]
+
+print(zip(names, grades))
+print(list(zip(names, grades)))
+
+for name, grade in zip(names, grades):
+    print(name, grade)
+
+print(list(zip([1, 2, 3], ["a", "b"])))
+```
+```python
+The same task, by name
+One call: zip(names, grades) replaces the loop, the index and the min()
+Lazy: the first print shows a zip object, not the pairs; list() collects them
+Unpacking in the header: the pairs come out one at a time, and name, grade takes each apart
+The shorter wins: [1, 2, 3] with ['a', 'b'] gives two pairs, as pairs() did
+```
+
+## Slide 13
+Exercise 2, with zip: the run
+`pairs_zip.py`
+```python
+names = ["dana", "ron", "omer"]
+grades = [88, 95, 51]
+
+print(zip(names, grades))
+print(list(zip(names, grades)))
+
+for name, grade in zip(names, grades):
+    print(name, grade)
+
+print(list(zip([1, 2, 3], ["a", "b"])))
+```
+`python pairs_zip.py`
+```python
+<zip object at 0x...>
+[('dana', 88), ('ron', 95), ('omer', 51)]
+dana 88
+ron 95
+omer 51
+[(1, 'a'), (2, 'b')]
+```
+
+## Slide 14
+Exercise 3: Mutate or return?
+Warm-up
+Comprehensions
+Lists
+Records
+Boards
+Extra
+Wrap-up
+MID · 10 MIN ON YOUR OWN
+Task: remove the negative numbers from a list - twice, in the two ways a function can do it.
+```python
+remove_negatives(nums) changes the list it is given and returns None
+without_negatives(nums) leaves its argument alone and returns a new list
+Test both on the same list and print it after each call. What is different?
+```
+```python
+the REPL
+```
+```python
+>>> a = [3, -1, 4, -5, 9]
+>>> b = without_negatives(a)
+>>> b, a
+([3, 4, 9], [3, -1, 4, -5, 9])
+>>> remove_negatives(a)
+>>> a
+[3, 4, 9]
+```
+```python
+Think about
+Removing inside a for skips items: use a while with an index and pop(i)
+The new-list version is the kept-list pattern
+```
+
+## Slide 15
+Exercise 3: one solution
+`negatives.py`
+```python
+def remove_negatives(nums):
+    """Remove the negatives, in place."""
+    i = 0
+    while i < len(nums):
+        if nums[i] < 0:
+            nums.pop(i)
+        else:
+            i += 1
+
+def without_negatives(nums):
+    """Return a new list, negatives dropped."""
+    kept = []
+    for x in nums:
+        if x >= 0:
+            kept.append(x)
+    return kept
+```
+```python
+Two contracts
+In place: no return - the parameter is a second name for the caller's list
+The index advances only when nothing was removed: after pop(i) the next item is already at i
+New list: the argument is never touched; the kept list is built and returned
+Never both: changing the argument and returning a result confuses every caller
+```
+
+## Slide 16
+Noa's version does both. What goes wrong?
+It mutates and returns. Predict the three prints.
+`noa.py`
+```python
+def cleaned(nums):
+    i = 0
+    while i < len(nums):
+        if nums[i] < 0:
+            nums.pop(i)
+        else:
+            i += 1
+    return nums
+```
+`using_noa.py`
+```python
+from noa import cleaned
+
+scores = [3, -1, 4, -5, 9]
+good = cleaned(scores)
+print(good)
+print(scores)
+good.append(100)
+print(scores)
+```
+```python
+[3, 4, 9], then [3, 4, 9] again - scores changed, which the name never suggested. Then [3, 4, 9, 100]: good and scores are one list.
+The rule: mutate and return None, or build and return new - never both.
+```
+
+## Slide 17
+Exercise 4: The grade book
+Warm-up
+Comprehensions
+Lists
+Records
+Boards
+Extra
+Wrap-up
+HIGH · 12 MIN ON YOUR OWN
+Task: a class is a list of (name, grade) tuples. Write the report functions.
+```python
+top_student(students): the record with the highest grade
+failing(students, pass_mark): names below pass_mark; default 56
+curve(students, points): new records with points added, capped at 100
+add_student(students, name, grade): adds a record, in place
+```
+```python
+the REPL
+```
+```python
+>>> top_student(students)
+('Ron Cohen', 95)
+>>> failing(students)
+['Omer Katz']
+>>> curve(students, 10)[1]
+('Ron Cohen', 100)
+```
+```python
+Think about
+Unpack in the for header: for name, grade in students:
+A tuple cannot change: curve builds a new one per student
+```
+
+## Slide 18
+Exercise 4: the class, and the top student
+```python
+gradebook.py (part 1)
+```
+```python
+students = [("Dana Levi", 88),
+            ("Ron Cohen", 95),
+            ("Omer Katz", 51),
+            ("Yael Bar", 73)]
+
+def top_student(students):
+    """Return the record with the top grade."""
+    best = students[0]
+    for record in students:
+        if record[1] > best[1]:
+            best = record
+    return best
+```
+```python
+Records in, a record out
+The class: a list of tuples, one tuple per student - the shape from lecture 4-2
+Running maximum over records: best is a whole tuple; record[1] is the grade inside it
+Returns the record, not the grade: the caller can unpack name and grade from it
+Empty class: students[0] raises IndexError - a promise to state in the docstring
+```
+
+## Slide 19
+Exercise 4: failing and curve
+```python
+gradebook.py (part 2)
+```
+```python
+def failing(students, pass_mark=56):
+    """Return the names below pass_mark."""
+    names = []
+    for name, grade in students:
+        if grade < pass_mark:
+            names.append(name)
+    return names
+
+def curve(students, points):
+    """New records, points added, max 100."""
+    curved = []
+    for name, grade in students:
+        new_grade = min(grade + points, 100)
+        curved.append((name, new_grade))
+    return curved
+```
+```python
+Two builders
+Unpacking in the header: for name, grade in students takes each tuple apart
+A default: pass_mark=56 makes the second argument optional - failing(students) and failing(students, 80) both work
+curve builds: a new list, and a new tuple per student - tuples cannot change, so none is
+min(grade + points, 100): the cap in one call, with the built-in from lecture 4-2
+```
+
+## Slide 20
+Exercise 4: add_student, and the report
+```python
+gradebook.py (part 3)
+```
+```python
+def add_student(students, name, grade):
+    """Add one record, in place."""
+    students.append((name, grade))
+
+add_student(students, "Noa Peretz", 64)
+name, grade = top_student(students)
+print(f"Top: {name} with {grade}")
+print(f"Failing: {failing(students)}")
+print(f"Curved: {curve(students, 10)}")
+```
+```python
+One mutator, then main
+add_student mutates: append on the caller's list, no return - the other contract
+Unpacking the answer: name, grade = top_student(students) takes the returned tuple apart
+The report calls the functions by name; nothing about loops appears here
+Next week: looking up one student by name is what a dictionary is for
+```
+
+## Slide 21
+Exercise 4: the run
+```python
+gradebook.py (part 3)
+```
+```python
+def add_student(students, name, grade):
+    """Add one record, in place."""
+    students.append((name, grade))
+
+add_student(students, "Noa Peretz", 64)
+name, grade = top_student(students)
+print(f"Top: {name} with {grade}")
+print(f"Failing: {failing(students)}")
+print(f"Curved: {curve(students, 10)}")
+```
+```python
+python gradebook.py (wrapped)
+```
+```python
+Top: Ron Cohen with 95
+Failing: ['Omer Katz']
+Curved: [('Dana Levi', 98),
+  ('Ron Cohen', 100),
+  ('Omer Katz', 61),
+  ('Yael Bar', 83),
+  ('Noa Peretz', 74)]
+```
+
+## Slide 22
+Exercise 5: Tic-tac-toe
+Warm-up
+Comprehensions
+Lists
+Records
+Boards
+Extra
+Wrap-up
+MID · 12 MIN ON YOUR OWN
 Task: the board is a 3 x 3 list of lists. Write the four functions a game needs.
 ```python
 make_board(): a fresh 3 x 3 board of dots
@@ -211,8 +598,8 @@ A column: [board[r][c] for r in range(3)]
 A line wins when its three cells are equal - and not dots
 ```
 
-## Slide 9
-Exercise 2: the board, show and place
+## Slide 23
+Exercise 5: the board, show and place
 ```python
 tictactoe.py (part 1)
 ```
@@ -241,8 +628,8 @@ place: a guard, then the write; the boolean tells the caller whether the move ha
 place mutates and returns a bool: a yes-or-no answer about what it did, not the board
 ```
 
-## Slide 10
-Exercise 2: the winner
+## Slide 24
+Exercise 5: the winner
 ```python
 tictactoe.py (part 2)
 ```
@@ -269,8 +656,8 @@ The test: not a dot, and all three equal - line == [first] * 3
 Two kinds of return: a mark as soon as a line is found, None after the loop
 ```
 
-## Slide 11
-Exercise 2: a scripted game
+## Slide 25
+Exercise 5: a scripted game
 ```python
 tictactoe.py (part 3)
 ```
@@ -293,8 +680,8 @@ The diagonal: X at (0, 0), (1, 1), (2, 2) wins
 Your turn: replace the list of moves with input() calls and a loop until someone wins
 ```
 
-## Slide 12
-Exercise 2: the run
+## Slide 26
+Exercise 5: the run
 ```python
 tictactoe.py (part 3)
 ```
@@ -318,385 +705,13 @@ O . X
 winner: X
 ```
 
-## Slide 13
-Exercise 3: Letter frequencies
-Warm-up
-Comprehensions
-Boards
-Counting
-Sets
-Extra
-Wrap-up
-MID · 10 MIN ON YOUR OWN
-Task: count how often each letter appears in a text, ignoring case and anything that is not a letter.
-```python
-letter_counts(text) returns a dictionary letter -> count
-Print the counts in alphabetical order, one line each, and then the most frequent letter
-Then: positions(text) returns word -> list of the positions where the word appears
-```
-```python
-terminal
-```
-```python
-text: banana!
-a 3
-b 1
-n 2
-most frequent: a
-```
-```python
-Think about
-Counting: counts[ch] = counts.get(ch, 0) + 1
-A dict of lists: create the empty list the first time a word is seen
-```
-
-## Slide 14
-Exercise 3: the counts
-`letters.py`
-```python
-def letter_counts(text):
-    """Return a dict of letter -> count."""
-    counts = {}
-    for ch in text.lower():
-        if ch.isalpha():
-            counts[ch] = counts.get(ch, 0) + 1
-    return counts
-
-text = input("text: ")
-counts = letter_counts(text)
-for letter in sorted(counts):
-    print(letter, counts[letter])
-best = ""
-for letter, count in counts.items():
-    if best == "" or count > counts[best]:
-        best = letter
-print("most frequent:", best)
-```
-```python
-The counting pattern, and a maximum over items
-counts.get(ch, 0) + 1: the count so far, or 0 if this letter is new - one line, no if
-sorted(counts): the keys in order; the value is fetched by key inside the loop
-The maximum over items: best holds a key; counts[best] is its count
-best == "" seeds the maximum on the first pass; ties keep the earlier letter
-```
-
-## Slide 15
-Exercise 3: the run
-`letters.py`
-```python
-def letter_counts(text):
-    """Return a dict of letter -> count."""
-    counts = {}
-    for ch in text.lower():
-        if ch.isalpha():
-            counts[ch] = counts.get(ch, 0) + 1
-    return counts
-
-text = input("text: ")
-counts = letter_counts(text)
-for letter in sorted(counts):
-    print(letter, counts[letter])
-best = ""
-for letter, count in counts.items():
-    if best == "" or count > counts[best]:
-        best = letter
-print("most frequent:", best)
-```
-`python letters.py`
-```python
-text: banana!
-a 3
-b 1
-n 2
-most frequent: a
-```
-
-## Slide 16
-Exercise 3, expansion: a dictionary of lists
-`positions.py`
-```python
-def positions(text):
-    """Return word -> list of its positions."""
-    where = {}
-    words = text.lower().split()
-    for i in range(len(words)):
-        w = words[i]
-        if w not in where:
-            where[w] = []
-        where[w].append(i)
-    return where
-
-text = "the cat saw the dog"
-print(positions(text))
-```
-```python
-The guard pattern
-A list per word: the value is a list, and it must exist before anything is appended to it
-Guard, then append: if w not in where: where[w] = [] creates the list the first time; the append always runs
-Index loop: the position is the index, so range(len(words)) instead of for w in words
-```
-```python
-python positions.py (wrapped)
-```
-```python
-{'the': [0, 3], 'cat': [1],
- 'saw': [2], 'dog': [4]}
-```
-
-## Slide 17
-Exercise 4: Anagram groups
-Warm-up
-Comprehensions
-Boards
-Counting
-Sets
-Extra
-Wrap-up
-HIGH · 12 MIN ON YOUR OWN
-Task: group a list of words so that words made of the same letters end up together.
-```python
-listen, silent, enlist and inlets are one group; google and elgoog another; banana is alone
-anagram_groups(words) returns a dictionary key -> list of words
-Print only the groups with more than one word, one line each
-```
-```python
-terminal
-```
-```python
-listen silent enlist inlets
-google elgoog
-```
-```python
-Think about
-Two anagrams have the same letters in sorted order: "".join(sorted(word)) is a key that both share
-Dictionary of lists: the guard pattern from exercise 3
-```
-
-## Slide 18
-The idea: a key that anagrams share
-listen and silent have the same letters. Sort the letters and they become the same string.
-```python
-1 · Sort the letters - sorted("listen") is a list of characters: e, i, l, n, s, t
-2 · Make it a key - "".join(...) turns the list into the string eilnst; a list cannot be a key, a string can
-3 · File each word under its key - the guard creates the list, append adds the word
-4 · Report - walk the dictionary; print the lists with more than one word
-```
-In pseudocode
-groups = {}
-for each word:
-      key = the letters of word, sorted
-      if key is new: groups[key] = []
-      groups[key].append(word)
-for each group with 2+ words:
-      print it
-
-## Slide 19
-Exercise 4: one solution
-`anagrams.py`
-```python
-def anagram_groups(words):
-    """Return sorted letters -> words."""
-    groups = {}
-    for word in words:
-        key = "".join(sorted(word))
-        if key not in groups:
-            groups[key] = []
-        groups[key].append(word)
-    return groups
-
-words = ["listen", "silent", "enlist",
-         "google", "banana", "inlets", "elgoog"]
-for group in anagram_groups(words).values():
-    if len(group) > 1:
-        print(" ".join(group))
-```
-```python
-Ten lines, one idea
-The key: "".join(sorted(word)) - two week-4 tools make the week-5 key
-The guard, then append: the dictionary-of-lists pattern
-.values(): the report never needs the keys, only the lists
-Insertion order: groups come out in the order their first word appeared
-```
-
-## Slide 20
-Exercise 4: the run
-`anagrams.py`
-```python
-def anagram_groups(words):
-    """Return sorted letters -> words."""
-    groups = {}
-    for word in words:
-        key = "".join(sorted(word))
-        if key not in groups:
-            groups[key] = []
-        groups[key].append(word)
-    return groups
-
-words = ["listen", "silent", "enlist",
-         "google", "banana", "inlets", "elgoog"]
-for group in anagram_groups(words).values():
-    if len(group) > 1:
-        print(" ".join(group))
-```
-`python anagrams.py`
-```python
-listen silent enlist inlets
-google elgoog
-```
-
-## Slide 21
-Exercise 5: Enrolments
-Warm-up
-Comprehensions
-Boards
-Counting
-Sets
-Extra
-Wrap-up
-HIGH · 10 MIN ON YOUR OWN
-Task: a dictionary maps each student to the set of courses they take. Four questions, one operator each.
-```python
-Who takes both python and calculus? Which of the listed courses does nobody take?
-Which two students share the most courses? Who takes exactly the same courses?
-<=, -, &, == and len() do the thinking; a loop does the walking
-```
-```python
-terminal
-```
-```python
-both: ['dana', 'ron']
-nobody: ['history']
-most shared: dana ron 2
-same: omer yael
-```
-```python
-Think about
-Union of everything: start from set() and |= each student's set
-Pairs: two loops over the sorted names, with the second starting after the first
-```
-
-## Slide 22
-Exercise 5: the data
-```python
-enrolments.py (part 1)
-```
-```python
-enrolled = {
-    "dana": {"python", "calculus", "physics"},
-    "ron": {"python", "calculus"},
-    "omer": {"python", "art"},
-    "yael": {"art", "python"},
-}
-courses = ["python", "calculus", "physics",
-           "art", "history"]
-```
-The four questions
-both: the students who take python and calculus
-nobody: the courses in the list that no student takes
-most shared: the two students with the most courses in common, and how many
-same: the students whose sets of courses are equal
-
-## Slide 23
-Exercise 5: both, and nobody
-```python
-enrolments.py (part 2)
-```
-```python
-both = []
-for name, taken in enrolled.items():
-    if {"python", "calculus"} <= taken:
-        both.append(name)
-print("both:", sorted(both))
-
-union = set()
-for taken in enrolled.values():
-    union |= taken
-print("nobody:", sorted(set(courses) - union))
-```
-```python
-A loop walks, an operator thinks
-Both: {"python", "calculus"} <= taken - subset, in one comparison
-Union of all: set() is the empty set; |= adds each student's courses to it
-Nobody: the courses that are not in the union - a set difference
-sorted() on a set: for printing in a predictable order
-```
-```python
-python enrolments.py (first half)
-```
-```python
-both: ['dana', 'ron']
-nobody: ['history']
-```
-
-## Slide 24
-Exercise 5: pairs
-```python
-enrolments.py (part 3)
-```
-```python
-names = sorted(enrolled)
-best = 0
-for i in range(len(names)):
-    for j in range(i + 1, len(names)):
-        a, b = names[i], names[j]
-        shared = len(enrolled[a] & enrolled[b])
-        if shared > best:
-            best = shared
-            pair = (a, b)
-print("most shared:", pair[0], pair[1], best)
-
-for i in range(len(names)):
-    for j in range(i + 1, len(names)):
-        a, b = names[i], names[j]
-        if enrolled[a] == enrolled[b]:
-            print("same:", a, b)
-```
-```python
-Every pair once
-The pair loop: j starts at i + 1, so each pair is visited once and never with itself
-Shared: len(a & b) - the intersection measured
-A running maximum carrying a tuple: the pair and its count move together
-Equal sets: == ignores order, so {art, python} and {python, art} match
-```
-
-## Slide 25
-Exercise 5: the run
-```python
-enrolments.py (part 3)
-```
-```python
-names = sorted(enrolled)
-best = 0
-for i in range(len(names)):
-    for j in range(i + 1, len(names)):
-        a, b = names[i], names[j]
-        shared = len(enrolled[a] & enrolled[b])
-        if shared > best:
-            best = shared
-            pair = (a, b)
-print("most shared:", pair[0], pair[1], best)
-
-for i in range(len(names)):
-    for j in range(i + 1, len(names)):
-        a, b = names[i], names[j]
-        if enrolled[a] == enrolled[b]:
-            print("same:", a, b)
-```
-```python
-python enrolments.py (second half)
-```
-```python
-most shared: dana ron 2
-same: omer yael
-```
-
-## Slide 26
+## Slide 27
 Extra 1: Minesweeper numbers
 Warm-up
 Comprehensions
+Lists
+Records
 Boards
-Counting
-Sets
 Extra
 Wrap-up
 EXTRA
@@ -721,7 +736,7 @@ Neighbours: dr and dc from -1 to 1, in two loops
 Count a neighbour only if its row and column are inside the grid
 ```
 
-## Slide 27
+## Slide 28
 Extra 1: counting around a cell
 ```python
 mines.py (part 1)
@@ -749,7 +764,7 @@ Order matters: inside and ... tests the bounds before the index is used
 field[-1] would not crash - it is the last row; the bounds check keeps the edge honest
 ```
 
-## Slide 28
+## Slide 29
 Extra 1: the whole field
 ```python
 mines.py (part 2)
@@ -780,7 +795,7 @@ around only for dots: the if keeps the mines
 str(...): a count is a number, a row is text
 ```
 
-## Slide 29
+## Slide 30
 Extra 1: the run
 ```python
 mines.py (part 2)
@@ -811,55 +826,140 @@ for row in numbers(field):
 1110
 ```
 
-## Slide 30
+## Slide 31
+Extra 2: Permutations
+Warm-up
+Comprehensions
+Lists
+Records
+Boards
+Extra
+Wrap-up
+EXTRA
+Task: a permutation of n holds every number from 0 to n - 1 exactly once.
+```python
+is_permutation(per): True for [2, 0, 1]; False for [2, 2, 0], [2, 3, 0], [0, 1, 5]
+inverse(per): undoes per - if per sends 0 to 2, the inverse sends 2 to 0
+Check: reorder with per, then with inverse(per), gives the list back
+```
+```python
+the REPL
+```
+```python
+>>> is_permutation([2, 0, 1])
+True
+>>> is_permutation([2, 2, 0])
+False
+>>> inverse([2, 0, 1])
+[1, 2, 0]
+```
+```python
+Think about
+[False] * n remembers which numbers were seen
+Out of range first: a value must be a valid index before it is used as one
+```
+
+## Slide 32
+Extra 2: is it a permutation?
+```python
+permutations.py (part 1)
+```
+```python
+def is_permutation(per):
+    """True if per holds each of 0..n-1 once."""
+    n = len(per)
+    seen = [False] * n
+    for value in per:
+        if value < 0 or value >= n:
+            return False
+        if seen[value]:
+            return False
+        seen[value] = True
+    return True
+```
+```python
+A list as memory
+seen: one slot per value; the value itself is the index - index-as-data, from the lecture
+Two early returns: out of range, or seen before - either settles the answer
+Order matters: the range check comes first, so seen[value] is only read with a valid index
+A missing value is never checked: n slots, n values, no repeat - nothing can be missing
+```
+
+## Slide 33
+Extra 2: the inverse
+```python
+permutations.py (part 2)
+```
+```python
+def inverse(per):
+    """Return the permutation undoing per."""
+    inv = [0] * len(per)
+    for i in range(len(per)):
+        inv[per[i]] = i
+    return inv
+```
+```python
+Write at the destination
+inv[per[i]] = i: per says where position i goes; the inverse records, there, where it came from
+A list of the right size first: [0] * len(per), then every slot is overwritten
+Trace [2, 0, 1]: 0 goes to 2, so inv[2] = 0; 1 goes to 0, so inv[0] = 1; 2 goes to 1 - giving [1, 2, 0]
+A promise: with a list that is not a permutation, the result is wrong or an IndexError
+```
+```python
+the REPL
+```
+```python
+>>> inverse([2, 0, 1])
+[1, 2, 0]
+>>> is_permutation([2, 3, 0])
+False
+```
+
+## Slide 34
 Recitation summary
 Warm-up
 Comprehensions
+Lists
+Records
 Boards
-Counting
-Sets
 Extra
 Wrap-up
 What we practised
 Read from the middle
 A comprehension: the loop, then the value, then the if.
+Mutate or return
+Change the argument and return None, or build and return new - never both.
+Records
+A list of tuples; unpack in the for header; carry a whole tuple in a maximum.
 Separate rows
 Build a grid with a comprehension; [[x] * m] * n is one row repeated.
-Guard, then append
-A dictionary of lists: create the list the first time, append always.
-A key is a label
-Choose it so that things that belong together share it: sorted letters.
 Tools we used
+Lists
+append, pop(i), [x] * n, in, not in, slicing copies, len, sum, min, max, sorted
+Tuples
+packing, unpacking, (name, grade) records, min(a, b) for a cap
 Tables
 board[r][c], rows as lists or strings, bounds checks, join to print
-Dictionaries
-d[k], in on keys, .get(k, 0), .items(), .values(), sorted(d)
-Sets
-set(), {a, b}, &, |, -, <=, ==, |=, sorted(set(...))
-From week 4
-functions with contracts, sorted, join, records as tuples
+zip
+zip(a, b) pairs matching positions, stops at the shorter; list(zip(...))
 
-## Slide 31
+## Slide 35
 Self practice
 AT HOME
 Write a program for each of these.
-Inventory
-A dictionary item -> price and a cart item -> quantity. Print the bill, one line per item, and the total; an item missing from the price list is reported, not crashed on.
-```python
-Invert
-invert(d) turns a dictionary name -> grade into grade -> list of names. The guard pattern; test it with two students on the same grade.
-```
-```python
+Rotate
+rotate(nums, k) returns a new list with the last k items moved to the front: [1, 2, 3, 4, 5] by 2 gives [4, 5, 1, 2, 3]. Slices do all the work.
+Merge
+merge(a, b) returns one sorted list from two sorted lists, walking both with an index - never using sort or sorted.
 Symmetric
 is_symmetric(m) returns True when a square matrix equals its transpose - with two loops, and then in one line with the lecture's transpose.
-```
-Coupons, counted
-Run the coupon collector 1000 times and count, in a dictionary, how often each number of boxes came up. Print the five most common counts.
+A module of text tools
+textstats.py: word_count, longest_word and unique_words (the distinct words, in order of first appearance), each a few lines over text.lower().split(); use them from a second file.
 
-## Slide 32
+## Slide 36
 PYTHON COURSE · WEEK 6 · RECITATION 6
-Next: Files
-text from outside the program
+Next: Dictionaries, sets and files
+counting by key, membership, and text from a file
 
 ## From `anagrams.py`
 
@@ -942,6 +1042,50 @@ for i in range(len(names)):
             print("same:", a, b)
 ```
 
+## From `gradebook.py`
+
+### `gradebook.py`
+```python
+students = [("Dana Levi", 88),
+            ("Ron Cohen", 95),
+            ("Omer Katz", 51),
+            ("Yael Bar", 73)]
+
+def top_student(students):
+    """Return the record with the top grade."""
+    best = students[0]
+    for record in students:
+        if record[1] > best[1]:
+            best = record
+    return best
+
+def failing(students, pass_mark=56):
+    """Return the names below pass_mark."""
+    names = []
+    for name, grade in students:
+        if grade < pass_mark:
+            names.append(name)
+    return names
+
+def curve(students, points):
+    """New records, points added, max 100."""
+    curved = []
+    for name, grade in students:
+        new_grade = min(grade + points, 100)
+        curved.append((name, new_grade))
+    return curved
+
+def add_student(students, name, grade):
+    """Add one record, in place."""
+    students.append((name, grade))
+
+add_student(students, "Noa Peretz", 64)
+name, grade = top_student(students)
+print(f"Top: {name} with {grade}")
+print(f"Failing: {failing(students)}")
+print(f"Curved: {curve(students, 10)}")
+```
+
 ## From `letters.py`
 
 ### `letters.py`
@@ -999,6 +1143,100 @@ def numbers(field):
 field = ["*...", "....", ".*..", "...."]
 for row in numbers(field):
     print(row)
+```
+
+## From `negatives.py`
+
+### `negatives.py`
+```python
+def remove_negatives(nums):
+    """Remove the negatives, in place."""
+    i = 0
+    while i < len(nums):
+        if nums[i] < 0:
+            nums.pop(i)
+        else:
+            i += 1
+
+def without_negatives(nums):
+    """Return a new list, negatives dropped."""
+    kept = []
+    for x in nums:
+        if x >= 0:
+            kept.append(x)
+    return kept
+```
+
+## From `noa.py`
+
+### `noa.py`
+```python
+def cleaned(nums):
+    i = 0
+    while i < len(nums):
+        if nums[i] < 0:
+            nums.pop(i)
+        else:
+            i += 1
+    return nums
+```
+
+## From `pairs.py`
+
+### `pairs.py`
+```python
+def pairs(a, b):
+    """Pair a[i] with b[i]; the shorter wins."""
+    result = []
+    for i in range(min(len(a), len(b))):
+        result.append((a[i], b[i]))
+    return result
+
+names = ["dana", "ron", "omer"]
+grades = [88, 95, 51]
+for name, grade in pairs(names, grades):
+    print(name, grade)
+print(pairs([1, 2, 3], ["a", "b"]))
+```
+
+## From `pairs_zip.py`
+
+### `pairs_zip.py`
+```python
+names = ["dana", "ron", "omer"]
+grades = [88, 95, 51]
+
+print(zip(names, grades))
+print(list(zip(names, grades)))
+
+for name, grade in zip(names, grades):
+    print(name, grade)
+
+print(list(zip([1, 2, 3], ["a", "b"])))
+```
+
+## From `permutations.py`
+
+### `permutations.py`
+```python
+def is_permutation(per):
+    """True if per holds each of 0..n-1 once."""
+    n = len(per)
+    seen = [False] * n
+    for value in per:
+        if value < 0 or value >= n:
+            return False
+        if seen[value]:
+            return False
+        seen[value] = True
+    return True
+
+def inverse(per):
+    """Return the permutation undoing per."""
+    inv = [0] * len(per)
+    for i in range(len(per)):
+        inv[per[i]] = i
+    return inv
 ```
 
 ## From `positions.py`
@@ -1065,6 +1303,20 @@ show(board)
 print("winner:", winner(board))
 ```
 
+## From `using_noa.py`
+
+### `using_noa.py`
+```python
+from noa import cleaned
+
+scores = [3, -1, 4, -5, 9]
+good = cleaned(scores)
+print(good)
+print(scores)
+good.append(100)
+print(scores)
+```
+
 ## From `warmup_dicts.py`
 
 ### `warmup_dicts.py`
@@ -1100,4 +1352,23 @@ rows = [[0] * 2 for _ in range(2)]
 rows[0][0] = 7
 print(rows)
 print([row[1] for row in rows])
+```
+
+## From `warmup_lists.py`
+
+### `warmup_lists.py`
+```python
+a = [1, 2, 3]
+b = a
+b.append(4)
+print(a)
+c = a[:]
+c[0] = 99
+print(a, c)
+print(a.sort())
+print(a)
+t = (1, 2)
+x, y = t
+print(y, x)
+print([1, 2] + [3], [0] * 3)
 ```

@@ -1,7 +1,7 @@
 # Lecture 5-2: Dictionaries and sets (week 5)
 
 ## Slide 1
-PYTHON COURSE · WEEK 5 · LECTURE 2
+INTRO TO CS COURSE · WEEK 5 · LECTURE 2
 Dictionaries and Sets
 Reaching a value by name
 
@@ -841,6 +841,41 @@ The input list remains untouched.
 The function creates and returns a new dictionary.
 
 ## Slide 18
+Dictionary comprehension
+The comprehension from the last lecture, with one character added.
+`build_index.py`
+```python
+def build_index(students):
+    grades = {}
+    for name, grade in students:
+        grades[name] = grade
+    return grades
+```
+`dict_comp.py`
+```python
+grades = {name: grade for name, grade in students}
+print(grades)
+# {'Dana Levi': 88, 'Ron Cohen': 95, 'Yael Bar': 73}
+
+grades["Omer Katz"] = 91
+```
+```python
+honours = {name: g for name, g in grades.items() if g >= 90}
+print(honours)      # {'Ron Cohen': 95, 'Omer Katz': 91}
+```
+```python
+curved = {name: g + 5 for name, g in grades.items()}
+print(grades)       # unchanged
+```
+Mutate vs. return
+changes what it was given
+builds a new one and returns it
+a comprehension is always here
+Read it from the middle: first the loop, then the value — the reading rule from Lecture 5-1.
+The colon is the only new character: brackets collect values, braces with key: value collect pairs.
+A comprehension always builds a new dictionary and hands it back; it can never change the one it reads.
+
+## Slide 19
 Class exercise: Merging two dictionaries
 Task: Merge two dictionaries. If a key is in both, the second dictionary wins.
 `merge_bug.py`
@@ -890,7 +925,7 @@ Aliasing bug: my_dict = dict1 creates an alias, not a new dictionary. Changing m
 The fix: Create a new copy using my_dict = dict1.copy() or my_dict = dict(dict1).
 ```
 
-## Slide 19
+## Slide 20
 Complex values in dictionaries
 Values can store lists, tuples or nested dictionaries – accessed in steps.
 `nested_dict.py`
@@ -950,7 +985,7 @@ Functions
 Nested
 Sets
 
-## Slide 20
+## Slide 21
 Class exercise: Inverting a nested dictionary
 Task: from student → course → grade, build course → student → grade.
 `invert.py`
@@ -1026,7 +1061,7 @@ Noa is first: both her courses are new, so the guard creates an empty dictionary
 Noya: both courses already exist, so the guard is skipped.
 Alma: History exists, but CS is new - the guard fires again, on the last pass.
 
-## Slide 21
+## Slide 22
 A set
 An unordered collection of unique, immutable elements (dictionary without values, only keys).
 `first_set.py`
@@ -1085,7 +1120,7 @@ Uniqueness: Duplicate elements are automatically removed upon creation.
 Unordered: Sets do not guarantee positional index access.
 Immutability: Elements inside a set must be immutable (like dictionary keys).
 
-## Slide 22
+## Slide 23
 Set operations
 Operators and methods sets
 `set_ops.py`
@@ -1159,7 +1194,7 @@ set1 ^ set2
 one or the other
 The shaded part is what the expression returns.
 
-## Slide 23
+## Slide 24
 Set comparisons
 Comparison and membership operators and the methods for sets
 `set_compare.py`
@@ -1232,7 +1267,7 @@ in
 ```
 none
 
-## Slide 24
+## Slide 25
 Class exercise: Is one set a subset of another?
 Task: Implement a function that that checks whether set1  set2 
 `subset_loop.py`
@@ -1262,7 +1297,7 @@ set1 \ set2
 Not equal
 set1  set2
 
-## Slide 25
+## Slide 26
 Primary use case: Deduplication
 Removing duplicates in a single, clean step
 `dedup.py`
@@ -1310,7 +1345,72 @@ unique
 "Yaniv"
 ```
 
-## Slide 26
+## Slide 27
+Set comprehension
+When the duplicates you want gone are not the items themselves.
+`set_comp.py`
+```python
+names = ["Omer Katz", "Dana Levi", "Omer Barak",
+         "Yaniv Levi", "Dana Levi"]
+
+families = {name.split()[1] for name in names}
+```
+```python
+print(len(families))     # 3
+print(sorted(families))  # ['Barak', 'Katz', 'Levi']
+```
+what you write
+what comes back
+list
+```python
+[x for x in …]
+```
+order and duplicates kept
+set
+```python
+{x for x in …}
+```
+no order, no duplicates
+dictionary
+```python
+{k: v for … in …}
+```
+key-value pairs
+The colon is the entire difference between the last two rows.
+```python
+"Omer Katz"
+```
+```python
+"Dana Levi"
+```
+```python
+"Omer Barak"
+```
+```python
+"Yaniv Levi"
+```
+```python
+"Dana Levi"
+```
+✗
+✗
+```python
+name.split()[1]
+```
+```python
+"Katz"
+```
+```python
+"Barak"
+```
+```python
+"Levi"
+```
+```python
+families
+```
+
+## Slide 28
 Instant lookups: Is it in ?
 Checking membership without searching one-by-one
 Searching a list vs. searching a set
@@ -1334,7 +1434,7 @@ print(how_long(words, asks))       # ~3 seconds
 print(how_long(set(words), asks))  # ~0.001 seconds
 ```
 
-## Slide 27
+## Slide 29
 Lecture summary
 list
 dictionary
@@ -1400,8 +1500,18 @@ Looping
 Functions
 Nested
 Sets
+Comprehension
+```python
+[x for x in …]
+```
+```python
+{k: v for … in …}
+```
+```python
+{x for x in …}
+```
 
-## Slide 28
+## Slide 30
 What is coming
 Files
 Week 6: Everything today gets more interesting when the text comes from a real file.
@@ -1410,7 +1520,7 @@ Week 7: A dictionary that remembers answers already computed turns a slow functi
 Efficiency
 Week 9: "Essentially does not get slower" finally gets its proper name.
 
-## Slide 29
-PYTHON COURSE · WEEK 6 · LECTURE 1
+## Slide 31
+INTRO TO CS COURSE · WEEK 6 · LECTURE 1
 Next: Files
 Reading text from outside the program

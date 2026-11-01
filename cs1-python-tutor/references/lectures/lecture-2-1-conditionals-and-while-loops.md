@@ -1,7 +1,7 @@
 # Lecture 2-1: Conditionals and while loops (week 2)
 
 ## Slide 1
-PYTHON COURSE · WEEK 2 · LECTURE 1
+INTRO TO CS COURSE · WEEK 2 · LECTURE 1
 Conditionals and Loops
 Control flow, conditionals (if, else, elif) and while loops
 
@@ -127,7 +127,8 @@ Syntax rules
 Unlike Java or C, Python requires no parentheses ( ) around the condition and no curly braces { } for block scope. Indentation defines the execution scope.
 `if_syntax.py`
 ```python
-block # executed if True
+block
+# executed if True
 ```
 Syntax:
 
@@ -183,7 +184,7 @@ Only the indented line belongs to the if.
 The rule
 All statements indented to the same level form the conditional block. Returning to the previous indentation level closes the block.
 The conventions
-Uset four spaces per indentation level (PEP 8 style guide). Never mix spaces and tabs doing so raises a TabError.
+Use four spaces per indentation level (PEP 8 style guide). Never mix spaces and tabs doing so raises a TabError.
 
 ## Slide 9
 What counts as a condition ?
@@ -303,7 +304,9 @@ Using conditionals to prevent runtime errors.
 `quadratic.py`
 ```python
 import math
-
+a = 1
+b = 1
+c = 2 
 d = b * b - 4.0 * a * c
 if d < 0.0:
     print("No real roots")
@@ -326,10 +329,10 @@ Both print the same thing. What is the difference?
 if a == b:
     print("a equals b")
 else:
-if a > b:
-    print("a is greater")
-else:
-    print("b is greater")
+    if a > b:
+        print("a is greater")
+    else:
+        print("b is greater")
 ```
 `chained_if.py`
 ```python
@@ -409,9 +412,9 @@ The first True leaves the chain
 if a == b:
     print("a equals b")
 elif a > b:
-print("a is greater")
+    print("a is greater")
 else:
-print("b is greater")
+    print("b is greater")
 ```
 Same execution flow as nested if, with flat indentation
 ```python
@@ -447,6 +450,7 @@ Tax bracket | Income
 34% | ₪20,001 and up
 `tax_v1.py`
 ```python
+income = int(input("Income: "))
 if income <= 5280:
     rate = 0.10
 else:
@@ -468,6 +472,7 @@ Example: Tax calculation
 Task: compute the applicable tax rate, according to income level.
 `tax_v2.py`
 ```python
+income = int(input("Income: "))
 if income <= 5280:
     rate = 0.10
 elif income <= 9010:
@@ -592,7 +597,7 @@ loop block
 ```
 ```python
 Semantics
-Evaluate condition (True \ False)
+Evaluate condition (True / False)
 If True – execute the loop block and return to step 1.
 If False – exit the loop and continue to the next statement.
 ```
@@ -617,13 +622,60 @@ while count < n:
     print(count)
     count = count + 1
 ```
-print | count < n | count | n
-0 | True | 0 | 3
-1 | True | 1 | 3
-2 | True | 2 | 3
-loop ends | False | 3 | 3
 Tracing a loop
 By hand, on paper, with small numbers. Here n = 3.
+n
+count
+count < n
+print
+```python
+3
+```
+```python
+0
+```
+```python
+True
+```
+```python
+0
+```
+```python
+3
+```
+```python
+1
+```
+```python
+True
+```
+```python
+1
+```
+```python
+3
+```
+```python
+2
+```
+```python
+True
+```
+```python
+2
+```
+```python
+3
+```
+```python
+3
+```
+```python
+False
+```
+```python
+loop ends
+```
 
 ## Slide 25
 Always check the edges
@@ -752,43 +804,37 @@ The program prints forever, and the values run away from the bound instead of to
 What will this print?
 `bug_updates.py`
 ```python
-i = 0
-v = 1
-while i <= n:
-    print(i, v)
-i += 1
-v *= 2
+n = 3
+while n > 0:
+    print(n)
+n -= 1
 ```
-Take n = 3. What appears on the screen?
+What appears on the screen?
 Read it before you run it.
 
 ## Slide 31
 Loop Bug 2 — Out-of-block updates
 `bug_updates.py`
-```python
-i = 0
-v = 1
-while i <= n:
-    print(i, v)
-i += 1
-v *= 2
-```
 `fixed.py`
 ```python
-i = 0
-v = 1
-while i <= n:
-    print(i, v)
-    i += 1
-    v *= 2
+n = 3
+while n > 0:
+    print(n)
+    n -= 1
 ```
-prints 0 1 forever
+prints 3 forever
 it ends
 The update sits outside the loop body, so nothing advances.
 How to spot it
-The same output line repeats forever. The body is shorter than you meant — read the indentation, not the intention.
+The same output line repeats forever. The body is shorter than you meant - read the indentation, not the intention.
 How to fix it
 Indent every line that belongs to the loop to the same level under the while.
+```python
+n = 3
+while n > 0:
+    print(n)
+n -= 1
+```
 
 ## Slide 32
 How many times does each loop run?
@@ -855,6 +901,8 @@ Trace the first and the last pass with small values, and check the boundary.
 What is total at the end?
 `bug_reinit.py`
 ```python
+n = int(input())
+i = 0
 while i < n:
     total = 0
     total += i
@@ -931,17 +979,51 @@ while n > 0:
     n = n // 10    # or n //= 10
 print("Digit sum:", total)
 ```
-n | digit | total
-4913 | 3 | 3
-491 | 1 | 4
-49 | 9 | 13
-4 | 4 | 17
 ```python
 Digit extraction in base 10
 Extracting digits: n % 10 extracts the last (rightmost) digit.
 Removing digits: n // 10 strips the last digit, shrinking n toward 0 to end the loop.
 ```
 What does it do for n = 0? 
+n
+digit
+total
+```python
+4913
+```
+```python
+3
+```
+```python
+3
+```
+```python
+491
+```
+```python
+1
+```
+```python
+4
+```
+```python
+49
+```
+```python
+9
+```
+```python
+13
+```
+```python
+4
+```
+```python
+4
+```
+```python
+17
+```
 
 ## Slide 38
 ```python
@@ -1095,13 +1177,31 @@ while True:
     # generate random x,y in [-1,1)
     x = 2.0 * random.random() - 1.0
     y = 2.0 * random.random() - 1.0
-    if x * x + y * y <= 1.0:
+    if x**2 + y**2 <= 1.0:
         break
 print("Inside:", x, y)
 ```
 Accepted and rejected
 Navy dots landed inside the circle and end the loop. 
 Orange crosses are thrown away.
+```python
+(x, y)
+```
+```python
+x
+```
+```python
+y
+```
+```python
+√
+```
+```python
+(x² + y²)
+```
+```python
+≤ 1
+```
 
 ## Slide 43
 Nested loops
@@ -1157,7 +1257,6 @@ Nine passes of the inner loop, three of the outer.
 pass
 i
 j
-prints
 ```python
 1
 ```
@@ -1166,9 +1265,6 @@ prints
 ```
 ```python
 0
-```
-```python
-*
 ```
 ```python
 2
@@ -1178,9 +1274,6 @@ prints
 ```
 ```python
 1
-```
-```python
-*
 ```
 ```python
 3
@@ -1192,9 +1285,6 @@ prints
 2
 ```
 ```python
-*   then a newline
-```
-```python
 4
 ```
 ```python
@@ -1202,9 +1292,6 @@ prints
 ```
 ```python
 0
-```
-```python
-*
 ```
 ```python
 5
@@ -1216,9 +1303,6 @@ prints
 1
 ```
 ```python
-*
-```
-```python
 6
 ```
 ```python
@@ -1226,9 +1310,6 @@ prints
 ```
 ```python
 2
-```
-```python
-*   then a newline
 ```
 ```python
 7
@@ -1240,9 +1321,6 @@ prints
 0
 ```
 ```python
-*
-```
-```python
 8
 ```
 ```python
@@ -1252,9 +1330,6 @@ prints
 1
 ```
 ```python
-*
-```
-```python
 9
 ```
 ```python
@@ -1262,9 +1337,6 @@ prints
 ```
 ```python
 2
-```
-```python
-*   then a newline
 ```
 ```python
 0
@@ -1316,6 +1388,17 @@ j
 ```
 ```python
 i
+```
+`square.py`
+```python
+i = 0
+while i < 3:
+    j = 0
+    while j < 3:
+        print("*", end="")
+        j += 1
+    print()
+    i += 1
 ```
 
 ## Slide 45
@@ -1396,6 +1479,6 @@ Loops
 Examples
 
 ## Slide 47
-PYTHON COURSE · WEEK 2 · LECTURE 2
+INTRO TO CS COURSE · WEEK 2 · LECTURE 2
 Next: Loops and numeral systems
 for and range(), loop patterns, and numbers in binary

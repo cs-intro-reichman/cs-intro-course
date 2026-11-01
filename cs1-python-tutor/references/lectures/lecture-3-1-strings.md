@@ -1,7 +1,7 @@
 # Lecture 3-1: Strings (week 3)
 
 ## Slide 1
-PYTHON COURSE · WEEK 3 · LECTURE 1
+INTRO TO CS COURSE · WEEK 3 · LECTURE 1
 Strings
 Indexing, slicing, immutability and methods
 
@@ -15,7 +15,7 @@ Operators
 Methods
 Examples
 1
-A string
+Basics
 characters in a row, numbered from 0
 2
 Indexing and slicing
@@ -196,6 +196,24 @@ Already known
 Direct iteration: for ch in s visits every character from left to right (Lecture 2-2).
 Limitations: Does not allow picking a specific index (e.g. the 5th or last character) or iterating in a custom order.
 ```
+```python
+b
+```
+```python
+i
+```
+```python
+n
+```
+```python
+a
+```
+```python
+r
+```
+```python
+y
+```
 
 ## Slide 6
 The questions we ask about text
@@ -308,13 +326,6 @@ One past the end
 Valid indices: 0 to len(s) - 1.
 s[len(s)]: Raises an IndexError.
 ```
-```python
-s[0]
-```
-```python
-P
-```
-a string of length 1
 Basics
 Indexing & slicing
 Immutability
@@ -322,6 +333,15 @@ Unicode
 Operators
 Methods
 Examples
+```python
+s[0]
+```
+```python
+s[5]
+```
+```python
+s[6]
+```
 
 ## Slide 8
 Negative indices
@@ -580,6 +600,9 @@ Unicode
 Operators
 Methods
 Examples
+```python
+s[1:5]
+```
 
 ## Slide 11
 Omitting a bound
@@ -654,6 +677,12 @@ Splitting at k
 s[:k] + s[k:]: Equals s for any k.
 s[-3:]: The last three characters.
 ```
+```python
+s[:3]
+```
+```python
+s[3:]
+```
 
 ## Slide 12
 The step: s[start:stop:step]
@@ -672,9 +701,6 @@ Step 2: Every second character.
 Step -1: Walks backwards: s[::-1] reverses s.
 ```
 ```python
-s[::2]
-```
-```python
 a
 ```
 ```python
@@ -709,57 +735,108 @@ e
 ```
 ```python
 g
+```
+```python
+a
+```
+```python
+b
+```
+```python
+c
+```
+```python
+d
+```
+```python
+e
+```
+```python
+f
+```
+```python
+g
+```
+```python
+h
+```
+```python
+h
+```
+```python
+g
+```
+```python
+f
+```
+```python
+e
+```
+```python
+d
+```
+```python
+c
+```
+```python
+b
+```
+```python
+a
+```
+```python
+0
+```
+```python
+1
+```
+```python
+2
+```
+```python
+3
+```
+```python
+4
+```
+```python
+5
+```
+```python
+6
+```
+```python
+7
+```
+```python
+0
+```
+```python
+1
+```
+```python
+2
+```
+```python
+3
+```
+```python
+4
+```
+```python
+5
+```
+```python
+6
+```
+```python
+7
+```
+```python
+s[0:8:2] (same as s[::2])
 ```
 ```python
 s[::-1]
-```
-```python
-a
-```
-```python
-b
-```
-```python
-c
-```
-```python
-d
-```
-```python
-e
-```
-```python
-f
-```
-```python
-g
-```
-```python
-h
-```
-```python
-h
-```
-```python
-g
-```
-```python
-f
-```
-```python
-e
-```
-```python
-d
-```
-```python
-c
-```
-```python
-b
-```
-```python
-a
 ```
 
 ## Slide 13
@@ -813,6 +890,9 @@ Unicode
 Operators
 Methods
 Examples
+```python
+J
+```
 
 ## Slide 14
 Every change produces a new string.
@@ -1173,7 +1253,7 @@ Two different types of in
 in as a part of a for header: Part of the loop syntax.
 in an a part of an expression: An operator that returns True or False.
 ```
-`vowels.py`
+`count_vowels.py`
 ```python
 word = input("Enter a string:")
 count = 0
@@ -1286,7 +1366,7 @@ or equal
 ## Slide 21
 Why capitals come first
 Characters are compared by their codes.
-`compare.py`
+`compare_case.py`
 ```python
 print("Zebra" < "apple")    # True
 ```
@@ -1463,7 +1543,7 @@ Examples
 
 ## Slide 24
 Common string methods
-The first seven return a string or a number; the last four return a bool.
+The first seven return a string or a number
 method
 what it does
 example
@@ -1544,6 +1624,7 @@ True if every character is a letter.
 ```python
 "Hi5".isalpha()  # False
 ```
+; the last four return a bool.
 
 ## Slide 25
 Functions vs. methods
@@ -1601,7 +1682,6 @@ Python enforces where a method lives.
 ```python
 x = 5
 x.upper()     # AttributeError
-upper("hi")   # NameError
 ```
 `arguments.py`
 ```python
@@ -1651,6 +1731,9 @@ o
 ```
 the value acted on
 the argument
+```python
+upper("hi")   # NameError
+```
 
 ## Slide 27
 The immutability trap
@@ -1715,9 +1798,9 @@ Examples
 
 ## Slide 29
 Removing the vowels
-Task: Given a string, print it without any vowels. 
+Task: Given a string, print it without any vowels (‘a’, ‘e’, ‘i’, ‘o’, ‘u’). 
 The idea: Using the accumulator pattern on strings.
-`vowels.py`
+`remove_vowels.py`
 ```python
 word = input("Enter a word: ")
 result = ""
@@ -1726,7 +1809,6 @@ for ch in word:
         result += ch
 print(result)
 ```
-example gives xmpl.
 ```python
 e
 ```
@@ -1774,7 +1856,7 @@ The accumulator, for strings
 ## Slide 30
 continue: skipping one iteration
 ```python
-break leaves the loop. continue leaves the current pass.
+continue ends the current pass and goes straight on to the next item.
 ```
 `vowels_if.py`
 ```python
@@ -1790,32 +1872,96 @@ for ch in word:
     result += ch
 ```
 ```python
-for ch in word:
+another ch?
 ```
 ```python
-if ch in "aeiou":
+True
 ```
 ```python
-    continue
+ch in "aeiou"
 ```
 ```python
-result += ch
+True
 ```
-the loop ends normally
 ```python
-break
+False
 ```
 ```python
 continue
 ```
 ```python
-break vs. continue
-break: Exits the loop.
-continue: Skips to the next item.
-When to use it: Many cases to skip, or a long body. Otherwise a plain if is clearer.
+result += ch
+```
+```python
+print(result)
+```
+```python
+False
+```
+What continue does
+Ends this pass. Nothing after it runs for this item.
+Takes the next item. As if the pass had finished.
+The loop is untouched. Only the body is skipped.
+```python
+Same answer as the plain if. It earns its place when there are many cases to skip, or the body is long.
 ```
 
 ## Slide 31
+break vs. continue
+```python
+The same loop, with break where continue was. Predict the output.
+```
+`vowels_break.py`
+```python
+word = input()
+result ="" 
+
+for ch in word:
+    if ch in "aeiou":
+        break
+    result += ch
+print(result)
+```
+```python
+"programming"  →  "pr"
+"python"  →  "pyth"
+"example"  →  ""
+```
+```python
+another ch?
+```
+```python
+True
+```
+```python
+ch in "aeiou"
+```
+```python
+True
+```
+```python
+False
+```
+```python
+break
+```
+```python
+result += ch
+```
+```python
+print(result)
+```
+```python
+False
+```
+```python
+Output
+Everything before the first vowel. The first vowel ends the loop.
+Nothing at all if the word starts with a vowel: break can end the loop before the body runs once.
+With continue, every vowel is skipped and the rest is appended.
+```
+
+## Slide 32
 Palindrome recognition: revisited
 `palindrome.py`
 ```python
@@ -1872,7 +2018,7 @@ a
 ```python
 r
 ```
-racecar: every pair matches.
+Every pair matches.
 ```python
 s
 ```
@@ -1897,7 +2043,7 @@ e
 ```python
 s
 ```
-seas: the second pair differs.
+The second pair differs.
 Task: Given a string, check if it is a palindrome (reads the same forwards and backwards).
 The idea: reverse the input string and compare to the original.
 word
@@ -1905,9 +2051,9 @@ Reversed word
 word
 Reversed word
 
-## Slide 32
+## Slide 33
 Class exercise: the Caesar cipher
-Shift every lowercase letter a fixed number of places.
+Task: Shift every lowercase letter of a given string a fixed number of places.
 ```python
 terminal
 ```
@@ -1916,19 +2062,16 @@ Message: hello, world
 Shift: 3
 khoor, zruog
 ```
-Five questions, in pairs
+Algorithm:
 1
-Loop and build a new string?
+Initialize: Create an empty string.
 2
-```python
-Is ch a lowercase letter?
-```
-3
-Letter → position 0 to 25?
-4
-Shift, wrapping from z to a?
-5
-Position → letter?
+Loop over input's characters one by one:
+2,1
+Check if character is a lower case letter. If it is:
+Shift letter position, wrapping from 25 to 0
+2.2
+Append character to new string.
 ```python
 a
 ```
@@ -2103,8 +2246,13 @@ x
 a
 ```
 Test first: xyz with shift 3 must give abc.
+Convert letter to position 0 to 25
+2,1.1
+2,1.2
+Convert back from position to letter
+2,1.3
 
-## Slide 33
+## Slide 34
 The Caesar cipher: one solution
 `caesar.py`
 ```python
@@ -2115,16 +2263,15 @@ for ch in text:
     if ch.islower():
         position = ord(ch) - ord("a")
         position = (position + shift) % 26
-        result += chr(position + ord("a"))
-    else:
-        result += ch
+        ch = chr(position + ord("a"))
+    result += ch
 print(result)
 ```
 1
 2
-3
-4
-5
+2.1
+2.1.1
+2.1.2
 ```python
 Decryption
 Shift -3: Run it on khoor, zruog: the original comes back.
@@ -2135,8 +2282,10 @@ If you finish early
 Uppercase: A second branch, with ord("A").
 ROT13: Shift 13, twice, gives the original. Why?
 ```
+2.1.3
+2.2
 
-## Slide 34
+## Slide 35
 Lecture summary
 ```python
 Strings as sequences
@@ -2166,7 +2315,7 @@ Operators
 Methods
 Examples
 
-## Slide 35
+## Slide 36
 Self practice
 Write a program for each of these.
 ```python
@@ -2180,7 +2329,7 @@ Count how many times a letter is followed by the same letter.
 The middle
 Print the middle character of a word — or the middle two, if its length is even.
 
-## Slide 36
-PYTHON COURSE · WEEK 3 · LECTURE 2
+## Slide 37
+INTRO TO CS COURSE · WEEK 3 · LECTURE 2
 Next: Approximation Algorithms
 When exact is impossible

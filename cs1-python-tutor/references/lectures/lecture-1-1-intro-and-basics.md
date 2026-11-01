@@ -130,9 +130,6 @@ Computer Science is About...
 
 ## Slide 13
 Computer Science is About...
-Theory
-Systems
-Applications
 Common Themes
 Programming
 The universal language
@@ -140,8 +137,11 @@ The universal language
 Efficiency
 Doing more with less, 
 faster and smarter
+Systems
+Applications
 Beauty
 Elegant solutions to hard problems
+Theory
 
 ## Slide 14
 High Level Apps & AI
@@ -248,6 +248,7 @@ General - it works for the whole class of inputs, not just the case you tried by
 ## Slide 23
 The peanut butter & jelly algorithm
 Task: Write precise step-by-step instructions (an algorithm) to make a peanut butter & jelly sandwich.
+https://www.youtube.com/watch?v=FN2RM-CHkuI
 
 ## Slide 24
 Knowing the limits
@@ -608,6 +609,8 @@ A group of statements executed together as a single unit, defined strictly by in
 A program
 A sequence of statements executed in logical order, directed by control flow (like loops and conditions).
 `count_to_five.py`
+Indentation rules:- any amount works, even 1 space; the convention is 4 (or tab).
+- every line in the block starts at the same column.- when the block ends, go back to a level that already exists.
 
 ## Slide 39
 ```python

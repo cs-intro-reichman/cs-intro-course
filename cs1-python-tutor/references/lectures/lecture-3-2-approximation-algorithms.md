@@ -1,33 +1,84 @@
 # Lecture 3-2: Approximation algorithms (week 3)
 
 ## Slide 1: Approximation Algorithms
-√
-PYTHON COURSE · WEEK 3 · LECTURE 2
+INTRO TO CS COURSE · WEEK 3 · LECTURE 2
 Approximation Algorithms
 Computing approximate answers
-Reichman University
 
-## Slide 2: Why approximate?
+## Slide 2
+Lecture overview
+1
+Why approximate
+answers with no exact formula
+2
+Sequential search
+try every candidate
+3
+Bisection
+halve the interval
+4
+Newton–Raphson
+follow the tangent
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
+
+## Slide 3: Why approximate?
 Why approximate?
 Some answers cannot be computed exactly.
 Square roots: √2 = 1.41421356…, with endless digits
 Equations: x = cos(x) has a solution, but no formula for it
 Floats: a fixed number of digits, so results are rounded
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 3: What “close enough” means
+## Slide 4: What “close enough” means
 What “close enough” means
 Guess: g, the current estimate
 Tolerance: ε, the allowed error
 Stopping rule: stop when |g · g − x| < ε
 The answer: a number g with g · g close to x
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
+Say, we would like to calculate √x:
 
-## Slide 4: The problem
+## Slide 5: The problem
 The problem
 Input and output.
 Input: a number x ≥ 0, and a tolerance ε > 0
 Output: a number g such that |g · g − x| < ε
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
+```python
+x = 16
+```
+```python
+ε = 0.01
+```
+```python
+g = 3.9988
+```
 
-## Slide 5: Three algorithms, one problem
+## Slide 6: Three algorithms, one problem
 Three algorithms, one problem
 Same problem, three methods, different running times.
 Sequential search
@@ -36,9 +87,15 @@ Bisection
 halve the interval
 Newton–Raphson
 follow the tangent
-From about 30,000 steps down to 3.
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 6: Sequential search
+## Slide 7: Sequential search
 Sequential search
 Goal: find √16. Try g = 1.0, 1.25, 1.5, … until g · g is close to 16.
 1.0
@@ -48,8 +105,15 @@ Goal: find √16. Try g = 1.0, 1.25, 1.5, … until g · g is close to 16.
 start: g = 1.0
 stop when |g · g − 16| < ε
 Every step costs one multiplication and one comparison.
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 7: Sequential search: the idea
+## Slide 8: Sequential search: the idea
 Sequential search: the idea
 In pseudocode
 set g to 1.0
@@ -61,8 +125,15 @@ epsilon: how close is close enough
 increment: how big a step to take
 
 The rest of the algorithm is fixed.
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 8: Sequential search: the program
+## Slide 9: Sequential search: the program
 Sequential search: the program
 ```python
 python sqrt_sequential.py
@@ -82,8 +153,15 @@ while abs(g * g - x) >= epsilon:
 print(f"{round(g, 4)} in {steps} steps")
 ```
 [LIVE] the file is in “week 3 code / sqrt_sequential.py”.
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 9: Reading the loop
+## Slide 10: Reading the loop
 Reading the loop
 `sqrt_sequential.py`
 ```python
@@ -104,23 +182,44 @@ increment
 The step size (speed).
 The condition
 Loop while the error is too big.
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 10: Sequential search: running time
+## Slide 11: Sequential search: running time
 Sequential search: running time
 Accuracy: smaller ε, more accurate answer
 Speed: smaller increment, slower program
 Cost: fewer than x / increment iterations
 In numbers: x = 16 → 29,988 steps; x = 105 → 92,465
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 11: Sequential search: a bug
+## Slide 12: Sequential search: a bug
 Sequential search: a bug
 Big increment: g jumps past the answer
 Infinite loop: the condition stays true forever
 The fix: stop once g has passed x
 This bug is hard to find.
 The program does not crash and prints nothing wrong. It just never stops, and no line is marked as the error.
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 12: Sequential search: bug fixed
+## Slide 13: Sequential search: bug fixed
 Sequential search: bug fixed
 `sqrt_sequential_fixed.py`
 ```python
@@ -138,9 +237,15 @@ if g > x:
 else:
     print(f"{round(g, 4)} in {steps} steps")
 ```
-[LIVE] the file is in “week 3 code / sqrt_sequential_fixed.py”.
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 13: Three algorithms, one problem
+## Slide 14: Three algorithms, one problem
 Three algorithms, one problem
 Same problem, three methods, different running times.
 Sequential search
@@ -149,9 +254,15 @@ Bisection
 halve the interval
 Newton–Raphson
 follow the tangent
-From about 30,000 steps down to 3.
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 14: Bisection search
+## Slide 15: Bisection search
 Bisection search
 Split the interval in two; keep the half that contains the answer.
 g = 8.5
@@ -162,8 +273,20 @@ g = 2.875
 itr 2
 the answer, 4
 Each step halves the interval.
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
+x = 16 · ε = 0.01  ·  stop when  |g · g − x| < ε
+g · g − x = +56.25  →  keep the lower half
+g · g − x = +6.56  →  keep the lower half
+g · g − x = −7.73  →  keep the upper half
+⋮
 
-## Slide 15: Bisection: the idea
+## Slide 16: Bisection: the idea
 Bisection: the idea
 In pseudocode
 set low to 1.0 and high to x
@@ -179,8 +302,15 @@ We need two numbers that the answer lies between.
 For x ≥ 1, √x is between 1 and x.
 
 For x < 1 this does not hold (an exercise).
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 16: Bisection: the program
+## Slide 17: Bisection: the program
 Bisection: the program
 ```python
 python sqrt_bisection.py
@@ -204,9 +334,15 @@ while abs(g * g - x) >= epsilon:
     steps = steps + 1
 print(f"{round(g, 4)} in {steps} steps")
 ```
-[LIVE] the file is in “week 3 code / sqrt_bisection.py”.
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 17: Bisection: running time
+## Slide 18: Bisection: running time
 Bisection: running time
 Each iteration halves the search interval.
 iteration 0   space = x
@@ -214,10 +350,20 @@ iteration 1   space = x / 2
 iteration 2   space = x / 4
 iteration 3   space = x / 8
 iteration k   space = x / 2ᵏ
-So k is about log₂(x / ε).
-For x = 16 and ε = 0.01: 11 steps. For an x 100 times bigger: about 7 more steps.
+So, in the worst case we keep looking until we get to a space of ε.
+That happens when x / 2ᵏ = ε. 
+To understand how many iterations we need to run to get there, we can solve for k:
+log₂(x / 2ᵏ) = log₂(ε) k = log₂(x) - log₂(ε)For x = 16 and ε = 0.01: 11 steps. For an x 100 times bigger: about 7 more steps.
+For x = 16 and ε = 1: 4 steps.
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 18: Three algorithms, one problem
+## Slide 19: Three algorithms, one problem
 Three algorithms, one problem
 Same problem, three methods, different running times.
 Sequential search
@@ -226,9 +372,29 @@ Bisection
 halve the interval
 Newton–Raphson
 follow the tangent
-From about 30,000 steps down to 3.
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 19: Newton–Raphson: the idea
+## Slide 20: Newton–Raphson: the idea
+Newton–Raphson: the idea
+Calculating √16 is like finding a solution for the equation:
+f(g) = g · g − 16 = 0
+Isaac Newton
+(1643–1727)
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
+
+## Slide 21: Newton–Raphson: the idea
 Newton–Raphson: the idea
 Follow tangent lines down to the solution of f(g) = 0.
 g
@@ -236,10 +402,15 @@ f(g) = g · g − 16
 g₀ = 8
 g₁ = 5
 g₂ = 4.1
-Isaac Newton
-(1643–1727)
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 20: Newton–Raphson: convergence
+## Slide 22: Newton–Raphson: convergence
 Newton–Raphson: convergence
 Every step roughly squares the error.
 x = 16, first guess 8
@@ -249,17 +420,34 @@ step 2: g = 4.1,  err 0.81
 step 3: g = 4.0012,  err 0.0098
 3 steps.
 Sequential search needed 29,988 steps and bisection 11, for the same x and ε.
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 21: Newton–Raphson: the formula
+## Slide 23: Newton–Raphson: the formula
 Newton–Raphson: the formula
+```python
 The rule: if g is near a solution of f(x) = 0, 				then g − f(g) / f′(g) is nearer
 For √x: f(g) = g · g − x, so f′(g) = 2 · g
 The next guess: g − (g · g − x) / (2 · g)
 Calculus: the derivative, tangent, convergence and limit grew out of such questions
+```
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 22: Newton–Raphson: why the formula works
+## Slide 24: Newton–Raphson: why the formula works
 Newton–Raphson: why the formula works
 The next guess is where the tangent line crosses zero.
+```python
 The tangent line at gₙ:
 L(g) = f(gₙ) + f′(gₙ) · (g − gₙ)
 
@@ -268,13 +456,22 @@ The next guess gₙ₊₁ is where L is 0:
 
 Solve for gₙ₊₁:
 gₙ₊₁ = gₙ − f(gₙ) / f′(gₙ)
+```
 gₙ
 gₙ₊₁
 (gₙ, f(gₙ))
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 23: Newton–Raphson: an example
+## Slide 25: Newton–Raphson: an example
 Newton–Raphson: an example
 Find √719, the same as solving x · x − 719 = 0.
+```python
 The rule for √719
 f(x) = x · x − 719
 f′(x) = 2 · x
@@ -282,14 +479,22 @@ f′(x) = 2 · x
 If g is close to √719, then
 g − (g · g − 719) / (2 · g)
 is closer.
+```
 Algorithm
 ε = 0.01
 g = 719 / 2
 while |g · g − 719| > ε:
 g = g − (g · g − 719) / (2 · g)
 report g
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 24: Newton–Raphson: the program
+## Slide 26: Newton–Raphson: the program
 Newton–Raphson: the program
 ```python
 python sqrt_newton.py
@@ -311,7 +516,6 @@ while abs(g * g - x) > epsilon:
     print(f"step {steps}: {g}")
 print(f"{round(g, 4)} in {steps} steps")
 ```
-[LIVE] the file is in “week 3 code / sqrt_newton.py”.
 ```python
 with x = 105
 step 1: 27.25
@@ -321,8 +525,15 @@ step 4: 10.283649283522411
 step 5: 10.247016247636102
 10.247 in 5 steps
 ```
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 25: Three algorithms compared
+## Slide 27: Three algorithms compared
 Three algorithms compared
 Same problem, same ε.
 Sequential search
@@ -346,17 +557,29 @@ Needs the slope of the function
 Squares the error each step (the fastest)
 x = 16 → 3 steps
 A bad first guess can fail
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 26: Beyond square roots
+## Slide 28: Beyond square roots
 Beyond square roots
 Root finding: all three solve f(x) = 0
 The pattern: guess, measure error, improve, stop
 The trade-off: more assumptions, fewer steps
 Used in: optimization, machine learning, graphics, simulation
+Why approximate
+The problem
+Sequential search
+Bisection search
+Newton–Raphson
+All three compared
+Beyond square roots
 
-## Slide 27: Next: Functions
-f
-PYTHON COURSE · WEEK 4 · LECTURE 1
+## Slide 29: Next: Functions
+INTRO TO CS COURSE · WEEK 4 · LECTURE 1
 Next: Functions
 Naming and reusing code
-Reichman University

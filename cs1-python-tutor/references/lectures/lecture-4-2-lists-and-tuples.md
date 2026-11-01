@@ -1,7 +1,7 @@
 # Lecture 4-2: Lists and tuples (week 4)
 
 ## Slide 1
-PYTHON COURSE · WEEK 4 · LECTURE 2
+INTRO TO CS COURSE · WEEK 4 · LECTURE 2
 Lists and Tuples
 Sequences that can be changed
 
@@ -2543,7 +2543,7 @@ students = [("Dana Levi", "012345678", 88),
             ("Ron Cohen", "305128744", 95),
             ("Yael Bar", "211980365", 73)]
 
-print(students[1])  # ('Ron Cohen ', '305128744', 95)
+print(students[1])  # ('Ron Cohen', '305128744', 95)
 ```
 ```python
 "Dana Levi"
@@ -2592,7 +2592,7 @@ Task: Maintain dynamic student records (name, ID, grade) through additions and d
 `List_of_tuples.py`
 ```python
 students.pop(1)   # Ron Cohen leaves
-print(students[1]) # ('Yael Bar ', '211980365', 73)
+print(students[1]) # ('Yael Bar', '211980365', 73)
 ```
 
 ## Slide 40
@@ -2658,6 +2658,115 @@ No shortcuts for maximum
 Finding the maximum requires going through every student.
 
 ## Slide 41
+Sorting the records by grade
+A function is a value. It can be given to another function.
+`sort_by_grade.py`
+```python
+students = [("Dana Levi", "012345678", 88),
+            ("Ron Cohen", "305128744", 95),
+            ("Yael Bar", "211980365", 73)]
+print(sorted(students))
+# by name - the grades come out 88, 95, 73
+def grade_of(s):
+    return s[2]
+print(sorted(students, key=grade_of, reverse=True))
+# by grade - 95, 88, 73
+```
+No parentheses: the function itself. With them: a call.
+sorted returns a new list; students is unchanged.
+`sort_by_grade.py`
+```python
+sorted(students, key=grade_of())
+# TypeError: grade_of() missing 1 required positional argument: 's'
+```
+```python
+students
+```
+```python
+0
+```
+```python
+"Dana Levi"
+```
+```python
+"012345678"
+```
+```python
+88
+```
+```python
+1
+```
+```python
+"Ron Cohen"
+```
+```python
+"305128744"
+```
+```python
+95
+```
+```python
+2
+```
+```python
+"Yael Bar"
+```
+```python
+"211980365"
+```
+```python
+73
+```
+```python
+a new list
+```
+```python
+0
+```
+```python
+"Ron Cohen"
+```
+```python
+"305128744"
+```
+```python
+95
+```
+```python
+1
+```
+```python
+"Dana Levi"
+```
+```python
+"012345678"
+```
+```python
+88
+```
+```python
+2
+```
+```python
+"Yael Bar"
+```
+```python
+"211980365"
+```
+```python
+73
+```
+the only part sorted compares
+```python
+grade_of
+```
+```python
+sorted
+```
+The function goes to sorted. sorted is what moves the records.
+
+## Slide 42
 Task: Find and print Ron Cohen's grade (by name).
 `find_student.py`
 ```python
@@ -2719,7 +2828,7 @@ a middleman step we never wanted
 students
 ```
 
-## Slide 42
+## Slide 43
 Lecture summary
 ```python
 The new ideas
@@ -2785,7 +2894,7 @@ Methods & Built-ins
 Strings & lists
 Tuples
 
-## Slide 43
-PYTHON COURSE · WEEK 5 · LECTURE 1
+## Slide 44
+INTRO TO CS COURSE · WEEK 5 · LECTURE 1
 Next: Two-dimensional lists
 Lists of lists, and list comprehension
