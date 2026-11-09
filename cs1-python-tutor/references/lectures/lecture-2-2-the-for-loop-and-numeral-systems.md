@@ -1474,24 +1474,6 @@ Built-in functions
 Our implementations
 
 ## Slide 37
-Where binary goes from here
-Today was one corner of a large subject.
-Non-negative integers in binary
-today
-✓
-Binary to decimal
-today
-✓
-Negative integers: two's complement
-other courses
-Real numbers: floating point
-other courses
-Images, sound, compression, transmission
-other courses
-Arithmetic implemented in binary
-other courses
-
-## Slide 38
 Gambler's ruin
 The for loop
 Loop patterns
@@ -1501,7 +1483,7 @@ Gambler's ruin
 Every flip wins $1 or loses $1. Start at $50, aim for $250.
 Same rules, completely different histories. The game ends at $0 or at $250.
 
-## Slide 39
+## Slide 38
 Monte Carlo simulation
 The strategy
 Flip a coin and see what happens. Repeat many times. Compute statistics.
@@ -1510,7 +1492,7 @@ Used across science, engineering, finance and game design — and often the only
 We are not computing an answer. We are estimating one, and the estimate differs every run. That is not a bug.
 Seventy games at once — about one in five reaches the goal.
 
-## Slide 40
+## Slide 39
 The simulation in Python
 `one_game.py`
 ```python
@@ -1536,7 +1518,7 @@ print(f"Percentage of winning games: {n_wins * 100 / T}%")
 We cannot know how many flips — an indefinite loop.
 We know exactly how many games — a counted loop.
 
-## Slide 41
+## Slide 40
 Running it
 ```python
 terminal
@@ -1552,7 +1534,7 @@ The numbers change every run
 That is what estimating looks like. Run it three times and watch the percentage move by a point or two.
 Knowing roughly how many operations you are asking for is part of the job — week 8 makes that idea formal.
 
-## Slide 42
+## Slide 41
 Theory and experiment
 What the mathematics says
 Probability of reaching the goal = start / goal =  = 50 / 250 = 20%. 
@@ -1564,7 +1546,7 @@ So why simulate, if the formula already answers it?
 To validate a theory, or to help reach one. To generate events from a model, for research, training, investing or games. And because in many cases there is no formula at all, and simulation is the only way to get data.
 Change 0.5 to 0.49 — a slightly unfair coin — and the mathematics gets much harder. The simulation needs a two-character edit.
 
-## Slide 43
+## Slide 42
 Lecture summary
 ```python
 The for loop
@@ -1591,7 +1573,7 @@ Numeral systems
 Binary
 Gambler's ruin
 
-## Slide 44
+## Slide 43
 Self practice
 Write a program for each of these.
 Rewrite with for
@@ -1603,7 +1585,7 @@ Read a non-negative integer and print how many digits it has, using % 10 and // 
 Binary, both directions
 Print the binary form of every number from 0 to 15, then read a binary string back and print its decimal value.
 
-## Slide 45
+## Slide 44
 INTRO TO CS COURSE · WEEK 3 · LECTURE 1
 Next: Strings and Approximation algorithms
 Where for comes into its own, and where exactness gives way to a good enough answer

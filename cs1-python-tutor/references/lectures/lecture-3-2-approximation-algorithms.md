@@ -61,13 +61,6 @@ The problem
 Input and output.
 Input: a number x ≥ 0, and a tolerance ε > 0
 Output: a number g such that |g · g − x| < ε
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 ```python
 x = 16
 ```
@@ -105,13 +98,6 @@ Goal: find √16. Try g = 1.0, 1.25, 1.5, … until g · g is close to 16.
 start: g = 1.0
 stop when |g · g − 16| < ε
 Every step costs one multiplication and one comparison.
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 
 ## Slide 8: Sequential search: the idea
 Sequential search: the idea
@@ -125,13 +111,6 @@ epsilon: how close is close enough
 increment: how big a step to take
 
 The rest of the algorithm is fixed.
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 
 ## Slide 9: Sequential search: the program
 Sequential search: the program
@@ -153,13 +132,6 @@ while abs(g * g - x) >= epsilon:
 print(f"{round(g, 4)} in {steps} steps")
 ```
 [LIVE] the file is in “week 3 code / sqrt_sequential.py”.
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 
 ## Slide 10: Reading the loop
 Reading the loop
@@ -182,13 +154,6 @@ increment
 The step size (speed).
 The condition
 Loop while the error is too big.
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 
 ## Slide 11: Sequential search: running time
 Sequential search: running time
@@ -196,13 +161,6 @@ Accuracy: smaller ε, more accurate answer
 Speed: smaller increment, slower program
 Cost: fewer than x / increment iterations
 In numbers: x = 16 → 29,988 steps; x = 105 → 92,465
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 
 ## Slide 12: Sequential search: a bug
 Sequential search: a bug
@@ -211,13 +169,6 @@ Infinite loop: the condition stays true forever
 The fix: stop once g has passed x
 This bug is hard to find.
 The program does not crash and prints nothing wrong. It just never stops, and no line is marked as the error.
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 
 ## Slide 13: Sequential search: bug fixed
 Sequential search: bug fixed
@@ -237,13 +188,6 @@ if g > x:
 else:
     print(f"{round(g, 4)} in {steps} steps")
 ```
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 
 ## Slide 14: Three algorithms, one problem
 Three algorithms, one problem
@@ -273,13 +217,6 @@ g = 2.875
 itr 2
 the answer, 4
 Each step halves the interval.
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 x = 16 · ε = 0.01  ·  stop when  |g · g − x| < ε
 g · g − x = +56.25  →  keep the lower half
 g · g − x = +6.56  →  keep the lower half
@@ -302,13 +239,6 @@ We need two numbers that the answer lies between.
 For x ≥ 1, √x is between 1 and x.
 
 For x < 1 this does not hold (an exercise).
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 
 ## Slide 17: Bisection: the program
 Bisection: the program
@@ -334,13 +264,6 @@ while abs(g * g - x) >= epsilon:
     steps = steps + 1
 print(f"{round(g, 4)} in {steps} steps")
 ```
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 
 ## Slide 18: Bisection: running time
 Bisection: running time
@@ -355,13 +278,6 @@ That happens when x / 2ᵏ = ε.
 To understand how many iterations we need to run to get there, we can solve for k:
 log₂(x / 2ᵏ) = log₂(ε) k = log₂(x) - log₂(ε)For x = 16 and ε = 0.01: 11 steps. For an x 100 times bigger: about 7 more steps.
 For x = 16 and ε = 1: 4 steps.
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 
 ## Slide 19: Three algorithms, one problem
 Three algorithms, one problem
@@ -386,13 +302,6 @@ Calculating √16 is like finding a solution for the equation:
 f(g) = g · g − 16 = 0
 Isaac Newton
 (1643–1727)
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 
 ## Slide 21: Newton–Raphson: the idea
 Newton–Raphson: the idea
@@ -402,13 +311,6 @@ f(g) = g · g − 16
 g₀ = 8
 g₁ = 5
 g₂ = 4.1
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 
 ## Slide 22: Newton–Raphson: convergence
 Newton–Raphson: convergence
@@ -420,13 +322,6 @@ step 2: g = 4.1,  err 0.81
 step 3: g = 4.0012,  err 0.0098
 3 steps.
 Sequential search needed 29,988 steps and bisection 11, for the same x and ε.
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 
 ## Slide 23: Newton–Raphson: the formula
 Newton–Raphson: the formula
@@ -436,13 +331,6 @@ For √x: f(g) = g · g − x, so f′(g) = 2 · g
 The next guess: g − (g · g − x) / (2 · g)
 Calculus: the derivative, tangent, convergence and limit grew out of such questions
 ```
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 
 ## Slide 24: Newton–Raphson: why the formula works
 Newton–Raphson: why the formula works
@@ -460,13 +348,6 @@ gₙ₊₁ = gₙ − f(gₙ) / f′(gₙ)
 gₙ
 gₙ₊₁
 (gₙ, f(gₙ))
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 
 ## Slide 25: Newton–Raphson: an example
 Newton–Raphson: an example
@@ -486,13 +367,6 @@ g = 719 / 2
 while |g · g − 719| > ε:
 g = g − (g · g − 719) / (2 · g)
 report g
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 
 ## Slide 26: Newton–Raphson: the program
 Newton–Raphson: the program
@@ -525,13 +399,6 @@ step 4: 10.283649283522411
 step 5: 10.247016247636102
 10.247 in 5 steps
 ```
-Why approximate
-The problem
-Sequential search
-Bisection search
-Newton–Raphson
-All three compared
-Beyond square roots
 
 ## Slide 27: Three algorithms compared
 Three algorithms compared

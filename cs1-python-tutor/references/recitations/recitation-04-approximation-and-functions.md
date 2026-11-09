@@ -1,4 +1,4 @@
-# Recitation, week 4: Functions, lists and tuples
+# Recitation, week 4: Approximation and functions
 
 ## From `recitation 4.pptx`
 
@@ -704,245 +704,74 @@ PYTHON COURSE · WEEK 5 · RECITATION 5
 Next: Lists, tuples and tables
 mutate or return, records, comprehensions, and boards
 
-## From `date.py`
+## From `warmup_functions.py`
 
-### `date.py`
+### `warmup_functions.py`
 ```python
-# The same design, with the bodies filled in
+def double(x):
+    return 2 * x
+def shout(word):
+    print(word.upper())
+
+a = double(4)
+b = shout("hi")
+print(a, b)
+print(double(double(3)))
+x = 10
+def change():
+    x = 5
+change()
+print(x)
+```
+
+## From `warmup_bisection.py`
+
+### `warmup_bisection.py`
+```python
+# Bisection (lecture 3-2), for x = 10
+x = 10
+epsilon = 0.01
+low = 1.0
+high = x
+g = (low + high) / 2
+steps = 0
+while abs(g * g - x) >= epsilon:
+    if g * g < x:
+        low = g
+    else:
+        high = g
+    g = (low + high) / 2
+    steps = steps + 1
+print(f"{round(g, 4)} in {steps} steps")
+```
+
+## From `small_functions.py`
+
+### `small_functions.py`
+```python
 def is_leap(year):
-    """Return True for a leap year."""
+    """Return True when year is a leap year."""
     by_400 = year % 400 == 0
     by_4 = year % 4 == 0 and year % 100 != 0
     return by_400 or by_4
 
 
-def days_in(month, year):
-    """Return the days in month (1-12) of year."""
-    if month == 2:
-        return 29 if is_leap(year) else 28
-    if month == 4 or month == 6 or month == 9 or month == 11:
-        return 30
-    return 31
-
-
-def is_valid_date(day, month, year):
-    """Return True when the date exists."""
-    if month < 1 or month > 12:
-        return False
-    return 1 <= day <= days_in(month, year)
-
-
-def day_of_year(day, month, year):
-    """Return the day number in the year, 1 to 366."""
+def digit_sum(n):
+    """Return the sum of the digits of n (n >= 0)."""
     total = 0
-    for m in range(1, month):
-        total += days_in(m, year)
-    return total + day
+    while n > 0:
+        total += n % 10
+        n = n // 10
+    return total
 
 
-day = int(input("Day: "))
-month = int(input("Month: "))
-year = int(input("Year: "))
-if is_valid_date(day, month, year):
-    print(f"Day {day_of_year(day, month, year)} of {year}")
-else:
-    print("Not a valid date")
-```
-
-## From `date_design.py`
-
-### `date_design.py`
-```python
-# The design first: names, parameters, promises
-def is_leap(year):
-    """Return True for a leap year."""
-    return False
-
-
-def days_in(month, year):
-    """Return the days in month (1-12) of year."""
-    return 30
-
-
-def is_valid_date(day, month, year):
-    """Return True when the date exists."""
-    return True
-
-
-def day_of_year(day, month, year):
-    """Return the day number in the year, 1 to 366."""
-    return 0
-
-
-day = int(input("Day: "))
-month = int(input("Month: "))
-year = int(input("Year: "))
-if is_valid_date(day, month, year):
-    print(f"Day {day_of_year(day, month, year)} of {year}")
-else:
-    print("Not a valid date")
-```
-
-## From `gradebook.py`
-
-### `gradebook.py`
-```python
-students = [("Dana Levi", 88),
-            ("Ron Cohen", 95),
-            ("Omer Katz", 51),
-            ("Yael Bar", 73)]
-
-def top_student(students):
-    """Return the record with the top grade."""
-    best = students[0]
-    for record in students:
-        if record[1] > best[1]:
-            best = record
-    return best
-
-def failing(students, pass_mark=56):
-    """Return the names below pass_mark."""
-    names = []
-    for name, grade in students:
-        if grade < pass_mark:
-            names.append(name)
-    return names
-
-def curve(students, points):
-    """New records, points added, max 100."""
-    curved = []
-    for name, grade in students:
-        new_grade = min(grade + points, 100)
-        curved.append((name, new_grade))
-    return curved
-
-def add_student(students, name, grade):
-    """Add one record, in place."""
-    students.append((name, grade))
-
-add_student(students, "Noa Peretz", 64)
-name, grade = top_student(students)
-print(f"Top: {name} with {grade}")
-print(f"Failing: {failing(students)}")
-print(f"Curved: {curve(students, 10)}")
-```
-
-## From `negatives.py`
-
-### `negatives.py`
-```python
-def remove_negatives(nums):
-    """Remove the negatives, in place."""
-    i = 0
-    while i < len(nums):
-        if nums[i] < 0:
-            nums.pop(i)
-        else:
-            i += 1
-
-def without_negatives(nums):
-    """Return a new list, negatives dropped."""
-    kept = []
-    for x in nums:
-        if x >= 0:
-            kept.append(x)
-    return kept
-```
-
-## From `noa.py`
-
-### `noa.py`
-```python
-def cleaned(nums):
-    i = 0
-    while i < len(nums):
-        if nums[i] < 0:
-            nums.pop(i)
-        else:
-            i += 1
-    return nums
-```
-
-## From `permutations.py`
-
-### `permutations.py`
-```python
-def is_permutation(per):
-    """True if per holds each of 0..n-1 once."""
-    n = len(per)
-    seen = [False] * n
-    for value in per:
-        if value < 0 or value >= n:
-            return False
-        if seen[value]:
-            return False
-        seen[value] = True
-    return True
-
-def inverse(per):
-    """Return the permutation undoing per."""
-    inv = [0] * len(per)
-    for i in range(len(per)):
-        inv[per[i]] = i
-    return inv
-```
-
-## From `report.py`
-
-### `report.py`
-```python
-def read_numbers():
-    """Return the ints typed on one line."""
-    nums = []
-    for piece in input("Numbers: ").split():
-        nums.append(int(piece))
-    return nums
-
-def average(nums):
-    """Return the average, 0.0 if empty."""
-    if len(nums) == 0:
-        return 0.0
-    return sum(nums) / len(nums)
-
-def count_above(nums, limit):
-    """Return how many are above limit."""
+def count_vowels(text):
+    """Return how many vowels text contains."""
     count = 0
-    for x in nums:
-        if x > limit:
+    for ch in text.lower():
+        if ch in "aeiou":
             count += 1
     return count
-
-nums = read_numbers()
-if len(nums) == 0:
-    print("No numbers")
-else:
-    mean = average(nums)
-    print(f"Largest: {max(nums)}")
-    print(f"Smallest: {min(nums)}")
-    print(f"Average: {round(mean, 2)}")
-    above = count_above(nums, mean)
-    print(f"Above average: {above}")
-```
-
-## From `report_stubs.py`
-
-### `report_stubs.py`
-```python
-def read_numbers():
-    """Return the ints typed on one line."""
-    return []
-
-def average(nums):
-    """Return the average, 0.0 if empty."""
-    return 0.0
-
-def count_above(nums, limit):
-    """Return how many are above limit."""
-    return 0
-
-nums = read_numbers()
-print(f"Largest: {max(nums)}")
-print(f"Smallest: {min(nums)}")
 ```
 
 ## From `roots.py`
@@ -993,33 +822,96 @@ def cube_root_newton(x, epsilon=1e-6, trace=False):
     return g
 ```
 
-## From `small_functions.py`
+## From `date_design.py`
 
-### `small_functions.py`
+### `date_design.py`
 ```python
+# The design first: names, parameters, promises
 def is_leap(year):
-    """Return True when year is a leap year."""
+    """Return True for a leap year."""
+    return False
+
+
+def days_in(month, year):
+    """Return the days in month (1-12) of year."""
+    return 30
+
+
+def is_valid_date(day, month, year):
+    """Return True when the date exists."""
+    return True
+
+
+def day_of_year(day, month, year):
+    """Return the day number in the year, 1 to 366."""
+    return 0
+
+
+day = int(input("Day: "))
+month = int(input("Month: "))
+year = int(input("Year: "))
+if is_valid_date(day, month, year):
+    print(f"Day {day_of_year(day, month, year)} of {year}")
+else:
+    print("Not a valid date")
+```
+
+## From `date.py`
+
+### `date.py`
+```python
+# The same design, with the bodies filled in
+def is_leap(year):
+    """Return True for a leap year."""
     by_400 = year % 400 == 0
     by_4 = year % 4 == 0 and year % 100 != 0
     return by_400 or by_4
 
 
-def digit_sum(n):
-    """Return the sum of the digits of n (n >= 0)."""
+def days_in(month, year):
+    """Return the days in month (1-12) of year."""
+    if month == 2:
+        return 29 if is_leap(year) else 28
+    if month == 4 or month == 6 or month == 9 or month == 11:
+        return 30
+    return 31
+
+
+def is_valid_date(day, month, year):
+    """Return True when the date exists."""
+    if month < 1 or month > 12:
+        return False
+    return 1 <= day <= days_in(month, year)
+
+
+def day_of_year(day, month, year):
+    """Return the day number in the year, 1 to 366."""
     total = 0
-    while n > 0:
-        total += n % 10
-        n = n // 10
-    return total
+    for m in range(1, month):
+        total += days_in(m, year)
+    return total + day
 
 
-def count_vowels(text):
-    """Return how many vowels text contains."""
-    count = 0
-    for ch in text.lower():
-        if ch in "aeiou":
-            count += 1
-    return count
+day = int(input("Day: "))
+month = int(input("Month: "))
+year = int(input("Year: "))
+if is_valid_date(day, month, year):
+    print(f"Day {day_of_year(day, month, year)} of {year}")
+else:
+    print("Not a valid date")
+```
+
+## From `use_roots.py`
+
+### `use_roots.py`
+```python
+import roots
+
+print("cube root of 27:", round(roots.cube_root(27), 4))
+print("cube root of 2:", round(roots.cube_root(2), 4))
+print("sloppy:", round(roots.cube_root(2, epsilon=0.1), 4))
+print("cos(x) = x at", round(roots.solve_cos(), 4))
+print("newton:", round(roots.cube_root_newton(27), 4))
 ```
 
 ## From `sqrt_sequential.py`
@@ -1041,145 +933,4 @@ print(round(sqrt_sequential(16), 4))
 print(round(sqrt_sequential(16, increment=0.01), 4))
 print(sqrt_sequential(16, increment=0.7))
 print(round(sqrt_sequential(2, 0.0001, 0.001), 4))
-```
-
-## From `text_report.py`
-
-### `text_report.py`
-```python
-import textstats
-
-text = "a rose is a rose is a rose"
-print("Words:", textstats.word_count(text))
-print("Longest:", textstats.longest_word(text))
-print("Unique:", textstats.unique_words(text))
-print("Top:", textstats.most_common(text))
-```
-
-## From `textstats.py`
-
-### `textstats.py`
-```python
-"""Small text statistics."""
-
-def words_of(text):
-    """Return the lowercase words of text."""
-    return text.lower().split()
-
-def word_count(text):
-    """Return how many words text has."""
-    return len(words_of(text))
-
-def longest_word(text):
-    """Return the first longest word."""
-    longest = ""
-    for w in words_of(text):
-        if len(w) > len(longest):
-            longest = w
-    return longest
-
-def unique_words(text):
-    """Return the distinct words, in order."""
-    seen = []
-    for w in words_of(text):
-        if w not in seen:
-            seen.append(w)
-    return seen
-
-def most_common(text):
-    """Return (word, count) of the top word."""
-    words = words_of(text)
-    best = ("", 0)
-    for w in unique_words(text):
-        count = words.count(w)
-        if count > best[1]:
-            best = (w, count)
-    return best
-```
-
-## From `use_roots.py`
-
-### `use_roots.py`
-```python
-import roots
-
-print("cube root of 27:", round(roots.cube_root(27), 4))
-print("cube root of 2:", round(roots.cube_root(2), 4))
-print("sloppy:", round(roots.cube_root(2, epsilon=0.1), 4))
-print("cos(x) = x at", round(roots.solve_cos(), 4))
-print("newton:", round(roots.cube_root_newton(27), 4))
-```
-
-## From `using_noa.py`
-
-### `using_noa.py`
-```python
-from noa import cleaned
-
-scores = [3, -1, 4, -5, 9]
-good = cleaned(scores)
-print(good)
-print(scores)
-good.append(100)
-print(scores)
-```
-
-## From `warmup_bisection.py`
-
-### `warmup_bisection.py`
-```python
-# Bisection (lecture 3-2), for x = 10
-x = 10
-epsilon = 0.01
-low = 1.0
-high = x
-g = (low + high) / 2
-steps = 0
-while abs(g * g - x) >= epsilon:
-    if g * g < x:
-        low = g
-    else:
-        high = g
-    g = (low + high) / 2
-    steps = steps + 1
-print(f"{round(g, 4)} in {steps} steps")
-```
-
-## From `warmup_functions.py`
-
-### `warmup_functions.py`
-```python
-def double(x):
-    return 2 * x
-def shout(word):
-    print(word.upper())
-
-a = double(4)
-b = shout("hi")
-print(a, b)
-print(double(double(3)))
-x = 10
-def change():
-    x = 5
-change()
-print(x)
-```
-
-## From `warmup_lists.py`
-
-### `warmup_lists.py`
-```python
-a = [1, 2, 3]
-b = a
-b.append(4)
-print(a)
-c = a[:]
-c[0] = 99
-print(a, c)
-print(a.sort())
-print(a)
-t = (1, 2)
-x, y = t
-print(y, x)
-print([1, 2] + [3], [0] * 3)
 ```

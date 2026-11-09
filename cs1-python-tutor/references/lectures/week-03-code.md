@@ -476,19 +476,3 @@ print(result)
 # The accumulator with an if: a character is appended when it is not a
 # vowel.
 ```
-
-### `two_roots_bad.py`
-```python
-# Two square roots: the same loop, twice
-epsilon = 0.01
-a = 16
-g = a / 2
-while abs(g * g - a) > epsilon:
-    g = g - (g * g - a) / (2 * g)
-print(f"root of {a} is about {round(g, 4)}")
-b = 105
-g = b / 2
-while abs(g * g - b) > epsilon:
-    g = g - (g * g - b) / (2 * g)
-print(f"root of {b} is about {round(g, 4)}")
-```

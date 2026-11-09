@@ -15,7 +15,7 @@ The instructor maintains this file. Week numbers follow the current schedule.
 - f-strings in the plain `{expr}` form only. Format specs are not taught yet.
 - `round(x, n)`, `abs`, `import math` (`math.sqrt`, `math.floor`, `math.ceil`, `math.pi`), `import random` (`random.random()` only; a random whole number is made as `int(random.random() * n)`, lecture 1-2 slide 58)
 - Kinds of errors (syntax, runtime, logical; lecture 1-1 slide 43) and reading a traceback (1-2)
-- Not taught in week 1: `random.randint`, `min`, `max`, `sum` (these first appear in the lists lecture, 4-2)
+- Not taught in week 1: `random.randint`, `min`, `max`, `sum` (these first appear in the lists lecture)
 - Shown only as previews, not yet taught: a `turtle` demo and a `class Dog` example
 
 ## Week 2: Conditionals and while loops (2-1), for loops and numeral systems (2-2)
@@ -41,12 +41,18 @@ The instructor maintains this file. Week numbers follow the current schedule.
 - `continue` (and when to prefer a plain `if`), `break` vs `continue`
 - Approximation: sequential (exhaustive) search with a fixed step (`increment`), bisection search, Newton–Raphson, tolerance ε (`epsilon`), counting iterations
 
-## Week 4: Functions (4-1), Lists and tuples (4-2)
-- `def`, parameters and arguments, `return`, functions calling functions, the order of events in a call
-- Default parameter values, keyword arguments
-- Type hints are shown once (4-1 slide 19) and then not used. Don't use them.
-- Docstrings, `help()`, modules: putting functions in a file and importing it (`import mymath`)
-- Stubs, top-down design, decomposition
+## Week 4: Functions (4-1), Functions, part 2: modules, API and design (4-2)
+- `def`, parameters and arguments, `return`, functions calling functions, the order of events in a call, the call stack (4-1)
+- Default parameter values, keyword arguments (4-1)
+- Type hints are shown once (4-1, "Type hints") and then not used. Don't use them.
+- Modules: putting functions in a file and importing it (`import mymath`, `mymath.my_sqrt(2)`), docstrings and the API (4-2)
+- Functions vs methods (`len(s)` vs `s.upper()`), `AttributeError` for a method on the wrong type (3-1 and 4-2)
+- What makes a good function, top-down design, decomposition diagrams, stubs, filling in bodies one at a time (4-2)
+- Checking functions with `assert` (4-2)
+- A function is an object: `f = my_sqrt` without parentheses (4-2)
+- Not taught yet: lists, tuples, `split`, `join`, `sorted`, `min`, `max`, `sum`. The lists lecture is being moved to a later week.
+
+## Lists and tuples (the lists lecture; its week is not set yet, so treat it as not taught)
 - Lists: literals, indexing, slicing, `in`, `+`, `*`, `len`, `list()`
 - Lists are mutable: item assignment, aliasing (`b = a`), copying (`a[:]`, `a.copy()`)
 - List methods: `append`, `insert`, `pop`, `remove`, `sort`, `reverse`, `copy`. Built-ins: `sorted`, `max`, `min`, `sum` (first taught here)
